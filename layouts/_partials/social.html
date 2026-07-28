@@ -1,0 +1,17 @@
+{{- with site.Params.social }}
+  <div id="social" class="mt-2 gap-3 flex flex-wrap justify-center">
+    {{- range . }}
+      {{- $icon := .icon | default "link-45deg" }}
+      {{- $isExternal := not (hasPrefix .url (or site.BaseURL "/")) }}
+      <a
+        class="icon-link text-muted"
+        href="{{ .url }}"
+        title="{{ .name }}"
+        {{- if $isExternal }}
+          target="_blank" rel="noopener"
+        {{- end }}>
+        <i class="bi bi-{{ $icon }}"></i>
+      </a>
+    {{- end }}
+  </div>
+{{- end }}

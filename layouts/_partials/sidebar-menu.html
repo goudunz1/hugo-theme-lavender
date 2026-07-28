@@ -1,0 +1,42 @@
+{{- $page := .page }}
+{{- $menuID := .menuID }}
+{{- with index site.Menus $menuID }}
+  <nav class="gap-2.5 px-2 flex w-full flex-col items-center">
+    {{- range . }}
+      {{- $active := false }}
+      {{- if $page.IsMenuCurrent .Menu . }}
+        {{- $active = true }}
+      {{- else if $page.HasMenuCurrent .Menu . }}
+        {{- $active = true }}
+      {{- end }}
+      {{- $icon := "" }}
+      {{- with .Params }}
+        {{- with .icon }}{{ $icon = . }}{{ end }}
+      {{- end }}
+      {{- $name := .Name }}
+      {{- /*
+        This <div> acts as a pin. Drawers have flexible sizes, to make them expand to the right on hover while maintain
+        central-aligned in regular times, `items-center` is not enough. Therefore we need a wrapper to do the trick.
+        As for alignment, we use left negative margin: half of the icon size (1.2rem) + padding (1px) + border (1px).
+      */}}
+      <div class="w-0">
+        <div
+          class="{{ if $active }}
+            sidebar-link--active
+          {{ end }} group -ml-[(1.2rem+2px)] h-fit w-fit">
+          <a href="{{ .URL }}" class="sidebar-drawer">
+            <div class="sidebar-drawer-icon">
+              {{- if $icon }}
+                <i class="bi bi-{{ $icon }}"></i>
+              {{- end }}
+            </div>
+            {{- /* Simulate a drawer by setting max-width */}}
+            <div class="sidebar-drawer-label-wrapper">
+              <span class="sidebar-drawer-label">{{- $name -}}</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    {{- end }}
+  </nav>
+{{- end }}

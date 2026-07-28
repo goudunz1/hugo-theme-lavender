@@ -1,0 +1,29 @@
+{{- /*
+  Insufficient viewport height triggers scrolling on the sidebar. Minimum height of the sidebar has to be 100vh, to
+  force overflows happen on itself instead of its children, preserving background when scrolling downwards.
+  We set `pointer-events-none` on the 'scrollbar provider' to allow events (e.g. mouse clicks) passing-through.
+*/}}
+<div class="left-0 top-0 pointer-events-none fixed z-50 h-dvh w-screen scrollbar-none overflow-y-scroll">
+  <aside id="sidebar" class="sidebar-rail sidebar:border-0 sidebar:bg-transparent sidebar:translate-x-0">
+    {{- $avatar := site.Params.avatar | default "" }}
+    {{- $blogName := site.Params.blogName | default site.Title }}
+    {{- if $avatar }}
+      <a class="avatar-link" href="{{ `` | relLangURL }}" title="{{ $blogName }}">
+        <img class="rounded-full object-cover" src="{{ $avatar | relURL }}" alt="{{ $blogName }}" />
+      </a>
+    {{- end }}
+    {{ partial "sidebar-menu.html" (dict "menuID" "main" "page" .) }}
+    <button type="button" id="theme-toggle" class="icon-link text-muted" title="Toggle color theme">
+      <i class="bi bi-sun-fill hidden dark:block"></i>
+      <i class="bi bi-moon-stars-fill block dark:hidden"></i>
+    </button>
+  </aside>
+</div>
+<button
+  type="button"
+  id="sidebar-burger"
+  class="icon-link right-3 top-3 sidebar:hidden fixed z-60 size-[2.6rem]"
+  title="Open menu">
+  <i id="sidebar-burger-icon" class="bi bi-list block"></i>
+</button>
+<div id="sidebar-scrim" class="inset-0 bg-black/45 fixed z-40 hidden"></div>

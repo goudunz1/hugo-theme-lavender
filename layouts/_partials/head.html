@@ -1,0 +1,52 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+{{- $faviconPath := (site.Params.faviconPath | default "" | absURL) }}
+{{- if site.Params.faviconSvg }}
+  <link rel="icon" type="image/svg+xml" href="{{ urls.JoinPath $faviconPath `favicon.svg` }}" />
+{{- end }}
+<link rel="icon" type="image/ico" href="{{ urls.JoinPath $faviconPath `favicon.ico` }}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{{ urls.JoinPath $faviconPath `favicon-16x16.png` }}" />
+<link rel="icon" type="image/png" sizes="32x32" href="{{ urls.JoinPath $faviconPath `favicon-32x32.png` }}" />
+<link rel="apple-touch-icon" sizes="180x180" href="{{ urls.JoinPath $faviconPath `apple-touch-icon.png` }}" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="192x192"
+  href="{{ urls.JoinPath $faviconPath `android-chrome-192x192.png` }}" />
+<link
+  rel="icon"
+  type="image/png"
+  sizes="512x512"
+  href="{{ urls.JoinPath $faviconPath `android-chrome-512x512.png` }}" />
+{{- /*
+  Because hugo sites aren't SPAs, palette has to be set manually each time the user follows a link. So we do it here
+  instead of main.js, before <body> is loaded, to prevent FOUC (flash of unstyled content).
+*/}}
+<title>
+  {{- if .IsHome }}
+    {{ site.Title }}
+  {{- else }}
+    {{ printf "%s | %s" .Title site.Title }}
+  {{- end }}
+</title>
+{{ partialCached "head/css.html" . }}
+<script>
+  (function () {
+    var pref ="{{ site.Params.themeDefault | default `auto` }}";
+    var stored = null;
+    try {
+      stored = localStorage.getItem("theme-palette");
+    } catch (e) {}
+    var dark;
+    if (stored === "light" || stored === "dark") {
+      dark = stored === "dark";
+    } else if (pref === "auto") {
+      dark =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+    } else {
+      dark = pref === "dark";
+    }
+    if (dark) document.documentElement.classList.add("dark");
+  })();
+</script>

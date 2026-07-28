@@ -1,0 +1,27 @@
+{{- define "main" }}
+  {{- /* Use params.pagination if configured, else let Hugo fallback to its [pagination] config. */}}
+  {{- $paginator := "" }}
+  {{- $configuredSize := index site.Params.pagination "posts" }}
+  {{- if $configuredSize }}
+    {{- $s := int $configuredSize }}
+    {{- if lt $s 1 }}
+      {{- $paginator = .Paginate .Pages }}
+    {{- else }}
+      {{- $paginator = .Paginate .Pages $s }}
+    {{- end }}
+  {{- else }}
+    {{- $paginator = .Paginate .Pages }}
+  {{- end }}
+  <div class="mb-2">
+    <h1 class="page-title">{{ .Title }}</h1>
+    <p class="meta-text">{{ .Pages.Len }}&nbsp;entries</p>
+  </div>
+  {{- with .Content }}
+    <div class="post-content">{{ . }}</div>
+  {{- end }}
+  {{- range $paginator.Pages.GroupByDate "2006" }}
+    {{ partial "separator.html" (dict "groupTitle" .Key) }}
+    {{ partial "post-cards.html" .Pages }}
+  {{- end }}
+  {{ partial "pagination.html" . }}
+{{- end }}

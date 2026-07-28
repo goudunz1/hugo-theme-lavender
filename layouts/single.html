@@ -1,0 +1,63 @@
+{{- define "main" }}
+  {{- if eq .Section "" }}
+    {{- /* root page, whose layout has no corresponding template */}}
+    <div class="mb-6">
+      <h1 class="page-title">{{ .Title }}</h1>
+    </div>
+    {{- with .Content }}
+      <div class="post-content">{{ . }}</div>
+    {{- end }}
+  {{- else }}
+    {{- /* a post */}}
+    {{- $author := .Params.author | default site.Params.author | default "Author" }}
+    {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+    {{- $dateHuman := .Date | time.Format "2006-01-02" }}
+    {{- $hasTOC := false }}
+    {{- with .Fragments }}
+      {{- with .Headings }}
+        {{- $hasTOC = site.Params.tableOfContents | default true }}
+      {{- end }}
+    {{- end }}
+    {{- $math := .Params.math | default false }}
+    <article class="min-w-0 flex flex-1 flex-col">
+      <h1 class="page-title">{{ .Title }}</h1>
+      <div class="mb-6 gap-3 text-muted flex flex-wrap items-center text-[0.9rem]">
+        <span class="flex items-center gap-[0.35rem]"><i class="bi bi-person"></i>{{ $author }}</span>
+        <span class="flex items-center gap-[0.35rem]"
+          ><i class="bi bi-calendar3"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
+        >
+        {{- if .Params.readingTime | default false }}
+          <span><i class="bi bi-clock"></i>&nbsp;{{ .ReadingTime }} min read</span>
+        {{- end }}
+      </div>
+      {{- /* Two columns if possible, a single stack if width < 64rem. */}}
+      <div class="gap-10 lg:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1">
+        <div class="post-content">{{ .Content }}</div>
+        <aside class="gap-6 lg:order-0 order-first flex flex-col text-[0.9rem]">
+          {{- with .GetTerms "categories" }}
+            {{ partial "chips.html" (dict "links" . "caption" "Categories") }}
+          {{- end }}
+          {{- with .GetTerms "tags" }}
+            {{ partial "chips.html" (dict "links" . "caption" "Tags") }}
+          {{- end }}
+          {{- if $hasTOC }}
+            {{- with .TableOfContents }}
+              <div class="panel lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] static max-h-none overflow-hidden">
+                <div id="post-toc" class="post-toc px-4 h-full overflow-x-hidden overflow-y-scroll py-[0.9rem]">
+                  <p class="caption">Contents</p>
+                  {{ . }}
+                </div>
+              </div>
+            {{- end }}
+          {{- end }}
+        </aside>
+      </div>
+      {{- if or .PrevInSection .NextInSection }}
+        {{ partial "post-nav.html" (dict "prev" .PrevInSection "next" .NextInSection) }}
+      {{- end }}
+    </article>
+    {{- if $math }}
+      {{ partial "math.html" . }}
+    {{- end }}
+  {{- end }}
+{{- end }}

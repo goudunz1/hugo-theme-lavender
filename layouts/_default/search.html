@@ -1,0 +1,31 @@
+{{- define "main" }}
+  {{- $enabled := site.Params.searchEnabled | default false }}
+  <div class="mb-6">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{- with .Description }}
+      <p class="meta-text">{{ . }}</p>
+    {{- end }}
+  </div>
+  {{- if not $enabled }}
+    <p class="meta-text">
+      Search is disabled. Set <code>searchEnabled = true</code> in <code>hugo.toml</code> to enable it.
+    </p>
+  {{- else }}
+    <div class="post-content">
+      <div class="mb-6">
+        <div class="search-box">
+          <i class="bi bi-search text-muted"></i>
+          <input
+            type="search"
+            id="search-input"
+            placeholder="Search posts..."
+            autocomplete="off"
+            autofocus
+            class="bg-bg text-base placeholder:text-muted flex-1 focus:outline-none" />
+        </div>
+      </div>
+      <p id="search-status" class="meta-text mb-4 min-h-[1.2rem]"></p>
+      <div id="search-results" class="gap-4 sm:grid-cols-2 sidebar:grid-cols-3 grid grid-cols-1"></div>
+    </div>
+  {{- end }}
+{{- end }}

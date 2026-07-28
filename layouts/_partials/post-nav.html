@@ -1,0 +1,20 @@
+{{- $prev := .prev }}
+{{- $next := .next }}
+<nav class="mt-10 gap-4 border-border pt-6 sm:grid-cols-2 grid grid-cols-1 border-t">
+  <div class="group">
+    {{- with $prev }}
+      <a class="post-nav-link group" href="{{ .RelPermalink }}">
+        <span class="post-nav-prompt"><i class="bi bi-arrow-left"></i> Previous</span>
+        <span class="line-clamp-1">{{ .Title }}</span>
+      </a>
+    {{- end }}
+  </div>
+  <div class="group">
+    {{- with $next }}
+      <a class="post-nav-link sm:text-right" href="{{ .RelPermalink }}">
+        <span class="post-nav-prompt">Next <i class="bi bi-arrow-right"></i></span>
+        <span class="line-clamp-1">{{ .Title }}</span>
+      </a>
+    {{- end }}
+  </div>
+</nav>

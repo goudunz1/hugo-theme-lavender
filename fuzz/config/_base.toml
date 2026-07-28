@@ -1,0 +1,129 @@
+# fuzz/config/_base.toml
+# -----------------------------------------------------------------------------
+# Shared base config for Lavender theme fuzz site.
+# Merge with a variant via:
+#   hugo --config fuzz/config/_base.toml,fuzz/config/<variant>.toml --buildDrafts
+# Run from repo root.
+# -----------------------------------------------------------------------------
+
+baseURL = "https://example.org/"
+languageCode = "en-US"
+title = "Lavender Fuzz Test"
+contentDir = "fuzz/content"
+publishDir = "fuzz/public"
+staticDir = ["fuzz/static", "static"]
+
+[params]
+  blogName = "Fuzz Blog"
+  author = "Fuzz Author"
+  avatar = "/favicon.svg"
+  intro = "Fuzz-test site for the Lavender Hugo theme."
+  themeDefault = "auto"
+  backToTop = true
+  tableOfContents = true
+  faviconSvg = true
+  faviconPath = "/"
+  markdownInlineMath = true
+  searchEnabled = true
+
+  [params.pagination]
+    tags = 24
+
+  [[params.social]]
+    name = "GitHub"
+    icon = "github"
+    url = "https://github.com/"
+  [[params.social]]
+    name = "Twitter"
+    icon = "twitter-x"
+    url = "https://twitter.com/"
+  [[params.social]]
+    name = "Email"
+    icon = "envelope"
+    url = "mailto:you@example.com"
+
+  [[params.aboutItems]]
+    title = "About"
+    content = "This is a fuzz-test site."
+  [[params.aboutItems]]
+    title = "Projects"
+    content = "Various fuzz projects."
+  [[params.aboutItems]]
+    title = "Contact"
+    content = "Reach out for bugs."
+
+  [[params.friends]]
+    name = "Hugo"
+    url = "https://gohugo.io/"
+    avatar = "https://gohugo.io/img/hugo.png"
+    desc = "The world's fastest framework for building websites."
+  [[params.friends]]
+    name = "Tailwind CSS"
+    url = "https://tailwindcss.com/"
+    avatar = "https://tailwindcss.com/favicons/favicon-32x32.png?v=3"
+    desc = "A utility-first CSS framework."
+  [[params.friends]]
+    name = "Bootstrap Icons"
+    url = "https://icons.getbootstrap.com/"
+    avatar = "https://icons.getbootstrap.com/favicon.ico"
+    desc = "Free, high quality, open source icon set."
+
+[menus]
+  [[menus.main]]
+    name = "Home"
+    pageRef = "/"
+    weight = 10
+    params = { icon = "house-door" }
+  [[menus.main]]
+    name = "Posts"
+    pageRef = "/posts"
+    weight = 20
+    params = { icon = "collection" }
+  [[menus.main]]
+    name = "Tags"
+    pageRef = "/tags"
+    weight = 30
+    params = { icon = "tags" }
+  [[menus.main]]
+    name = "Categories"
+    pageRef = "/categories"
+    weight = 40
+    params = { icon = "grid" }
+  [[menus.main]]
+    name = "About"
+    pageRef = "/about"
+    weight = 50
+    params = { icon = "person" }
+  [[menus.main]]
+    name = "Links"
+    pageRef = "/links"
+    weight = 60
+    params = { icon = "link-45deg" }
+  [[menus.main]]
+    name = "Search"
+    pageRef = "/search"
+    weight = 70
+    params = { icon = "search" }
+
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)'], ['$', '$']]
+  [markup.highlight]
+    noClasses = false
+    lineNos = false
+    codeFences = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+    ordered = false
+
+[outputs]
+  home = ["HTML"]

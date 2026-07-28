@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode | default `en` }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="text-fg bg-bg">
+    {{ partial "sidebar.html" . }}
+    <div class="sidebar:ml-[4.8rem] min-w-0 flex min-h-dvh flex-col">
+      <main class="max-w-275 min-w-75 py-4 sm:px-6 sm:py-8 mx-auto flex w-full flex-1 flex-col px-[0.9rem]">
+        {{ block "main" . }}{{ end }}
+      </main>
+      <footer class="max-w-275 min-w-75 px-6 pt-6 pb-10 m-4 mx-auto flex w-full flex-0 flex-col text-center">
+        {{ partial "footer.html" . }}
+      </footer>
+    </div>
+    {{- if site.Params.backToTop | default true }}
+      <button
+        type="button"
+        id="back-to-top"
+        class="icon-link right-6 bottom-6 translate-y-2.5 fixed z-30 size-[2.6rem] opacity-0 transition"
+        title="Back to top">
+        <i class="bi bi-arrow-up"></i>
+      </button>
+    {{- end }}
+    {{ partialCached "head/js.html" . }}
+  </body>
+</html>

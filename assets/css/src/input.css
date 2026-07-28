@@ -1,0 +1,452 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* sidebar/rail switch breakpoint */
+@theme {
+  --breakpoint-sidebar: 900px;
+}
+
+@theme inline {
+  --color-bg: var(--c-bg);
+  --color-fg: var(--c-fg);
+  --color-muted: var(--c-muted);
+  --color-accent: var(--c-accent);
+  --color-accent-fog: var(--c-accent-fog);
+  --color-border: var(--c-border);
+  --color-shadow: var(--c-shadow);
+  --font-sans: var(--f-sans);
+  --font-mono: var(--f-mono);
+  --shadow-card: 0px 4px 8px var(--c-shadow);
+  --shadow-pic: 0 4px 12px var(--c-shadow);
+  --text-title: var(--sz-title);
+  --text-title-big: var(--sz-title-big);
+  --text-title-heavy: var(--sz-title-heavy);
+  --size-avatar: var(--sz-avatar);
+  --ease-out-back: var(--ez-out-back);
+}
+
+:root {
+  /* light palette: #5cbf6f green */
+  --c-bg: #ffffff;
+  --c-fg: #1d1d1d;
+  --c-muted: #6a7280;
+  --c-accent: #5cbf6f;
+  --c-accent-fog: rgba(92, 191, 111, 0.25);
+  --c-border: #e2e4e8;
+  --c-shadow: rgba(0, 0, 0, 0.08);
+  --ez-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --f-sans: Fredoka, "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
+  --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  /* 500px ~ 900px */
+  font-size: clamp(0.813rem, 0.578rem + 0.75vw, 1rem);
+  --sz-title: clamp(1.625rem, 1.156rem + 1.5vw, 2rem);
+  --sz-title-big: clamp(2rem, 1.375rem + 2vw, 2.5rem);
+  --sz-title-heavy: clamp(3rem, -0.75rem + 12vw, 6rem);
+  --sz-avatar: clamp(7.5rem, 5.625rem + 6vw, 9rem);
+}
+
+.dark {
+  /* dark palette: #a15ed1 purple */
+  --c-bg: #151515;
+  --c-fg: #e8e8ed;
+  --c-muted: #9da3ae;
+  --c-accent: #a15ed1;
+  --c-accent-fog: rgba(161, 93, 209, 0.25);
+  --c-border: #2e2e2e;
+  --c-shadow: rgba(0, 0, 0, 0.24);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    @apply scroll-smooth antialiased;
+  }
+
+  body {
+    @apply m-0 leading-[1.65] transition-colors duration-300;
+  }
+
+  a {
+    @apply text-accent no-underline hover:underline;
+  }
+
+  ::selection {
+    @apply bg-accent-fog;
+  }
+
+  i {
+    @apply leading-none;
+  }
+}
+
+@layer components {
+  .icon-link {
+    @apply flex size-[2.8rem] cursor-pointer items-center justify-center rounded-full no-underline select-none;
+    @apply bg-bg border-accent text-fg border-2 text-[1.1rem];
+    @apply ease-out-back transition-transform duration-300 will-change-transform;
+    @apply hover:scale-108;
+  }
+
+  .avatar-link {
+    @apply p-0.5 block size-[3.6rem] overflow-hidden rounded-full border-2 no-underline select-none;
+    @apply ease-out-back transition-transform duration-300 will-change-transform;
+    @apply hover:scale-105;
+  }
+
+  .page-nav-link {
+    @apply inline-flex h-[2.2rem] min-w-[2.2rem] items-center justify-center;
+    @apply rounded-lg border-border text-fg bg-bg border px-[0.6rem] select-none;
+    @apply hover:border-accent hover:text-accent transition-colors duration-200;
+  }
+
+  .lift-card {
+    @apply rounded-xl border-border bg-bg flex h-fit overflow-hidden border no-underline;
+    @apply transition duration-200 will-change-transform;
+    @apply group-hover:border-accent group-hover:shadow-card group-hover:-translate-y-0.5;
+  }
+
+  .chip-link {
+    @apply border-border bg-bg text-fg inline-block rounded-full border;
+    @apply px-[0.6rem] py-[0.15rem] text-[0.8rem] no-underline select-none;
+    @apply hover:border-accent hover:text-accent transition-colors duration-200;
+  }
+
+  .post-nav-link {
+    @apply rounded-xl border-border bg-bg text-fg flex flex-col gap-[0.2rem] border;
+    @apply px-[0.9rem] py-[0.6rem] no-underline;
+    @apply group-hover:border-accent group-hover:text-accent transition-colors duration-200;
+  }
+
+  .post-nav-prompt {
+    @apply text-muted text-[0.7rem];
+    @apply group-hover:text-accent transition-colors duration-200;
+  }
+
+  .page-title {
+    @apply m-0 text-title mb-[0.3rem];
+  }
+
+  .meta-text {
+    @apply text-muted text-[0.9rem];
+  }
+
+  .caption {
+    @apply m-0 text-muted tracking-wider mb-[0.6rem] text-[0.8rem] uppercase;
+  }
+
+  .panel {
+    @apply rounded-xl border-border bg-bg border;
+  }
+
+  .sidebar-rail {
+    @apply pointer-events-auto flex min-h-dvh w-[4.8rem] flex-col items-center justify-between;
+    @apply gap-4 border-border bg-bg px-2 py-4 -translate-x-full border-r transition duration-200;
+  }
+
+  .sidebar-drawer {
+    @apply border-border bg-bg flex items-center overflow-hidden rounded-full border p-px no-underline;
+    @apply ease-out transition-transform duration-300 will-change-transform;
+    @apply group-hover:translate-x-1.5;
+  }
+
+  .sidebar-drawer-icon {
+    @apply text-muted flex size-[2.4rem] items-center justify-center text-[0.9rem];
+  }
+
+  .sidebar-drawer-label {
+    @apply pr-3 font-medium text-fg text-[0.9rem];
+  }
+
+  .sidebar-drawer-label-wrapper {
+    @apply max-w-0 ease-out overflow-hidden opacity-0 transition-[max-width,opacity] duration-300;
+    @apply group-hover:max-w-[40vw] group-hover:opacity-100;
+  }
+
+  .accordion {
+    @apply rounded-xl border-border bg-bg overflow-hidden border transition-[border-color] duration-200;
+  }
+
+  .accordion-head {
+    @apply gap-3 bg-bg flex w-full cursor-pointer items-center justify-between border-0;
+    @apply text-base text-fg font-semibold px-[1.1rem] py-[0.85rem] text-left;
+  }
+
+  .accordion-body {
+    @apply max-h-0 overflow-hidden transition-[max-height] duration-300;
+  }
+
+  .accordion-chevron {
+    @apply text-muted transition-transform duration-200;
+  }
+
+  .tag-link {
+    @apply border-border bg-bg text-fg inline-flex items-center gap-[0.35rem] rounded-full border no-underline;
+    @apply px-[0.9rem] py-[0.4rem] text-[0.9rem] transition duration-200 select-none;
+    @apply group-hover:-translate-y-0.75 group-hover:border-accent group-hover:text-accent group-hover:bg-accent-fog;
+  }
+
+  .search-box {
+    @apply gap-2 rounded-xl border-border bg-bg px-4 text-fg flex items-center border py-[0.6rem];
+    @apply focus-within:border-accent transition-colors duration-200;
+  }
+
+  .text-button {
+    @apply text-fg flex items-center gap-[0.4rem] px-[1.1rem] py-[0.6rem] text-[0.9rem] no-underline;
+    @apply hover:text-accent transition-colors duration-200;
+  }
+}
+
+@layer utilities {
+  .bg-semitransparent {
+    @apply bg-bg from-accent-fog to-accent-fog bg-linear-0;
+  }
+
+  .bg-gradient-to-right {
+    @apply from-accent bg-linear-to-r to-transparent;
+  }
+
+  .bg-gradient-to-both-sides {
+    @apply via-accent bg-linear-to-r from-transparent to-transparent;
+  }
+}
+
+/* JS-toggled state classes — kept out of @layer so they override utilities. */
+
+.sidebar-link--active .sidebar-drawer {
+  @apply bg-bg border-accent from-accent-fog to-accent-fog bg-linear-0;
+}
+
+.sidebar-link--active .sidebar-drawer-icon,
+.sidebar-link--active .sidebar-drawer-label {
+  @apply text-accent;
+}
+
+.sidebar--open {
+  @apply translate-x-0;
+}
+
+body.sidebar-open #sidebar-scrim {
+  @apply block;
+}
+
+.back-to-top--show {
+  @apply translate-y-0 opacity-100;
+}
+
+.accordion--open {
+  @apply border-accent;
+}
+
+.accordion--open .accordion-chevron {
+  @apply text-accent rotate-180;
+}
+
+/* Markdown-rendered content. */
+
+.post-content {
+  @apply text-fg overflow-hidden text-[1.02rem] leading-[1.8] wrap-break-word;
+}
+
+.post-content > :first-child {
+  @apply mt-0;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4 {
+  @apply mt-8 font-bold mb-[0.8rem] leading-[1.3];
+}
+
+.post-content h2 {
+  @apply border-border border-b pb-[0.3rem] text-[1.5rem];
+}
+
+.post-content h3 {
+  @apply text-[1.25rem];
+}
+
+.post-content h4 {
+  @apply text-[1.08rem];
+}
+
+.post-content p {
+  @apply my-4;
+}
+
+.post-content a {
+  @apply text-accent underline underline-offset-2;
+}
+
+.post-content ul,
+.post-content ol {
+  @apply my-4 pl-6;
+}
+
+.post-content ul {
+  @apply list-disc;
+}
+
+.post-content ol {
+  @apply list-decimal;
+}
+
+.post-content li {
+  @apply my-[0.35rem];
+}
+
+.post-content li::marker {
+  @apply text-accent;
+}
+
+.post-content blockquote {
+  @apply my-5 pl-4 text-muted py-[0.4rem];
+  @apply border-l-accent bg-accent-fog rounded-r-lg rounded-l-none border-l-[3px];
+}
+
+.post-content blockquote p {
+  @apply my-[0.4rem];
+}
+
+.post-content img {
+  /* 80% keeps images from crowding the text column. */
+  @apply my-5 mx-auto block h-auto max-w-[80%];
+}
+
+.post-content hrimages {
+  @apply my-8 bg-border h-px border-0;
+}
+
+.post-content table:not(.lntable) {
+  @apply my-5 block w-full border-collapse overflow-x-auto text-[0.9rem];
+}
+
+.post-content th {
+  @apply font-bold bg-border border-border py-2 px-3 min-w-24 border text-left;
+}
+
+.post-content td:not(.lntd) {
+  @apply border-border py-2 px-3 min-w-24 border text-left;
+}
+
+.post-content :not(pre) > code {
+  @apply font-mono bg-border rounded-[0.4rem] px-[0.2rem] py-[0.1rem] text-[0.9rem];
+  @apply box-decoration-clone wrap-anywhere;
+}
+
+.post-content pre {
+  /* overflow-hidden clips the inner code scrollbar to the rounded corner. */
+  @apply my-5 border-border rounded-xl overflow-hidden border;
+}
+
+.post-content pre > code {
+  @apply py-4 leading-normal block overflow-x-auto px-[1.1rem] text-[0.9rem];
+}
+
+.post-content .highlight {
+  @apply my-5 border-border rounded-xl overflow-hidden border;
+}
+
+.post-content .highlight pre {
+  @apply m-0 overflow-hidden rounded-none border-0;
+}
+
+.post-content .lntd code:has(.lnt) {
+  @apply pr-0 pl-0 min-w-8 ml-[0.4rem] flex flex-col items-end;
+  @apply [overflow-x:unset];
+}
+
+.post-content .highlight .line {
+  @apply w-fit;
+}
+
+/* Hugo line-table: render as blocks so the inner scrollbar behaves. */
+.post-content .highlight .lntable,
+.post-content .highlight .lntable tbody,
+.post-content .highlight .lntd {
+  @apply block;
+}
+
+.post-content .highlight .lntable tr {
+  @apply flex;
+}
+
+.post-content .highlight .lntd:first-child {
+  @apply flex-none;
+}
+
+.post-content .highlight .lntd:last-child {
+  /* min-w-0 lets the <td> shrink to activate the inner scrollbar. */
+  @apply min-w-0 flex-1;
+}
+
+/* Table of contents. */
+
+.post-toc nav#TableOfContents {
+  @apply wrap-anywhere;
+}
+
+.post-toc nav#TableOfContents ul {
+  @apply m-0 p-0 list-none;
+}
+
+.post-toc nav#TableOfContents li {
+  @apply my-[0.2rem];
+}
+
+.post-toc nav#TableOfContents a {
+  @apply text-muted inline-block min-w-full text-[0.8rem] leading-[1.4];
+  @apply pl-2 border-l-2 border-l-transparent;
+}
+
+.post-toc nav#TableOfContents a:hover {
+  @apply text-accent no-underline;
+}
+
+.post-toc nav#TableOfContents a.toc-link--active {
+  /* Set by JS scroll-spy: heavy left border on the current section. */
+  @apply text-accent border-l-accent;
+}
+
+.post-toc nav#TableOfContents ul ul {
+  @apply pl-[0.8rem];
+}
+
+/* Scrollbars inside <article>. */
+
+@supports (-moz-tab-size: 4) {
+  /* Firefox-only standard props; gated so Chrome keeps the webkit rules below. */
+  article {
+    @apply scrollbar-thumb-border scrollbar-auto scrollbar-track-transparent;
+  }
+}
+
+article ::-webkit-scrollbar {
+  @apply h-[0.4rem] w-[0.4rem];
+}
+
+article ::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+article ::-webkit-scrollbar-thumb {
+  @apply bg-border rounded-[0.2rem];
+}
+
+article ::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent-fog cursor-pointer;
+}
+
+article ::-webkit-scrollbar-button {
+  @apply hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

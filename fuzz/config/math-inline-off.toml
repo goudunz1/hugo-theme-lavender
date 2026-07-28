@@ -1,0 +1,3 @@
+# variant: disable dollar-sign inline math ($...$), only \(...\) works
+[params]
+  markdownInlineMath = false

@@ -1,0 +1,19 @@
+# variant: boundary / edge-case params overrides
+# Tests: light theme, disabled backToTop/TOC/favicon/math-inline,
+# empty avatar/blogName/author, pagination.tags=1 (forces pagination)
+# NOTE: arrays (social/aboutItems/friends) not overridden — Hugo config merge
+# appends rather than replaces array-of-tables entries.
+[params]
+  themeDefault = "light"
+  backToTop = false
+  tableOfContents = false
+  markdownInlineMath = false
+  faviconSvg = false
+  faviconPath = ""
+  avatar = ""
+  blogName = ""
+  author = ""
+
+  [params.pagination]
+    posts = 0
+    tags = 1

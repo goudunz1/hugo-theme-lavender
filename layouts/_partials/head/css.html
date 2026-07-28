@@ -1,0 +1,20 @@
+{{- with resources.Get "css/theme.css" }}
+  {{- if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" />
+  {{- else }}
+    {{- with . | minify | fingerprint }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
+    {{- end }}
+  {{- end }}
+{{- end }}
+{{- with resources.Get "css/syntax.css" }}
+  {{- if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" />
+  {{- else }}
+    {{- with . | minify | fingerprint }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
+    {{- end }}
+  {{- end }}
+{{- end }}
+<link rel="stylesheet" href="{{ `lib/fonts/fonts.css` | relURL }}" />
+<link rel="stylesheet" href="{{ `lib/bootstrap-icons/bootstrap-icons.min.css` | relURL }}" />

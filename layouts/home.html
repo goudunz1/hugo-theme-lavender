@@ -1,0 +1,15 @@
+{{- define "main" }}
+  {{- $blogName := site.Params.blogName | default site.Title }}
+  {{- $intro := site.Params.intro | default "" }}
+  <section class="gap-5 px-4 pt-10 pb-4 flex flex-1 flex-col items-center justify-center text-center">
+    {{ partial "avatar.html" . }}
+    <h1 class="m-0 text-title-big font-bold">{{ $blogName }}</h1>
+    {{- with $intro }}
+      <p class="text-muted max-w-160 mx-auto text-[1rem]">{{ . }}</p>
+    {{- end }}
+    {{ partial "social.html" . }}
+    {{- with .Content }}
+      <div class="post-content">{{ . }}</div>
+    {{- end }}
+  </section>
+{{- end }}

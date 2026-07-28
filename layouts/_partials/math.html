@@ -1,0 +1,32 @@
+{{- /*
+  There's an inconsistency between MathJax and standard Markdown when defining inline Math blocks with dollar symbols,
+  so we make it an optional.
+  Example:
+
+  I'll give you \\$2 if you can resolve $x+1=2$.
+
+  But in standard Markdown (and common Markdown readers like Obsidian), it's
+
+  I'll give you \$2 if you can resolve $x+1=2$.
+*/}}
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        displayMath: [
+          ["\\[", "\\]"],
+          ["$$", "$$"],
+        ],
+        inlineMath: [
+          ["\\(", "\\)"],
+// This is NOT a comment :)
+// {{- if site.Params.markdownInlineMath | default true }}
+          ["$", "$"],
+// {{- end }}
+        ],
+      },
+      loader: {
+        load: ["ui/safe"],
+      },
+    };
+  </script>

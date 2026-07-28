@@ -1,0 +1,10 @@
+{{- $avatar := site.Params.avatar | default "" }}
+{{- $blogName := site.Params.blogName | default site.Title }}
+{{- if $avatar }}
+  <a
+    class="avatar-link size-avatar p-1 hover:shadow-pic border-4 transition-[box-shadow,scale]"
+    href="{{ `` | relLangURL }}"
+    title="{{ $blogName }}">
+    <img class="rounded-full object-cover" src="{{ $avatar | relURL }}" alt="{{ $blogName }}" />
+  </a>
+{{- end }}

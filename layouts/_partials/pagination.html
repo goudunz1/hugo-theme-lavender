@@ -1,0 +1,61 @@
+{{- $paginator := .Paginator }}
+{{- if gt $paginator.TotalPages 1 }}
+  <nav id="pagination" class="mt-10 flex flex-wrap items-center justify-center gap-[0.4rem] text-[0.9rem]">
+    {{- if $paginator.HasPrev }}
+      <a class="page-nav-link no-underline" href="{{ $paginator.Prev.URL }}" rel="prev">
+        <i class="bi bi-chevron-left"></i>
+      </a>
+    {{- else }}
+      <div class="page-nav-link text-muted pointer-events-none opacity-40">
+        <i class="bi bi-chevron-left"></i>
+      </div>
+    {{- end }}
+    {{- /* Buffer visible page numbers in $nums: 1, cur-1, cur, cur+1, total. */}}
+    {{- $total := $paginator.TotalPages }}
+    {{- $cur := $paginator.PageNumber }}
+    {{- $nums := slice }}
+    {{- $nums = $nums | append 1 }}
+    {{- if gt (sub $cur 1) 1 }}
+      {{- $nums = $nums | append (sub $cur 1) }}
+    {{- end }}
+    {{- if and (ne $cur 1) (ne $cur $total) }}
+      {{- $nums = $nums | append $cur }}
+    {{- end }}
+    {{- if lt (add $cur 1) $total }}
+      {{- $nums = $nums | append (add $cur 1) }}
+    {{- end }}
+    {{- if gt $total 1 }}
+      {{- $nums = $nums | append $total }}
+    {{- end }}
+    {{- $nums = uniq $nums }}
+    {{- $prev := 0 }}
+    {{- /* hellip gap, highlight if current. */}}
+    {{- range $nums }}
+      {{- if and (gt $prev 0) (gt (sub . $prev) 1) }}
+        <span class="text-muted inline-flex h-[2.2rem] min-w-[2.2rem] items-center justify-center select-none">
+          &hellip;
+        </span>
+      {{- end }}
+      {{- if eq . $cur }}
+        <div class="page-nav-link border-accent text-accent bg-semitransparent font-semibold pointer-events-none">
+          {{ . }}
+        </div>
+      {{- else }}
+        {{- $pager := index $paginator.Pagers (sub . 1) }}
+        <a class="page-nav-link no-underline" href="{{ $pager.URL }}">
+          {{ . }}
+        </a>
+      {{- end }}
+      {{- $prev = . }}
+    {{- end }}
+    {{- if $paginator.HasNext }}
+      <a class="page-nav-link no-underline" href="{{ $paginator.Next.URL }}" rel="next">
+        <i class="bi bi-chevron-right"></i>
+      </a>
+    {{- else }}
+      <div class="page-nav-link text-muted pointer-events-none opacity-40">
+        <i class="bi bi-chevron-right"></i>
+      </div>
+    {{- end }}
+  </nav>
+{{- end }}
