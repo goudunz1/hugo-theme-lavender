@@ -16,11 +16,11 @@
     <h3 class="m-0 mb-1 text-base text-fg line-clamp-1 font-[650]">
       {{ $page.Title }}
     </h3>
-    <p class="m-0 gap-2 text-muted flex flex-wrap text-[0.8rem]">
-      {{- with $author -}}
-        <span><i class="bi bi-person"></i>&nbsp;{{ . }}</span>
-      {{- end -}}
-      <span><i class="bi bi-calendar3"></i>&nbsp;{{ $date }}</span>
+    <p class="meta-text-small m-0 gap-2 flex flex-wrap">
+      {{- with $author }}
+        <span class="flex items-center gap-[0.2rem]"><i class="bi bi-person"></i>{{ . }}</span>
+      {{- end }}
+      <span class="flex items-center gap-[0.2rem]"><i class="bi bi-calendar3"></i>{{ $date }}</span>
     </p>
   </a>
 </div>

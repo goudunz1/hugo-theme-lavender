@@ -1,7 +1,7 @@
 {{- $page := .page }}
 {{- $menuID := .menuID }}
 {{- with index site.Menus $menuID }}
-  <nav class="gap-2.5 px-2 flex w-full flex-col items-center">
+  <nav class="gap-3 px-2 flex w-full flex-col items-center">
     {{- range . }}
       {{- $active := false }}
       {{- if $page.IsMenuCurrent .Menu . }}

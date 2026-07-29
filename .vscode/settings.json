@@ -2,7 +2,7 @@
   "editor.formatOnSave": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.wordWrap": "on",
-  "editor.rulers": [120],
+  "editor.rulers": [80, 120],
   "files.associations": {
     "*.css": "tailwindcss"
   },
