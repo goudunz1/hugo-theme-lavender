@@ -1,7 +1,7 @@
 {{- define "main" }}
   <section class="gap-5 px-4 pt-10 pb-4 flex flex-col items-center text-center">
     {{ partial "avatar.html" . }}
-    <h1 class="m-0 text-title-big font-bold">{{ .Title }}</h1>
+    <h1 class="m-0 font-bold text-[2.5rem]">{{ .Title }}</h1>
     {{- with site.Params.aboutItems }}
       <div class="mt-6 max-w-184 mx-auto flex w-full flex-col gap-[0.6rem] text-left">
         {{- range $i, $item := . }}

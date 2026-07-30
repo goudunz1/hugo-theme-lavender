@@ -19,10 +19,6 @@
   --font-mono: var(--f-mono);
   --shadow-card: 0px 4px 8px var(--c-shadow);
   --shadow-pic: 0 4px 12px var(--c-shadow);
-  --text-title: var(--sz-title);
-  --text-title-big: var(--sz-title-big);
-  --text-title-heavy: var(--sz-title-heavy);
-  --size-avatar: var(--sz-avatar);
   --ease-out-back: var(--ez-out-back);
 }
 
@@ -38,12 +34,8 @@
   --ez-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
   --f-sans: Fredoka, "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
   --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  /* 500px ~ 900px */
-  font-size: clamp(0.813rem, 0.578rem + 0.75vw, 1rem);
-  --sz-title: clamp(1.625rem, 1.156rem + 1.5vw, 2rem);
-  --sz-title-big: clamp(2rem, 1.375rem + 2vw, 2.5rem);
-  --sz-title-heavy: clamp(3rem, -0.75rem + 12vw, 6rem);
-  --sz-avatar: clamp(7.5rem, 5.625rem + 6vw, 9rem);
+  /* 500px - 900px : 14px - 16px */
+  font-size: clamp(0.875rem, 0.719rem + 0.5vw, 1rem);
 }
 
 .dark {
@@ -124,7 +116,7 @@
   }
 
   .page-title {
-    @apply m-0 text-title mb-[0.3rem];
+    @apply m-0 mb-[0.3rem] text-[1.8rem];
   }
 
   .meta-text {
