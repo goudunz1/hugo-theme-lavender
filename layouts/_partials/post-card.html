@@ -2,7 +2,7 @@
 {{- $author := $page.Params.author | default site.Params.author | default "" }}
 {{- $date := $page.Date | time.Format "2006-01-02" }}
 <div class="group">
-  <a href="{{ $page.RelPermalink }}" class="lift-card min-h-44 px-4 sm:h-60 sm:min-h-0 flex-col py-[0.9rem]">
+  <a href="{{ $page.RelPermalink }}" class="card min-h-44 px-4 sm:h-60 sm:min-h-0 py-3.5 flex-col">
     <div class="m-0 flex-1">
       <p class="meta-text sm:line-clamp-5 leading-normal line-clamp-4 wrap-break-word">
         {{- with $page.Description }}
@@ -12,15 +12,15 @@
         {{- end }}
       </p>
     </div>
-    <hr class="bg-border my-[0.6rem] h-px shrink-0 border-0" />
-    <h3 class="m-0 mb-1 text-base text-fg line-clamp-1 font-[650]">
+    <hr class="bg-border my-2.5 h-px shrink-0 border-0" />
+    <h3 class="m-0 mb-1 text-base text-fg font-semibold line-clamp-1">
       {{ $page.Title }}
     </h3>
     <p class="meta-text-small m-0 gap-2 flex flex-wrap">
       {{- with $author }}
-        <span class="flex items-center gap-[0.2rem]"><i class="bi bi-person"></i>{{ . }}</span>
+        <span class="gap-0.75 flex items-center"><i class="bi bi-person"></i>{{ . }}</span>
       {{- end }}
-      <span class="flex items-center gap-[0.2rem]"><i class="bi bi-calendar3"></i>{{ $date }}</span>
+      <span class="gap-0.75 flex items-center"><i class="bi bi-calendar3"></i>{{ $date }}</span>
     </p>
   </a>
 </div>

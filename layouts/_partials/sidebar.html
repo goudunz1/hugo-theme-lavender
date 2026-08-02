@@ -8,22 +8,18 @@
     {{- $avatar := site.Params.avatar | default "" }}
     {{- $blogName := site.Params.blogName | default site.Title }}
     {{- if $avatar }}
-      <a class="avatar-link" href="{{ `` | relLangURL }}" title="{{ $blogName }}">
+      <a class="avatar-button" href="{{ `` | relLangURL }}" title="{{ $blogName }}">
         <img class="rounded-full object-cover" src="{{ $avatar | relURL }}" alt="{{ $blogName }}" />
       </a>
     {{- end }}
     {{ partial "sidebar-menu.html" (dict "menuID" "main" "page" .) }}
-    <button type="button" id="theme-toggle" class="icon-link text-muted" title="Toggle color theme">
+    <button type="button" id="theme-toggle" class="icon-button text-muted" title="Toggle color theme">
       <i class="bi bi-sun-fill hidden dark:block"></i>
       <i class="bi bi-moon-stars-fill block dark:hidden"></i>
     </button>
   </aside>
 </div>
-<button
-  type="button"
-  id="sidebar-burger"
-  class="icon-link right-3 top-3 sidebar:hidden fixed z-60 size-[2.6rem]"
-  title="Open menu">
+<button type="button" id="sidebar-burger" class="icon-button right-3 top-3 sidebar:hidden fixed z-60" title="Open menu">
   <i id="sidebar-burger-icon" class="bi bi-list block"></i>
 </button>
 <div id="sidebar-scrim" class="inset-0 bg-black/45 fixed z-40 hidden"></div>

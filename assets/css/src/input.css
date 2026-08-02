@@ -15,11 +15,20 @@
   --color-accent-fog: var(--c-accent-fog);
   --color-border: var(--c-border);
   --color-shadow: var(--c-shadow);
+  --ease-out-back: var(--ez-out-back);
   --font-sans: var(--f-sans);
   --font-mono: var(--f-mono);
   --shadow-card: 0px 4px 8px var(--c-shadow);
   --shadow-pic: 0 4px 12px var(--c-shadow);
-  --ease-out-back: var(--ez-out-back);
+  --spacing-sidebar: var(--w-sidebar);
+  --spacing-panel: var(--w-panel);
+  --spacing-btn-xl: var(--sz-btn-xl);
+  --spacing-btn-lg: var(--sz-btn-lg);
+  --spacing-btn: var(--sz-btn);
+  --spacing-btn-sm: var(--sz-btn-sm);
+  --spacing-btn-xs: var(--sz-btn-xs);
+  --spacing-avatar: var(--sz-avatar);
+  --spacing-avatar-xl: var(--sz-avatar-xl);
 }
 
 :root {
@@ -34,7 +43,19 @@
   --ez-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
   --f-sans: Fredoka, "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
   --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  /* 500px - 900px : 14px - 16px */
+  --w-sidebar: 4.75rem;
+  --w-panel: 260px;
+  --sz-btn-xl: 3.25rem;
+  --sz-btn-lg: 3rem;
+  --sz-btn: 2.75rem;
+  --sz-btn-sm: 2.5rem;
+  --sz-btn-xs: 2.25rem;
+  --sz-avatar: 3.75rem;
+  --sz-avatar-xl: 9rem;
+}
+
+/* rem: 500px - 900px : 14px - 16px */
+:root {
   font-size: clamp(0.875rem, 0.719rem + 0.5vw, 1rem);
 }
 
@@ -56,7 +77,7 @@
   }
 
   body {
-    @apply m-0 leading-[1.6] transition-colors duration-300;
+    @apply m-0 leading-relaxed transition-colors duration-300;
   }
 
   a {
@@ -72,100 +93,115 @@
   }
 }
 
+@utility bg-fog-opaque {
+  @apply bg-bg from-accent-fog to-accent-fog bg-linear-0;
+}
+
+@utility fg-accent {
+  @apply border-accent text-accent;
+}
+
 @layer components {
-  .icon-link {
-    @apply flex size-[2.8rem] cursor-pointer items-center justify-center rounded-full no-underline select-none;
-    @apply bg-bg border-accent text-fg border-2 text-[1.1rem];
+  .icon-button {
+    @apply size-btn flex cursor-pointer items-center justify-center rounded-full no-underline select-none;
+    @apply bg-bg border-accent text-fg text-lg border-2;
     @apply ease-out-back transition-transform duration-300 will-change-transform;
     @apply hover:scale-108;
   }
 
-  .avatar-link {
-    @apply p-0.5 block size-[3.6rem] overflow-hidden rounded-full border-2 no-underline select-none;
+  .avatar-button {
+    @apply p-0.5 size-avatar block overflow-hidden rounded-full border-2 no-underline select-none;
     @apply ease-out-back transition-transform duration-300 will-change-transform;
     @apply hover:scale-105;
   }
 
-  .page-nav-link {
-    @apply inline-flex h-[2.2rem] min-w-[2.2rem] items-center justify-center;
-    @apply rounded-lg border-border text-fg bg-bg border px-[0.6rem] select-none;
-    @apply hover:border-accent hover:text-accent transition-colors duration-200;
+  .number-button {
+    @apply h-btn-xs min-w-btn-xs inline-flex items-center justify-center;
+    @apply rounded-lg border-border text-fg text-sm bg-bg px-2.5 border no-underline select-none;
+    @apply hover:fg-accent transition-colors duration-200;
   }
 
-  .lift-card {
+  .card {
     @apply rounded-xl border-border bg-bg flex h-fit overflow-hidden border no-underline;
-    @apply transition duration-200 will-change-transform;
+    @apply transition-[border-color,box-shadow,translate] duration-200 will-change-transform;
     @apply group-hover:border-accent group-hover:shadow-card group-hover:-translate-y-0.5;
   }
 
-  .chip-link {
+  .chip {
     @apply border-border bg-bg text-fg inline-block rounded-full border;
-    @apply px-[0.6rem] py-[0.2rem] text-[0.8rem] no-underline select-none;
-    @apply hover:border-accent hover:text-accent transition-colors duration-200;
+    @apply px-2.5 py-1 text-xs no-underline select-none;
+    @apply hover:fg-accent transition-colors duration-200;
+  }
+
+  .tag {
+    @apply border-border bg-bg text-fg gap-1 inline-flex items-center rounded-full border no-underline;
+    @apply px-3.5 py-1.5 text-sm transition duration-200 select-none;
+    @apply group-hover:-translate-y-0.5 group-hover:fg-accent group-hover:bg-fog-opaque;
   }
 
   .post-nav-link {
-    @apply rounded-xl border-border bg-bg text-fg flex flex-col gap-[0.2rem] border;
-    @apply px-[0.9rem] py-[0.6rem] no-underline;
-    @apply group-hover:border-accent group-hover:text-accent transition-colors duration-200;
+    @apply rounded-xl border-border bg-bg text-fg gap-0.75 flex flex-col border;
+    @apply px-3.5 py-2.5 no-underline;
+    @apply group-hover:fg-accent transition-colors duration-200;
   }
 
   .post-nav-prompt {
-    @apply text-muted text-[0.7rem];
+    @apply text-muted text-xs;
     @apply group-hover:text-accent transition-colors duration-200;
   }
 
   .page-title {
-    @apply m-0 mb-[0.3rem] text-[1.8rem];
+    @apply m-0 mb-1.25 text-3xl;
   }
 
   .meta-text {
-    @apply text-muted text-[0.9rem];
+    @apply text-muted text-sm;
   }
 
   .meta-text-small {
-    @apply text-muted text-[0.8rem];
+    @apply text-muted text-xs;
   }
 
   .caption {
-    @apply m-0 text-muted tracking-wider mb-[0.6rem] text-[0.8rem] uppercase;
+    @apply m-0 text-muted tracking-wider mb-2.5 text-xs uppercase;
   }
 
   .panel {
-    @apply rounded-xl border-border bg-bg border;
+    @apply rounded-xl border-border bg-bg overflow-hidden border;
   }
 
   .sidebar-rail {
-    @apply pointer-events-auto flex min-h-dvh w-[4.8rem] flex-col items-center justify-between;
-    @apply gap-4 border-border bg-bg px-2 py-4 -translate-x-full border-r transition duration-200;
+    @apply w-sidebar pointer-events-auto flex min-h-dvh flex-col items-center justify-between;
+    @apply gap-4 border-border bg-bg py-4 -translate-x-full border-r transition duration-200;
   }
 
   .sidebar-drawer {
-    @apply border-border bg-bg flex items-center overflow-hidden rounded-full border p-px no-underline;
+    @apply border-border bg-bg text-sm border p-px;
+    @apply flex items-center overflow-hidden rounded-full no-underline;
     @apply ease-out transition-transform duration-300 will-change-transform;
     @apply group-hover:translate-x-1.5;
   }
 
   .sidebar-drawer-icon {
-    @apply text-muted flex size-[2.4rem] items-center justify-center text-[0.9rem];
+    @apply text-muted text-sm size-btn-sm flex items-center justify-center;
   }
 
   .sidebar-drawer-label {
-    @apply pr-3 font-medium text-fg text-[0.9rem];
+    @apply pr-3 font-medium text-fg;
   }
 
   .sidebar-drawer-label-wrapper {
     @apply max-w-0 ease-out overflow-hidden opacity-0 transition-[max-width,opacity] duration-300;
-    @apply group-hover:max-w-[40vw] group-hover:opacity-100;
+    @apply group-hover:max-w-75 group-hover:opacity-100;
   }
 
   .accordion {
-    @apply rounded-xl border-border bg-bg overflow-hidden border transition-[border-color] duration-200;
+    @apply rounded-xl border-border bg-bg overflow-hidden border transition-[border-color] duration-300;
   }
 
   .accordion-head {
     @apply gap-3 bg-bg flex w-full cursor-pointer items-center justify-between border-0;
-    @apply text-base text-fg font-semibold px-[1.1rem] py-[0.9rem] text-left;
+    @apply text-base text-fg font-semibold px-4.5 py-3.5 text-left;
   }
 
   .accordion-body {
@@ -173,29 +209,17 @@
   }
 
   .accordion-chevron {
-    @apply text-muted transition-transform duration-200;
-  }
-
-  .tag-link {
-    @apply border-border bg-bg text-fg inline-flex items-center gap-[0.3rem] rounded-full border no-underline;
-    @apply px-[0.9rem] py-[0.4rem] text-[0.9rem] transition duration-200 select-none;
-    @apply group-hover:-translate-y-0.75 group-hover:border-accent group-hover:text-accent group-hover:bg-accent-fog;
+    @apply text-muted transition-[rotate,color] duration-300;
   }
 
   .search-box {
-    @apply gap-2 rounded-xl border-border bg-bg px-4 text-fg flex items-center border py-[0.6rem];
+    @apply gap-2 rounded-xl border-border bg-bg px-4 text-fg py-2.5 flex items-center border;
     @apply focus-within:border-accent transition-colors duration-200;
   }
 
-  .text-button {
-    @apply text-fg flex items-center gap-[0.4rem] px-[1.1rem] py-[0.6rem] text-[0.9rem] no-underline;
+  .text-link {
+    @apply text-fg gap-1.5 px-4.5 py-2.5 text-sm flex items-center no-underline;
     @apply hover:text-accent transition-colors duration-200;
-  }
-}
-
-@layer utilities {
-  .bg-semitransparent {
-    @apply bg-bg from-accent-fog to-accent-fog bg-linear-0;
   }
 
   .bg-gradient-to-right {
@@ -210,7 +234,7 @@
 /* JS-toggled state classes — kept out of @layer so they override utilities. */
 
 .sidebar-link--active .sidebar-drawer {
-  @apply bg-bg border-accent from-accent-fog to-accent-fog bg-linear-0;
+  @apply border-accent bg-fog-opaque;
 }
 
 .sidebar-link--active .sidebar-drawer-icon,
@@ -241,7 +265,7 @@ body.sidebar-open #sidebar-scrim {
 /* Markdown-rendered content. */
 
 .post-content {
-  @apply text-fg overflow-hidden text-[1rem] leading-[1.8] wrap-break-word;
+  @apply text-fg text-base/loose overflow-hidden wrap-break-word;
 }
 
 .post-content > :first-child {
@@ -252,19 +276,19 @@ body.sidebar-open #sidebar-scrim {
 .post-content h2,
 .post-content h3,
 .post-content h4 {
-  @apply mt-8 font-bold mb-[0.8rem] leading-[1.3];
+  @apply mt-8 font-bold mb-3 leading-snug;
 }
 
 .post-content h2 {
-  @apply border-border border-b pb-[0.3rem] text-[1.5rem];
+  @apply border-border pb-1.25 text-2xl border-b;
 }
 
 .post-content h3 {
-  @apply text-[1.2rem];
+  @apply text-xl;
 }
 
 .post-content h4 {
-  @apply text-[1.1rem];
+  @apply text-lg;
 }
 
 .post-content p {
@@ -289,7 +313,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content li {
-  @apply my-[0.3rem];
+  @apply my-1.25;
 }
 
 .post-content li::marker {
@@ -297,17 +321,17 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content blockquote {
-  @apply my-5 pl-4 text-muted py-[0.4rem];
-  @apply border-l-accent bg-accent-fog rounded-r-lg rounded-l-none border-l-[3px];
+  @apply my-5 pl-4 pr-2 text-muted py-0.75 leading-relaxed;
+  @apply border-l-accent bg-accent-fog rounded-r-lg rounded-l-none border-l-2;
 }
 
 .post-content blockquote p {
-  @apply my-[0.4rem];
+  @apply my-1.5;
 }
 
 .post-content img {
   /* 80% keeps images from crowding the text column. */
-  @apply my-5 mx-auto block h-auto max-w-[80%];
+  @apply my-5 mx-auto block h-auto max-w-4/5;
 }
 
 .post-content hr {
@@ -315,7 +339,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content table:not(.lntable) {
-  @apply my-5 block w-full border-collapse overflow-x-auto text-[0.9rem];
+  @apply my-5 text-sm block w-full border-collapse overflow-x-auto;
 }
 
 .post-content th {
@@ -327,7 +351,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content :not(pre) > code {
-  @apply font-mono bg-border rounded-[0.4rem] px-[0.2rem] py-[0.1rem] text-[0.9rem];
+  @apply font-mono bg-border px-0.75 py-0.5 text-sm rounded-md;
   @apply box-decoration-clone wrap-anywhere;
 }
 
@@ -337,7 +361,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content pre > code {
-  @apply py-4 leading-normal block overflow-x-auto px-[1.1rem] text-[0.9rem];
+  @apply py-4 leading-normal px-4.5 text-sm block overflow-x-auto;
 }
 
 .post-content .highlight {
@@ -349,7 +373,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content .lntd code:has(.lnt) {
-  @apply pr-0 pl-0 min-w-8 ml-[0.4rem] flex flex-col items-end;
+  @apply pr-0 pl-0 min-w-8 ml-1.5 flex flex-col items-end;
   @apply [overflow-x:unset];
 }
 
@@ -388,11 +412,11 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents li {
-  @apply my-[0.2rem];
+  @apply my-0.75 leading-relaxed;
 }
 
 .post-toc nav#TableOfContents a {
-  @apply text-muted inline-block min-w-full text-[0.8rem] leading-[1.4];
+  @apply text-xs text-muted inline-block min-w-full;
   @apply pl-2 border-l-2 border-l-transparent no-underline;
   @apply hover:text-accent;
 }
@@ -403,7 +427,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents ul ul {
-  @apply pl-[0.8rem];
+  @apply pl-3.25;
 }
 
 /* Scrollbars inside <article>. */
@@ -416,7 +440,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 article ::-webkit-scrollbar {
-  @apply h-[0.4rem] w-[0.4rem];
+  @apply h-1.5 w-1.5;
 }
 
 article ::-webkit-scrollbar-track {
@@ -424,7 +448,7 @@ article ::-webkit-scrollbar-track {
 }
 
 article ::-webkit-scrollbar-thumb {
-  @apply bg-border rounded-[0.2rem];
+  @apply bg-border rounded-sm;
 }
 
 article ::-webkit-scrollbar-thumb:hover {

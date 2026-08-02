@@ -11,16 +11,16 @@
         {{- $avatar := .avatar }}
         {{- $desc := .desc }}
         <div class="group">
-          <a class="lift-card gap-4 p-4 items-center" href="{{ $url }}" target="_blank" rel="noopener">
+          <a class="card gap-4 p-4 items-center" href="{{ $url }}" target="_blank" rel="noopener">
             {{- with $avatar }}
               <img
-                class="border-border size-[2.8rem] shrink-0 rounded-full border-2 object-cover select-none"
+                class="border-border size-btn-lg shrink-0 rounded-full border-2 object-cover select-none"
                 src="{{ . }}"
                 alt="{{ $name }}"
                 loading="lazy" />
             {{- end }}
             <div class="min-w-0 flex-1">
-              <h3 class="m-0 mb-1 text-base text-fg truncate font-[650]">
+              <h3 class="m-0 mb-1 text-base text-fg font-semibold truncate">
                 {{- $name -}}
               </h3>
               {{- with $desc }}

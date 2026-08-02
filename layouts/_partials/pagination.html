@@ -1,12 +1,12 @@
 {{- $paginator := .Paginator }}
 {{- if gt $paginator.TotalPages 1 }}
-  <nav id="pagination" class="mt-10 flex flex-wrap items-center justify-center gap-[0.4rem] text-[0.9rem]">
+  <nav id="pagination" class="mt-10 gap-1.5 flex flex-wrap items-center justify-center">
     {{- if $paginator.HasPrev }}
-      <a class="page-nav-link no-underline" href="{{ $paginator.Prev.URL }}" rel="prev">
+      <a class="number-button" href="{{ $paginator.Prev.URL }}" rel="prev">
         <i class="bi bi-chevron-left"></i>
       </a>
     {{- else }}
-      <div class="page-nav-link text-muted pointer-events-none opacity-40">
+      <div class="number-button text-muted pointer-events-none opacity-40">
         <i class="bi bi-chevron-left"></i>
       </div>
     {{- end }}
@@ -32,28 +32,28 @@
     {{- /* hellip gap, highlight if current. */}}
     {{- range $nums }}
       {{- if and (gt $prev 0) (gt (sub . $prev) 1) }}
-        <span class="text-muted inline-flex h-[2.2rem] min-w-[2.2rem] items-center justify-center select-none">
+        <span class="text-muted text-sm h-btn-xs min-w-btn-xs inline-flex items-center justify-center select-none">
           &hellip;
         </span>
       {{- end }}
       {{- if eq . $cur }}
-        <div class="page-nav-link border-accent text-accent bg-semitransparent font-semibold pointer-events-none">
+        <div class="number-button fg-accent bg-fog-opaque font-semibold pointer-events-none">
           {{ . }}
         </div>
       {{- else }}
         {{- $pager := index $paginator.Pagers (sub . 1) }}
-        <a class="page-nav-link no-underline" href="{{ $pager.URL }}">
+        <a class="number-button" href="{{ $pager.URL }}">
           {{ . }}
         </a>
       {{- end }}
       {{- $prev = . }}
     {{- end }}
     {{- if $paginator.HasNext }}
-      <a class="page-nav-link no-underline" href="{{ $paginator.Next.URL }}" rel="next">
+      <a class="number-button" href="{{ $paginator.Next.URL }}" rel="next">
         <i class="bi bi-chevron-right"></i>
       </a>
     {{- else }}
-      <div class="page-nav-link text-muted pointer-events-none opacity-40">
+      <div class="number-button text-muted pointer-events-none opacity-40">
         <i class="bi bi-chevron-right"></i>
       </div>
     {{- end }}
