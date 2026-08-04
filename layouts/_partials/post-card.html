@@ -2,7 +2,7 @@
 {{- $author := $page.Params.author | default site.Params.author | default "" }}
 {{- $date := $page.Date | time.Format "2006-01-02" }}
 <div class="group">
-  <a href="{{ $page.RelPermalink }}" class="lift-card min-h-44 px-4 sm:h-60 sm:min-h-0 flex-col py-[0.9rem]">
+  <a href="{{ $page.RelPermalink }}" class="card min-h-44 px-4 sm:h-60 sm:min-h-0 flex-col py-[0.9rem]">
     <div class="m-0 flex-1">
       <p class="meta-text sm:line-clamp-5 leading-normal line-clamp-4 wrap-break-word">
         {{- with $page.Description }}
@@ -13,7 +13,7 @@
       </p>
     </div>
     <hr class="bg-border my-[0.6rem] h-px shrink-0 border-0" />
-    <h3 class="m-0 mb-1 text-base text-fg line-clamp-1 font-[650]">
+    <h3 class="m-0 mb-1 text-base text-fg line-clamp-1 font-semibold">
       {{ $page.Title }}
     </h3>
     <p class="meta-text-small m-0 gap-2 flex flex-wrap">

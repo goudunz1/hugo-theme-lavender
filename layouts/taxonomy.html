@@ -110,7 +110,7 @@
     <div class="mt-8 mb-8 flex flex-wrap gap-[0.6rem]">
       {{- range $paginator.Pages }}
         <div class="group">
-          <a href="{{ .RelPermalink }}" class="tag-link">
+          <a href="{{ .RelPermalink }}" class="tag">
             <i class="bi bi-tag"></i>
             {{ .LinkTitle }}
             <span class="meta-text-small group-hover:text-accent transition-colors duration-200">{{ .Pages.Len }}</span>

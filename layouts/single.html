@@ -31,7 +31,7 @@
         {{- end }}
       </div>
       {{- /* Two columns if possible, a single stack if width < 64rem. */}}
-      <div class="gap-10 lg:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1">
+      <div class="gap-10 lg:grid-cols-[minmax(0,1fr)_var(--sz-panel)] grid flex-1 grid-cols-1">
         <div class="post-content">{{ .Content }}</div>
         <aside class="gap-6 lg:order-0 order-first flex flex-col text-[0.9rem]">
           {{- with .GetTerms "categories" }}
@@ -42,7 +42,7 @@
           {{- end }}
           {{- if $hasTOC }}
             {{- with .TableOfContents }}
-              <div class="panel lg:sticky lg:top-6 lg:max-h-[calc(100vh-3rem)] static max-h-none overflow-hidden">
+              <div class="panel lg:sticky lg:top-6 lg:max-h-[calc(100dvh-var(--spacing)*12)] static max-h-none">
                 <div id="post-toc" class="post-toc px-4 h-full overflow-x-hidden overflow-y-scroll py-[0.9rem]">
                   <p class="caption">Contents</p>
                   {{ . }}
