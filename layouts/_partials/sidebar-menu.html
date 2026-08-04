@@ -20,10 +20,7 @@
         As for alignment, we use left negative margin: half of the icon size (1.2rem) + padding (1px) + border (1px).
       */}}
       <div class="w-0">
-        <div
-          class="{{ if $active }}
-            sidebar-link--active
-          {{ end }} group -ml-[(var(--spacing-button)/2+2px)] h-fit w-fit">
+        <div class="{{ if $active }}sidebar-link--active{{ end }} group -ml-[(2.5rem/2+2px)] size-fit">
           <a href="{{ .URL }}" class="sidebar-drawer">
             <div class="sidebar-drawer-icon">
               {{- if $icon }}

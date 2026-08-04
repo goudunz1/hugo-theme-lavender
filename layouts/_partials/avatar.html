@@ -2,7 +2,7 @@
 {{- $blogName := site.Params.blogName | default site.Title }}
 {{- if $avatar }}
   <a
-    class="image-button p-1 hover:shadow-pic size-hero border-4 transition-[box-shadow,scale]"
+    class="image-button p-1 hover:shadow-pic size-36 border-4 transition"
     href="{{ `` | relLangURL }}"
     title="{{ $blogName }}">
     <img class="rounded-full object-cover" src="{{ $avatar | relURL }}" alt="{{ $blogName }}" />

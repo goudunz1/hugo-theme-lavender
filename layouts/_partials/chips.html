@@ -1,8 +1,8 @@
 {{- $links := .links }}
 {{- $caption := .caption }}
-<div class="panel px-4 py-[0.9rem]">
+<div class="panel">
   <p class="caption">{{- $caption }}</p>
-  <div class="flex flex-wrap gap-[0.4rem]">
+  <div class="gap-1.5 flex flex-wrap">
     {{- range $links }}
       <a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
     {{- end }}

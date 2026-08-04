@@ -23,21 +23,6 @@
   --shadow-card: 0px 4px 8px var(--c-shadow);
   --shadow-pic: 0 4px 12px var(--c-shadow);
   --ease-out-back: var(--ez-out-back);
-  --spacing-sidebar: var(--w-sidebar);
-  --spacing-panel: var(--w-panel);
-  --spacing-content-ub: var(--w-content-ub);
-  --spacing-content-lb: var(--w-content-lb);
-  --spacing-banner: var(--w-banner);
-  --spacing-separator: var(--w-separator);
-  --spacing-column: var(--w-column);
-  --spacing-post-card-min: var(--h-post-card-min);
-  --spacing-post-card: var(--h-post-card);
-  --spacing-button-lg: var(--sz-button-lg);
-  --spacing-button: var(--sz-button);
-  --spacing-button-sm: var(--sz-button-sm);
-  --spacing-profile: var(--sz-profile);
-  --spacing-hero: var(--sz-hero);
-  --spacing-image: var(--sz-image);
 }
 
 :root {
@@ -52,21 +37,6 @@
   --ez-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
   --f-sans: Fredoka, "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
   --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --w-sidebar: 4.75rem;
-  --w-panel: 260px;
-  --w-content-ub: 1100px;
-  --w-content-lb: 300px;
-  --w-banner: 40rem;
-  --w-separator: 30rem;
-  --w-column: 6rem;
-  --h-post-card-min: 11rem;
-  --h-post-card: 15rem;
-  --sz-button-lg: 2.75rem;
-  --sz-button: 2.5rem;
-  --sz-button-sm: 2.25rem;
-  --sz-profile: 3.75rem;
-  --sz-hero: 9rem;
-  --sz-image: 3rem;
 }
 
 .dark {
@@ -117,22 +87,26 @@
 }
 
 @layer components {
+  .hero-page {
+    @apply gap-5 px-4 pt-10 pb-4 flex flex-1 flex-col items-center justify-center text-center;
+  }
+
   .icon-button {
-    @apply size-button text-muted bg-bg border-accent border-2 text-[1.1rem];
+    @apply size-10 text-muted bg-bg border-accent border-2 text-[1.1rem];
     @apply flex cursor-pointer items-center justify-center rounded-full no-underline select-none;
     @apply ease-out-back transition-transform duration-300 will-change-transform;
     @apply hover:scale-108;
   }
 
   .image-button {
-    @apply p-0.5 size-profile bg-bg block overflow-hidden rounded-full border-2 no-underline select-none;
+    @apply p-0.5 size-15 bg-bg block overflow-hidden rounded-full border-2 no-underline select-none;
     @apply ease-out-back transition-transform duration-300 will-change-transform;
     @apply hover:scale-105;
   }
 
   .page-button {
-    @apply h-button-sm min-w-button-sm inline-flex items-center justify-center;
-    @apply rounded-lg border-border text-fg bg-bg border px-[0.6rem] select-none;
+    @apply h-9 min-w-9 inline-flex items-center justify-center;
+    @apply rounded-lg border-border text-fg bg-bg px-2.5 border no-underline select-none;
     @apply hover:fg-accent transition-colors duration-200;
   }
 
@@ -144,13 +118,13 @@
 
   .chip {
     @apply border-border bg-bg text-fg inline-block rounded-full border;
-    @apply px-[0.6rem] py-[0.2rem] text-[0.8rem] no-underline select-none;
+    @apply px-2.5 py-0.75 text-[0.8rem] no-underline select-none;
     @apply hover:fg-accent transition-colors duration-200;
   }
 
   .post-nav-link {
-    @apply rounded-xl border-border bg-bg text-fg flex flex-col gap-[0.2rem] border;
-    @apply px-[0.9rem] py-[0.6rem] no-underline;
+    @apply rounded-xl border-border bg-bg text-fg gap-0.75 flex flex-col border;
+    @apply px-3.5 py-2.5 no-underline;
     @apply group-hover:fg-accent transition-colors duration-200;
   }
 
@@ -160,7 +134,7 @@
   }
 
   .page-title {
-    @apply m-0 mb-[0.3rem] text-[1.8rem];
+    @apply mb-1.25 text-[1.8rem];
   }
 
   .meta-text {
@@ -172,15 +146,15 @@
   }
 
   .caption {
-    @apply m-0 text-muted tracking-wider mb-[0.6rem] text-[0.8rem] uppercase;
+    @apply text-muted tracking-wider mb-2.5 text-[0.8rem] uppercase;
   }
 
   .panel {
-    @apply rounded-xl border-border bg-bg overflow-hidden border;
+    @apply rounded-xl border-border bg-bg px-4 py-3.5 overflow-hidden border;
   }
 
   .sidebar-rail {
-    @apply w-sidebar pointer-events-auto flex min-h-dvh flex-col items-center justify-between;
+    @apply w-19 pointer-events-auto flex min-h-dvh flex-col items-center justify-between;
     @apply gap-4 border-border bg-bg px-2 py-4 -translate-x-full border-r transition duration-200;
   }
 
@@ -191,7 +165,7 @@
   }
 
   .sidebar-drawer-icon {
-    @apply text-muted size-button flex items-center justify-center text-[0.9rem];
+    @apply text-muted size-10 flex items-center justify-center text-[0.9rem];
   }
 
   .sidebar-drawer-label {
@@ -200,7 +174,7 @@
 
   .sidebar-drawer-label-wrapper {
     @apply max-w-0 ease-out overflow-hidden opacity-0 transition-[max-width,opacity] duration-300;
-    @apply group-hover:max-w-column group-hover:opacity-100;
+    @apply group-hover:max-w-24 group-hover:opacity-100;
   }
 
   .accordion {
@@ -209,7 +183,7 @@
 
   .accordion-head {
     @apply gap-3 bg-bg flex w-full cursor-pointer items-center justify-between border-0;
-    @apply text-base text-fg font-semibold px-[1.1rem] py-[0.9rem] text-left;
+    @apply text-base text-fg font-semibold px-4.5 py-3.5 text-left;
   }
 
   .accordion-body {
@@ -221,18 +195,18 @@
   }
 
   .tag {
-    @apply border-border bg-bg text-fg inline-flex items-center gap-[0.3rem] rounded-full border no-underline;
-    @apply px-[0.9rem] py-[0.4rem] text-[0.9rem] transition duration-200 select-none;
-    @apply group-hover:-translate-y-0.75 group-hover:fg-accent group-hover:bg-opaque-fog;
+    @apply border-border bg-bg text-fg gap-1.25 inline-flex items-center rounded-full border no-underline;
+    @apply px-3.5 py-1.5 text-[0.9rem] transition duration-200 select-none;
+    @apply group-hover:-translate-y-0.5 group-hover:fg-accent group-hover:bg-opaque-fog;
   }
 
   .search-box {
-    @apply gap-2 rounded-xl border-border bg-bg px-4 text-fg flex items-center border py-[0.6rem];
+    @apply gap-2 rounded-xl border-border bg-bg px-4 text-fg py-2.5 flex items-center border;
     @apply focus-within:border-accent transition-colors duration-200;
   }
 
   .text-link {
-    @apply text-fg flex items-center gap-[0.4rem] px-[1.1rem] py-[0.6rem] text-[0.9rem] no-underline;
+    @apply text-fg gap-1.5 px-4.5 py-2.5 flex items-center text-[0.9rem] no-underline;
     @apply hover:text-accent transition-colors duration-200;
   }
 
@@ -290,11 +264,11 @@ body.sidebar-open #sidebar-scrim {
 .post-content h2,
 .post-content h3,
 .post-content h4 {
-  @apply mt-8 font-bold mb-[0.8rem] leading-[1.3];
+  @apply mt-8 font-bold mb-3.25 leading-[1.3];
 }
 
 .post-content h2 {
-  @apply border-border border-b pb-[0.3rem] text-[1.5rem];
+  @apply border-border pb-1.25 border-b text-[1.5rem];
 }
 
 .post-content h3 {
@@ -327,7 +301,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content li {
-  @apply my-[0.3rem];
+  @apply my-1.25;
 }
 
 .post-content li::marker {
@@ -335,12 +309,12 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content blockquote {
-  @apply my-5 pl-4 text-muted py-[0.4rem];
+  @apply my-5 px-4 text-muted py-1.5;
   @apply border-l-accent bg-accent-fog rounded-r-lg rounded-l-none border-l-[3px];
 }
 
 .post-content blockquote p {
-  @apply my-[0.4rem];
+  @apply my-1.5;
 }
 
 .post-content img {
@@ -359,20 +333,20 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content th {
-  @apply font-bold bg-border border-border py-2 px-3 min-w-column border text-left;
+  @apply font-bold bg-border border-border py-2 px-3 min-w-24 border text-left;
 }
 
 .post-content td:not(.lntd) {
-  @apply border-border py-2 px-3 min-w-column border text-left;
+  @apply border-border py-2 px-3 min-w-24 border text-left;
 }
 
 .post-content :not(pre) > code {
-  @apply font-mono bg-border rounded-[0.4rem] px-[0.2rem] py-[0.1rem] text-[0.9rem];
+  @apply font-mono bg-border px-0.75 py-0.5 rounded-[0.4rem] text-[0.9rem];
   @apply box-decoration-clone wrap-anywhere;
 }
 
 .post-content pre > code {
-  @apply py-4 block overflow-x-auto px-[1.1rem] text-[0.9rem] leading-[1.6];
+  @apply py-4 px-4.5 block overflow-x-auto text-[0.9rem] leading-[1.6];
 }
 
 .post-content pre:not(.chroma),
@@ -416,7 +390,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents li {
-  @apply my-[0.2rem];
+  @apply my-0.75;
 }
 
 .post-toc nav#TableOfContents a {
@@ -431,7 +405,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents ul ul {
-  @apply pl-[0.8rem];
+  @apply pl-3.25;
 }
 
 /* Scrollbars inside <article>. */
