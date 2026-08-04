@@ -4,7 +4,7 @@
       {{- $icon := .icon | default "link-45deg" }}
       {{- $isExternal := not (hasPrefix .url (or site.BaseURL "/")) }}
       <a
-        class="icon-button text-muted"
+        class="icon-button size-button-lg"
         href="{{ .url }}"
         title="{{ .name }}"
         {{- if $isExternal }}

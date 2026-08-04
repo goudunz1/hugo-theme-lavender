@@ -13,7 +13,7 @@
       </a>
     {{- end }}
     {{ partial "sidebar-menu.html" (dict "menuID" "main" "page" .) }}
-    <button type="button" id="theme-toggle" class="icon-button text-muted" title="Toggle color theme">
+    <button type="button" id="theme-toggle" class="icon-button size-button-lg" title="Toggle color theme">
       <i class="bi bi-sun-fill hidden dark:block"></i>
       <i class="bi bi-moon-stars-fill block dark:hidden"></i>
     </button>
@@ -22,7 +22,7 @@
 <button
   type="button"
   id="sidebar-burger"
-  class="icon-button right-3 top-3 sidebar:hidden size-button fixed z-60"
+  class="icon-button text-fg right-3 top-3 sidebar:hidden fixed z-60"
   title="Open menu">
   <i id="sidebar-burger-icon" class="bi bi-list block"></i>
 </button>

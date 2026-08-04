@@ -23,7 +23,7 @@
         <div
           class="{{ if $active }}
             sidebar-link--active
-          {{ end }} group -ml-[(1.2rem+2px)] h-fit w-fit">
+          {{ end }} group -ml-[(var(--spacing-button)/2+2px)] h-fit w-fit">
           <a href="{{ .URL }}" class="sidebar-drawer">
             <div class="sidebar-drawer-icon">
               {{- if $icon }}

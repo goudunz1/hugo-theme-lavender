@@ -3,7 +3,7 @@
     {{ partial "avatar.html" . }}
     <h1 class="m-0 font-bold text-[2.5rem]">{{ .Title }}</h1>
     {{- with site.Params.aboutItems }}
-      <div class="mt-6 max-w-184 mx-auto flex w-full flex-col gap-[0.6rem] text-left">
+      <div class="mt-6 max-w-banner mx-auto flex w-full flex-col gap-[0.6rem] text-left">
         {{- range $i, $item := . }}
           <div class="accordion">
             <button type="button" class="accordion-head">

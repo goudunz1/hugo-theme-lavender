@@ -30,10 +30,10 @@
           <span><i class="bi bi-clock"></i>&nbsp;{{ .ReadingTime }} min read</span>
         {{- end }}
       </div>
-      {{- /* Two columns if possible, a single stack if width < 64rem. */}}
-      <div class="gap-10 lg:grid-cols-[minmax(0,1fr)_var(--sz-panel)] grid flex-1 grid-cols-1">
+      {{- /* Two columns if possible, a single stack on mobile devices. */}}
+      <div class="gap-10 lg:grid-cols-[minmax(0,1fr)_var(--spacing-panel)] grid flex-1 grid-cols-1">
         <div class="post-content">{{ .Content }}</div>
-        <aside class="gap-6 lg:order-0 order-first flex flex-col text-[0.9rem]">
+        <aside class="gap-6 lg:order-0 order-first flex flex-col">
           {{- with .GetTerms "categories" }}
             {{ partial "chips.html" (dict "links" . "caption" "Categories") }}
           {{- end }}

@@ -22,6 +22,11 @@
   --ease-out-back: var(--ez-out-back);
   --spacing-sidebar: var(--w-sidebar);
   --spacing-panel: var(--w-panel);
+  --spacing-content-ub: var(--w-content-ub);
+  --spacing-content-lb: var(--w-content-lb);
+  --spacing-banner: var(--w-banner);
+  --spacing-separator: var(--w-separator);
+  --spacing-column: var(--w-column);
   --spacing-button-lg: var(--sz-button-lg);
   --spacing-button: var(--sz-button);
   --spacing-button-sm: var(--sz-button-sm);
@@ -44,6 +49,11 @@
   --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --w-sidebar: 4.75rem;
   --w-panel: 260px;
+  --w-content-ub: 1100px;
+  --w-content-lb: 300px;
+  --w-banner: 40rem;
+  --w-separator: 30rem;
+  --w-column: 6rem;
   --sz-button-lg: 2.75rem;
   --sz-button: 2.5rem;
   --sz-button-sm: 2.25rem;
@@ -101,8 +111,8 @@
 
 @layer components {
   .icon-button {
-    @apply size-button-lg flex cursor-pointer items-center justify-center rounded-full no-underline select-none;
-    @apply bg-bg border-accent text-fg border-2 text-[1.1rem];
+    @apply size-button text-muted bg-bg border-accent border-2 text-[1.1rem];
+    @apply flex cursor-pointer items-center justify-center rounded-full no-underline select-none;
     @apply ease-out-back transition-transform duration-300 will-change-transform;
     @apply hover:scale-108;
   }
@@ -183,7 +193,7 @@
 
   .sidebar-drawer-label-wrapper {
     @apply max-w-0 ease-out overflow-hidden opacity-0 transition-[max-width,opacity] duration-300;
-    @apply group-hover:max-w-[40vw] group-hover:opacity-100;
+    @apply group-hover:max-w-column group-hover:opacity-100;
   }
 
   .accordion {
@@ -328,7 +338,7 @@ body.sidebar-open #sidebar-scrim {
 
 .post-content img {
   /* 80% keeps images from crowding the text column. */
-  @apply my-5 mx-auto block h-auto max-w-[80%];
+  @apply my-5 mx-auto block h-auto max-w-4/5;
 }
 
 .post-content hr {
@@ -340,11 +350,11 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content th {
-  @apply font-bold bg-border border-border py-2 px-3 min-w-24 border text-left;
+  @apply font-bold bg-border border-border py-2 px-3 min-w-column border text-left;
 }
 
 .post-content td:not(.lntd) {
-  @apply border-border py-2 px-3 min-w-24 border text-left;
+  @apply border-border py-2 px-3 min-w-column border text-left;
 }
 
 .post-content :not(pre) > code {
@@ -370,7 +380,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content .lntd code:has(.lnt) {
-  @apply pr-0 pl-0 min-w-8 ml-[0.4rem] flex flex-col items-end;
+  @apply pr-0 pl-0 ml-[0.4rem] flex flex-col items-end;
   @apply [overflow-x:unset];
 }
 
