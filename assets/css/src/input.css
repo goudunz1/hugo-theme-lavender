@@ -1,4 +1,7 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+
+@source "../../../layouts/";
+@source "../";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -27,6 +30,8 @@
   --spacing-banner: var(--w-banner);
   --spacing-separator: var(--w-separator);
   --spacing-column: var(--w-column);
+  --spacing-post-card-min: var(--h-post-card-min);
+  --spacing-post-card: var(--h-post-card);
   --spacing-button-lg: var(--sz-button-lg);
   --spacing-button: var(--sz-button);
   --spacing-button-sm: var(--sz-button-sm);
@@ -54,6 +59,8 @@
   --w-banner: 40rem;
   --w-separator: 30rem;
   --w-column: 6rem;
+  --h-post-card-min: 11rem;
+  --h-post-card: 15rem;
   --sz-button-lg: 2.75rem;
   --sz-button: 2.5rem;
   --sz-button-sm: 2.25rem;
@@ -345,6 +352,8 @@ body.sidebar-open #sidebar-scrim {
   @apply my-8 bg-border h-px border-0;
 }
 
+/* Table & Syntax highlight. */
+
 .post-content table:not(.lntable) {
   @apply my-5 block w-full border-collapse overflow-x-auto text-[0.9rem];
 }
@@ -362,36 +371,20 @@ body.sidebar-open #sidebar-scrim {
   @apply box-decoration-clone wrap-anywhere;
 }
 
-.post-content pre {
-  /* overflow-hidden clips the inner code scrollbar to the rounded corner. */
-  @apply my-5 border-border rounded-xl overflow-hidden border;
-}
-
 .post-content pre > code {
-  @apply py-4 leading-normal block overflow-x-auto px-[1.1rem] text-[0.9rem];
+  @apply py-4 block overflow-x-auto px-[1.1rem] text-[0.9rem] leading-[1.6];
 }
 
+.post-content pre:not(.chroma),
 .post-content .highlight {
-  @apply my-5 border-border rounded-xl overflow-hidden border;
-}
-
-.post-content .highlight pre {
-  @apply m-0 overflow-hidden rounded-none border-0;
-}
-
-.post-content .lntd code:has(.lnt) {
-  @apply pr-0 pl-0 ml-[0.4rem] flex flex-col items-end;
-  @apply [overflow-x:unset];
-}
-
-.post-content .highlight .line {
-  @apply w-fit;
+  /* overflow-hidden clips the inner code scrollbar to the rounded corner. */
+  @apply my-5 bg-bg border-border rounded-xl overflow-hidden border tab-4;
 }
 
 /* Hugo line-table: render as blocks so the inner scrollbar behaves. */
 .post-content .highlight .lntable,
 .post-content .highlight .lntable tbody,
-.post-content .highlight .lntd {
+.post-content .highlight .lntable .lntd {
   @apply block;
 }
 
@@ -399,16 +392,20 @@ body.sidebar-open #sidebar-scrim {
   @apply flex;
 }
 
-.post-content .highlight .lntd:first-child {
-  @apply flex-none;
+.post-content .highlight .lntable .lntd:first-child {
+  @apply flex-0;
 }
 
-.post-content .highlight .lntd:last-child {
+.post-content .highlight .lntable .lntd:first-child code {
+  @apply pr-0 flex flex-col [overflow-x:unset];
+}
+
+.post-content .highlight .lntable .lntd:last-child {
   /* min-w-0 lets the <td> shrink to activate the inner scrollbar. */
   @apply min-w-0 flex-1;
 }
 
-/* Table of contents. */
+/* Table of Contents. */
 
 .post-toc nav#TableOfContents {
   @apply wrap-anywhere;
