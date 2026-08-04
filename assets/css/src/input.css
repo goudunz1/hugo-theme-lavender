@@ -91,24 +91,32 @@
   }
 }
 
+@utility bg-opaque-fog {
+  @apply bg-bg from-accent-fog to-accent-fog bg-linear-0;
+}
+
+@utility fg-accent {
+  @apply text-accent border-accent;
+}
+
 @layer components {
   .icon-button {
-    @apply flex size-button-lg cursor-pointer items-center justify-center rounded-full no-underline select-none;
+    @apply size-button-lg flex cursor-pointer items-center justify-center rounded-full no-underline select-none;
     @apply bg-bg border-accent text-fg border-2 text-[1.1rem];
     @apply ease-out-back transition-transform duration-300 will-change-transform;
     @apply hover:scale-108;
   }
 
   .image-button {
-    @apply p-0.5 block size-profile overflow-hidden rounded-full border-2 no-underline select-none;
+    @apply p-0.5 size-profile bg-bg block overflow-hidden rounded-full border-2 no-underline select-none;
     @apply ease-out-back transition-transform duration-300 will-change-transform;
     @apply hover:scale-105;
   }
 
   .page-button {
-    @apply inline-flex h-button-sm min-w-button-sm items-center justify-center;
+    @apply h-button-sm min-w-button-sm inline-flex items-center justify-center;
     @apply rounded-lg border-border text-fg bg-bg border px-[0.6rem] select-none;
-    @apply hover:border-accent hover:text-accent transition-colors duration-200;
+    @apply hover:fg-accent transition-colors duration-200;
   }
 
   .card {
@@ -120,13 +128,13 @@
   .chip {
     @apply border-border bg-bg text-fg inline-block rounded-full border;
     @apply px-[0.6rem] py-[0.2rem] text-[0.8rem] no-underline select-none;
-    @apply hover:border-accent hover:text-accent transition-colors duration-200;
+    @apply hover:fg-accent transition-colors duration-200;
   }
 
   .post-nav-link {
     @apply rounded-xl border-border bg-bg text-fg flex flex-col gap-[0.2rem] border;
     @apply px-[0.9rem] py-[0.6rem] no-underline;
-    @apply group-hover:border-accent group-hover:text-accent transition-colors duration-200;
+    @apply group-hover:fg-accent transition-colors duration-200;
   }
 
   .post-nav-prompt {
@@ -151,11 +159,11 @@
   }
 
   .panel {
-    @apply rounded-xl border-border bg-bg border overflow-hidden;
+    @apply rounded-xl border-border bg-bg overflow-hidden border;
   }
 
   .sidebar-rail {
-    @apply pointer-events-auto flex min-h-dvh w-sidebar flex-col items-center justify-between;
+    @apply w-sidebar pointer-events-auto flex min-h-dvh flex-col items-center justify-between;
     @apply gap-4 border-border bg-bg px-2 py-4 -translate-x-full border-r transition duration-200;
   }
 
@@ -166,7 +174,7 @@
   }
 
   .sidebar-drawer-icon {
-    @apply text-muted flex size-button items-center justify-center text-[0.9rem];
+    @apply text-muted size-button flex items-center justify-center text-[0.9rem];
   }
 
   .sidebar-drawer-label {
@@ -198,7 +206,7 @@
   .tag {
     @apply border-border bg-bg text-fg inline-flex items-center gap-[0.3rem] rounded-full border no-underline;
     @apply px-[0.9rem] py-[0.4rem] text-[0.9rem] transition duration-200 select-none;
-    @apply group-hover:-translate-y-0.75 group-hover:border-accent group-hover:text-accent group-hover:bg-accent-fog;
+    @apply group-hover:-translate-y-0.75 group-hover:fg-accent group-hover:bg-opaque-fog;
   }
 
   .search-box {
@@ -210,18 +218,12 @@
     @apply text-fg flex items-center gap-[0.4rem] px-[1.1rem] py-[0.6rem] text-[0.9rem] no-underline;
     @apply hover:text-accent transition-colors duration-200;
   }
-}
 
-@layer utilities {
-  .bg-semitransparent {
-    @apply bg-bg from-accent-fog to-accent-fog bg-linear-0;
-  }
-
-  .bg-gradient-to-right {
+  .gradient-to-right {
     @apply from-accent bg-linear-to-r to-transparent;
   }
 
-  .bg-gradient-to-both-sides {
+  .gradient-to-both-sides {
     @apply via-accent bg-linear-to-r from-transparent to-transparent;
   }
 }
@@ -229,7 +231,7 @@
 /* JS-toggled state classes — kept out of @layer so they override utilities. */
 
 .sidebar-link--active .sidebar-drawer {
-  @apply bg-bg border-accent from-accent-fog to-accent-fog bg-linear-0;
+  @apply border-accent bg-opaque-fog;
 }
 
 .sidebar-link--active .sidebar-drawer-icon,
