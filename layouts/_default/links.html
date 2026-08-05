@@ -1,7 +1,7 @@
 {{- define "main" }}
   <div class="mb-6">
     <h1 class="page-title">{{ .Title }}</h1>
-    <p class="meta-text m-0">A list of friends &amp; friendly sites.</p>
+    <p class="meta-text">A list of friends &amp; friendly sites.</p>
   </div>
   {{- with site.Params.friends }}
     <div class="mb-8 gap-4 sm:grid-cols-2 grid grid-cols-1">
@@ -20,11 +20,11 @@
                 loading="lazy" />
             {{- end }}
             <div class="min-w-0 flex-1">
-              <h3 class="m-0 mb-1 text-base text-fg font-semibold truncate">
+              <h3 class="mb-1 text-base text-fg font-semibold truncate">
                 {{- $name -}}
               </h3>
               {{- with $desc }}
-                <p class="meta-text m-0 truncate">{{ . }}</p>
+                <p class="meta-text truncate">{{ . }}</p>
               {{- end }}
             </div>
             <i class="bi bi-box-arrow-up-right text-muted group-hover:text-accent transition-colors"></i>

@@ -93,7 +93,7 @@
     {{- end }}
     {{ partial "pagination.html" . }}
   {{- else }}
-    {{- /* tag: inline-block cloud, sorted alphabetically. */}}
+    {{- /* tag: cloud, sorted alphabetically. */}}
     {{- $sortedTags := sort .Pages ".LinkTitle" "asc" }}
     {{- $configuredSize := index site.Params.pagination "tags" }}
     {{- $paginator := "" }}
@@ -111,9 +111,10 @@
       {{- range $paginator.Pages }}
         <div class="group">
           <a href="{{ .RelPermalink }}" class="tag">
-            <i class="bi bi-tag"></i>
-            {{ .LinkTitle }}
-            <span class="meta-text-small group-hover:text-accent transition-colors duration-200">{{ .Pages.Len }}</span>
+            <i class="bi bi-tag"></i>{{ .LinkTitle }}<span
+              class="meta-text-small group-hover:text-accent transition-colors duration-200"
+              >{{ .Pages.Len }}</span
+            >
           </a>
         </div>
       {{- end }}

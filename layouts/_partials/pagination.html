@@ -1,6 +1,6 @@
 {{- $paginator := .Paginator }}
 {{- if gt $paginator.TotalPages 1 }}
-  <nav id="pagination" class="mt-10 gap-1.5 flex flex-wrap items-center justify-center text-[0.9rem]">
+  <nav id="pagination" class="mt-10 gap-1.5 flex flex-wrap items-center justify-center">
     {{- if $paginator.HasPrev }}
       <a class="page-button" href="{{ $paginator.Prev.URL }}" rel="prev">
         <i class="bi bi-chevron-left"></i>
@@ -32,7 +32,7 @@
     {{- /* hellip gap, highlight if current. */}}
     {{- range $nums }}
       {{- if and (gt $prev 0) (gt (sub . $prev) 1) }}
-        <span class="text-muted h-9 min-w-9 inline-flex items-center justify-center select-none">&hellip;</span>
+        <span class="page-button text-muted pointer-events-none border-none">&hellip;</span>
       {{- end }}
       {{- if eq . $cur }}
         <div class="page-button border-accent text-accent bg-opaque-fog font-semibold pointer-events-none">

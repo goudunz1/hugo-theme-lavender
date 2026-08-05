@@ -3,7 +3,7 @@
   {{- $intro := site.Params.intro | default "" }}
   <section class="hero-page">
     {{ partial "avatar.html" . }}
-    <h1 class="m-0 font-bold text-[2.5rem]">{{ $blogName }}</h1>
+    <h1 class="font-bold text-40">{{ $blogName }}</h1>
     {{- with $intro }}
       <p class="text-muted max-w-160 mx-auto">{{ . }}</p>
     {{- end }}

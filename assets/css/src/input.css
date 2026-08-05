@@ -22,7 +22,20 @@
   --font-mono: var(--f-mono);
   --shadow-card: 0px 4px 8px var(--c-shadow);
   --shadow-pic: 0 4px 12px var(--c-shadow);
-  --ease-out-back: var(--ez-out-back);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --text-13: 0.8125rem;
+  --text-14: 0.875rem;
+  --text-17: 1.0625rem;
+  --text-19: 1.1875rem;
+  --text-24: 1.5rem;
+  --text-29: 1.8125rem;
+  --text-40: 2.5rem;
+  --text-96: 6rem;
+  --leading-110: 1.1;
+  --leading-130: 1.3;
+  --leading-140: 1.4;
+  --leading-160: 1.6;
+  --leading-180: 1.8;
 }
 
 :root {
@@ -34,7 +47,6 @@
   --c-accent-fog: rgba(92, 191, 111, 0.25);
   --c-border: #e2e4e8;
   --c-shadow: rgba(0, 0, 0, 0.08);
-  --ez-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
   --f-sans: Fredoka, "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
   --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
@@ -62,7 +74,7 @@
   }
 
   body {
-    @apply m-0 text-fg bg-bg leading-[1.6] transition-colors duration-300;
+    @apply text-fg bg-bg leading-160 transition-colors duration-300;
   }
 
   a {
@@ -92,20 +104,18 @@
   }
 
   .icon-button {
-    @apply size-10 text-muted bg-bg border-accent border-2 text-[1.1rem];
+    @apply size-10 text-muted bg-bg border-accent text-17/none border-2;
     @apply flex cursor-pointer items-center justify-center rounded-full no-underline select-none;
-    @apply ease-out-back transition-transform duration-300 will-change-transform;
-    @apply hover:scale-108;
+    @apply ease-out-back transition-transform duration-300 will-change-transform hover:scale-108;
   }
 
   .image-button {
     @apply p-0.5 size-15 bg-bg block overflow-hidden rounded-full border-2 no-underline select-none;
-    @apply ease-out-back transition-transform duration-300 will-change-transform;
-    @apply hover:scale-105;
+    @apply ease-out-back transition-transform duration-300 will-change-transform hover:scale-105;
   }
 
   .page-button {
-    @apply h-9 min-w-9 inline-flex items-center justify-center;
+    @apply h-9 min-w-9 text-14/none inline-flex items-center justify-center;
     @apply rounded-lg border-border text-fg bg-bg px-2.5 border no-underline select-none;
     @apply hover:fg-accent transition-colors duration-200;
   }
@@ -117,36 +127,33 @@
   }
 
   .chip {
-    @apply border-border bg-bg text-fg inline-block rounded-full border;
-    @apply px-2.5 py-0.75 text-[0.8rem] no-underline select-none;
-    @apply hover:fg-accent transition-colors duration-200;
+    @apply border-border bg-bg text-fg px-2.5 py-0.75 h-7 text-13/none inline-flex items-center rounded-full border;
+    @apply hover:fg-accent no-underline transition-colors duration-200 select-none;
   }
 
   .post-nav-link {
-    @apply rounded-xl border-border bg-bg text-fg gap-0.75 flex flex-col border;
-    @apply px-3.5 py-2.5 no-underline;
+    @apply rounded-xl border-border bg-bg text-fg gap-0.75 px-3.5 py-2.5 flex flex-col border no-underline;
     @apply group-hover:fg-accent transition-colors duration-200;
   }
 
   .post-nav-prompt {
-    @apply text-muted text-[0.7rem];
-    @apply group-hover:text-accent transition-colors duration-200;
+    @apply text-muted group-hover:text-accent text-13 transition-colors duration-200;
   }
 
   .page-title {
-    @apply mb-1.25 text-[1.8rem];
+    @apply mb-1.25 text-19;
   }
 
   .meta-text {
-    @apply text-muted text-[0.9rem];
+    @apply text-muted text-14;
   }
 
   .meta-text-small {
-    @apply text-muted text-[0.8rem];
+    @apply text-muted text-13;
   }
 
   .caption {
-    @apply text-muted tracking-wider mb-2.5 text-[0.8rem] uppercase;
+    @apply text-muted tracking-wider mb-2.5 text-13 uppercase;
   }
 
   .panel {
@@ -159,17 +166,16 @@
   }
 
   .sidebar-drawer {
-    @apply border-border bg-bg flex items-center overflow-hidden rounded-full border p-px no-underline;
-    @apply ease-out transition-transform duration-300 will-change-transform;
-    @apply group-hover:translate-x-1.5;
+    @apply text-14/none border-border bg-bg flex items-center overflow-hidden rounded-full border p-px no-underline;
+    @apply ease-out group-hover:translate-x-1.5 transition-transform duration-300 will-change-transform;
   }
 
   .sidebar-drawer-icon {
-    @apply text-muted size-10 flex items-center justify-center text-[0.9rem];
+    @apply text-muted size-10 flex items-center justify-center;
   }
 
   .sidebar-drawer-label {
-    @apply pr-3 font-medium text-fg text-[0.9rem];
+    @apply pr-3 font-medium text-fg;
   }
 
   .sidebar-drawer-label-wrapper {
@@ -195,8 +201,8 @@
   }
 
   .tag {
-    @apply border-border bg-bg text-fg gap-1.25 inline-flex items-center rounded-full border no-underline;
-    @apply px-3.5 py-1.5 text-[0.9rem] transition duration-200 select-none;
+    @apply border-border bg-bg text-fg gap-1.25 flex items-center rounded-full border no-underline;
+    @apply h-9 px-3.5 py-1.5 text-14/none transition duration-200 select-none;
     @apply group-hover:-translate-y-0.5 group-hover:fg-accent group-hover:bg-opaque-fog;
   }
 
@@ -206,7 +212,7 @@
   }
 
   .text-link {
-    @apply text-fg gap-1.5 px-4.5 py-2.5 flex items-center text-[0.9rem] no-underline;
+    @apply text-fg gap-1.5 px-4.5 py-2.5 text-14 flex items-center no-underline;
     @apply hover:text-accent transition-colors duration-200;
   }
 
@@ -253,7 +259,7 @@ body.sidebar-open #sidebar-scrim {
 /* Markdown-rendered content. */
 
 .post-content {
-  @apply text-fg overflow-hidden text-[1rem] leading-[1.8] wrap-break-word;
+  @apply text-fg leading-180 overflow-hidden wrap-break-word;
 }
 
 .post-content > :first-child {
@@ -264,19 +270,19 @@ body.sidebar-open #sidebar-scrim {
 .post-content h2,
 .post-content h3,
 .post-content h4 {
-  @apply mt-8 font-bold mb-3.25 leading-[1.3];
+  @apply mt-8 font-bold mb-3.25 leading-130;
 }
 
 .post-content h2 {
-  @apply border-border pb-1.25 border-b text-[1.5rem];
+  @apply border-border pb-1.25 text-24 border-b;
 }
 
 .post-content h3 {
-  @apply text-[1.2rem];
+  @apply text-19;
 }
 
 .post-content h4 {
-  @apply text-[1.1rem];
+  @apply text-17;
 }
 
 .post-content p {
@@ -309,8 +315,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content blockquote {
-  @apply my-5 px-4 text-muted py-1.5;
-  @apply border-l-accent bg-accent-fog rounded-r-lg rounded-l-none border-l-[3px];
+  @apply my-5 px-4 text-muted py-1.5 border-l-accent bg-accent-fog rounded-r-lg rounded-l-none border-l-[3px];
 }
 
 .post-content blockquote p {
@@ -329,7 +334,7 @@ body.sidebar-open #sidebar-scrim {
 /* Table & Syntax highlight. */
 
 .post-content table:not(.lntable) {
-  @apply my-5 block w-full border-collapse overflow-x-auto text-[0.9rem];
+  @apply my-5 text-14 block w-full border-collapse overflow-x-auto;
 }
 
 .post-content th {
@@ -341,12 +346,11 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content :not(pre) > code {
-  @apply font-mono bg-border px-0.75 py-0.5 rounded-[0.4rem] text-[0.9rem];
-  @apply box-decoration-clone wrap-anywhere;
+  @apply font-mono bg-border px-0.75 py-0.5 text-14 rounded-sm box-decoration-clone wrap-anywhere;
 }
 
 .post-content pre > code {
-  @apply py-4 px-4.5 block overflow-x-auto text-[0.9rem] leading-[1.6];
+  @apply py-4 px-4.5 text-14 block overflow-x-auto;
 }
 
 .post-content pre:not(.chroma),
@@ -394,8 +398,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents a {
-  @apply text-muted inline-block min-w-full text-[0.8rem] leading-[1.4];
-  @apply pl-2 border-l-2 border-l-transparent no-underline;
+  @apply text-muted text-13/140 pl-2 inline-block min-w-full border-l-2 border-l-transparent no-underline;
   @apply hover:text-accent;
 }
 
@@ -418,7 +421,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 article ::-webkit-scrollbar {
-  @apply h-[0.4rem] w-[0.4rem];
+  @apply h-2 w-2;
 }
 
 article ::-webkit-scrollbar-track {
@@ -426,7 +429,7 @@ article ::-webkit-scrollbar-track {
 }
 
 article ::-webkit-scrollbar-thumb {
-  @apply bg-border rounded-[0.2rem];
+  @apply bg-border rounded-sm;
 }
 
 article ::-webkit-scrollbar-thumb:hover {
