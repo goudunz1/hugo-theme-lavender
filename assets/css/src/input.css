@@ -8,6 +8,7 @@
 /* sidebar/rail switch breakpoint */
 @theme {
   --breakpoint-sidebar: 900px;
+  --breakpoint-mobile: 500px;
 }
 
 @theme inline {
@@ -130,8 +131,14 @@
   }
 
   .chip {
-    @apply align border-border bg-bg text-fg px-2.5 py-0.75 h-7 text-13/none rounded-full border;
+    @apply align border-border bg-bg text-fg px-2.5 py-0.75 h-7 text-13 rounded-full border;
     @apply hover:fg-accent no-underline transition-colors duration-200 select-none;
+  }
+
+  .tag {
+    @apply align border-border bg-bg text-fg gap-1.25 h-9 px-3.5 py-1.5 text-14 rounded-full border;
+    @apply no-underline transition duration-200 select-none;
+    @apply group-hover:-translate-y-0.5 group-hover:fg-accent group-hover:bg-opaque-fog;
   }
 
   .post-nav-link {
@@ -203,12 +210,6 @@
     @apply text-muted transition duration-200;
   }
 
-  .tag {
-    @apply align border-border bg-bg text-fg gap-1.25 rounded-full border no-underline;
-    @apply h-9 px-3.5 py-1.5 text-14/none transition duration-200 select-none;
-    @apply group-hover:-translate-y-0.5 group-hover:fg-accent group-hover:bg-opaque-fog;
-  }
-
   .search-box {
     @apply align gap-2 rounded-xl border-border bg-bg px-4 text-fg py-2.5 border;
     @apply focus-within:border-accent transition-colors duration-200;
@@ -273,11 +274,11 @@ body.sidebar-open #sidebar-scrim {
 .post-content h2,
 .post-content h3,
 .post-content h4 {
-  @apply mt-8 font-bold mb-3.25 leading-[1.3];
+  @apply mt-8 font-bold mb-3.25 text-24/[1.4];
 }
 
 .post-content h2 {
-  @apply border-border pb-1.25 text-24 border-b;
+  @apply border-border pb-1.25 border-b;
 }
 
 .post-content h3 {
@@ -390,10 +391,11 @@ body.sidebar-open #sidebar-scrim {
 /* Table of Contents. */
 
 .post-toc nav#TableOfContents {
-  @apply overflow-hidden leading-[1.4] wrap-break-word;
+  @apply overflow-hidden wrap-break-word;
 }
 
-.post-toc nav#TableOfContents ul {
+.post-toc nav#TableOfContents ul,
+.post-toc nav#TableOfContents ol {
   @apply m-0 p-0 list-none;
 }
 
@@ -402,7 +404,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents a {
-  @apply text-muted text-13 pl-2 inline-block min-w-full border-l-2 border-l-transparent no-underline;
+  @apply text-muted text-13/[1.4] pl-2 inline-block min-w-full border-l-2 border-l-transparent no-underline;
   @apply hover:text-accent transition-colors duration-200;
 }
 
@@ -411,7 +413,8 @@ body.sidebar-open #sidebar-scrim {
   @apply text-accent border-l-accent;
 }
 
-.post-toc nav#TableOfContents ul ul {
+.post-toc nav#TableOfContents ul ul,
+.post-toc nav#TableOfContents ol ol {
   @apply pl-3.25;
 }
 

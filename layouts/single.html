@@ -12,12 +12,7 @@
     {{- $author := .Params.author | default site.Params.author | default "Author" }}
     {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
     {{- $dateHuman := .Date | time.Format "2006-01-02" }}
-    {{- $hasTOC := false }}
-    {{- with .Fragments }}
-      {{- with .Headings }}
-        {{- $hasTOC = site.Params.tableOfContents | default true }}
-      {{- end }}
-    {{- end }}
+    {{- $tocEnabled := site.Params.tableOfContents | default true }}
     {{- $math := .Params.math | default false }}
     <article class="flex flex-1 flex-col">
       <h1 class="page-title">{{ .Title }}</h1>
@@ -31,23 +26,27 @@
         {{- end }}
       </div>
       {{- /* Two columns if possible, a single stack on mobile devices. */}}
-      <div class="gap-10 lg:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1">
+      <div class="gap-10 sidebar:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1 content-start">
         <div class="post-content">{{ .Content }}</div>
-        <aside class="gap-6 lg:order-0 order-first flex flex-col">
+        <aside class="gap-6 sidebar:order-0 order-first flex flex-col">
           {{- with .GetTerms "categories" }}
             {{ partial "chips.html" (dict "links" . "caption" "Categories") }}
           {{- end }}
           {{- with .GetTerms "tags" }}
             {{ partial "chips.html" (dict "links" . "caption" "Tags") }}
           {{- end }}
-          {{- if $hasTOC }}
-            {{- with .TableOfContents }}
-              <div class="panel lg:sticky lg:top-6 lg:max-h-[calc(100dvh-3rem)] static max-h-none">
-                <div id="post-toc" class="post-toc h-full overflow-x-hidden overflow-y-scroll">
-                  <p class="caption">Contents</p>
-                  {{ . }}
+          {{- if $tocEnabled }}
+            {{- with .Fragments }}
+              {{- /* <p>{{ debug.Dump .Headings }}</p> */}}
+              {{- $toc := .ToHTML 2 5 false }}
+              {{- if strings.Contains $toc "href" }}
+                <div class="panel sidebar:sticky sidebar:top-6 sidebar:max-h-[calc(100dvh-3rem)] static max-h-none">
+                  <div id="post-toc" class="post-toc h-full overflow-x-hidden overflow-y-scroll">
+                    <p class="caption">Contents</p>
+                    {{ $toc }}
+                  </div>
                 </div>
-              </div>
+              {{- end }}
             {{- end }}
           {{- end }}
         </aside>

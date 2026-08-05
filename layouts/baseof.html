@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="{{ site.Language.LanguageCode | default `en` }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
   <head>
     {{ partial "head.html" . }}
@@ -6,7 +6,7 @@
   <body>
     {{ partial "sidebar.html" . }}
     <div class="sidebar:ml-19 min-w-86 flex min-h-dvh flex-col">
-      <main class="max-w-275 px-6 py-4 sm:px-6 sm:py-8 mx-auto flex w-full flex-1 flex-col">
+      <main class="max-w-275 px-6 py-4 mobile:px-6 mobile:py-8 mx-auto flex w-full flex-1 flex-col">
         {{ block "main" . }}{{ end }}
       </main>
       <footer class="max-w-275 px-6 pt-6 pb-10 my-4 mx-auto flex w-full flex-0 flex-col text-center">

@@ -12,6 +12,9 @@
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
   <script>
     MathJax = {
+      startup: {
+        elements: [".post-content"],   // 只渲染匹配这个选择器的元素
+      },
       tex: {
         displayMath: [
           ["\\[", "\\]"],

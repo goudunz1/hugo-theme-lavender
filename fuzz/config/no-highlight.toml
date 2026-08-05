@@ -1,0 +1,3 @@
+# variant: no highlight classes, only <pre> and <code>
+[markup.highlight]
+  codeFences = false

@@ -4,7 +4,7 @@
     <p class="meta-text">A list of friends &amp; friendly sites.</p>
   </div>
   {{- with site.Params.friends }}
-    <div class="mb-8 gap-4 sm:grid-cols-2 grid grid-cols-1">
+    <div class="mb-8 gap-4 mobile:grid-cols-2 grid grid-cols-1">
       {{- range . }}
         {{- $name := .name }}
         {{- $url := .url }}
@@ -20,9 +20,7 @@
                 loading="lazy" />
             {{- end }}
             <div class="min-w-0 flex-1">
-              <h3 class="mb-1 text-base text-fg font-semibold truncate">
-                {{- $name -}}
-              </h3>
+              <h3 class="mb-1 text-base text-fg font-semibold truncate">{{ $name }}</h3>
               {{- with $desc }}
                 <p class="meta-text truncate">{{ . }}</p>
               {{- end }}

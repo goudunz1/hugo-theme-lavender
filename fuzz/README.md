@@ -56,3 +56,7 @@ Merge multiple config files: later files override earlier ones.
 | 020–029 | 10    | Math: `\(...\)`, `\[...\]`, `$...$`, `$$...$$`, escaped `\$`, matrices, aligned equations, CJK |
 | 030–039 | 10    | Code: `hl_lines`, `linenostart`, all languages, empty blocks, long lines, diff format |
 | 040–049 | 10    | Edge cases: long Latin/CJK/RTL text, emoji, unicode, deep nesting, wide tables, HTML-heavy, whitespace body |
+
+---
+
+Stripes by DiceBear, licensed under CC0 1.0 .

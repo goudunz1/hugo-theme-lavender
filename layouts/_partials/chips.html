@@ -4,7 +4,7 @@
   <p class="caption">{{- $caption }}</p>
   <div class="gap-1.5 flex flex-wrap">
     {{- range $links }}
-      <a class="chip" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      <a class="chip max-w-full" href="{{ .RelPermalink }}"><span class="truncate">{{ .LinkTitle }}</span></a>
     {{- end }}
   </div>
 </div>
