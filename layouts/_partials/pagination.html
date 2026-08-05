@@ -1,6 +1,6 @@
 {{- $paginator := .Paginator }}
 {{- if gt $paginator.TotalPages 1 }}
-  <nav id="pagination" class="mt-10 gap-1.5 flex flex-wrap items-center justify-center">
+  <nav id="pagination" class="centralize mt-10 gap-1.5 flex-wrap">
     {{- if $paginator.HasPrev }}
       <a class="page-button" href="{{ $paginator.Prev.URL }}" rel="prev">
         <i class="bi bi-chevron-left"></i>

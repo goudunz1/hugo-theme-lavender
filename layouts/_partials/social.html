@@ -1,5 +1,5 @@
 {{- with site.Params.social }}
-  <div id="social" class="mt-2 gap-3 flex flex-wrap justify-center">
+  <div id="social" class="centralize mt-2 gap-3 flex-wrap">
     {{- range . }}
       {{- $icon := .icon | default "link-45deg" }}
       {{- $isExternal := not (hasPrefix .url (or site.BaseURL "/")) }}

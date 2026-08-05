@@ -1,10 +1,11 @@
 {{- $page := . }}
 {{- $author := $page.Params.author | default site.Params.author | default "" }}
-{{- $date := $page.Date | time.Format "2006-01-02" }}
+{{- $dateHuman := $page.Date | time.Format "2006-01-02" }}
+{{- $dateMachine := $page.Date | time.Format "2006-01-02T15:04:05-07:00" }}
 <div class="group">
   <a href="{{ $page.RelPermalink }}" class="card min-h-44 px-4 sm:h-60 sm:min-h-0 py-3.5 flex-col">
     <div class="flex-1">
-      <p class="meta-text sm:line-clamp-5 leading-normal line-clamp-4 wrap-break-word">
+      <p class="meta-text sm:line-clamp-5 line-clamp-4 wrap-break-word">
         {{- with $page.Description }}
           {{ . }}
         {{- else }}
@@ -16,11 +17,13 @@
     <h3 class="mb-1 text-base text-fg font-semibold line-clamp-1">
       {{ $page.Title }}
     </h3>
-    <p class="meta-text-small gap-2 flex flex-wrap">
+    <p class="align meta-text-small gap-2 flex-wrap">
       {{- with $author }}
-        <span class="gap-0.75 flex items-center"><i class="bi bi-person"></i>{{ . }}</span>
+        <span class="align gap-0.75"><i class="bi bi-person"></i>{{ . }}</span>
       {{- end }}
-      <span class="gap-0.75 flex items-center"><i class="bi bi-calendar3"></i>{{ $date }}</span>
+      <span class="align gap-0.75"
+        ><i class="bi bi-calendar3"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
+      >
     </p>
   </a>
 </div>

@@ -69,7 +69,7 @@
   }
 
   body {
-    @apply text-fg bg-bg leading-[1.6] transition-colors duration-300;
+    @apply text-fg bg-bg leading-[1.6] transition-colors duration-1000;
   }
 
   a {
@@ -93,14 +93,22 @@
   @apply text-accent border-accent;
 }
 
+@utility align {
+  @apply flex items-center;
+}
+
+@utility centralize {
+  @apply flex items-center justify-center;
+}
+
 @layer components {
   .hero-page {
-    @apply gap-5 px-4 pt-10 pb-4 flex flex-1 flex-col items-center justify-center text-center;
+    @apply centralize gap-5 px-4 pt-10 pb-4 flex-1 flex-col text-center;
   }
 
   .icon-button {
     @apply size-10 text-muted bg-bg border-accent text-17/none border-2;
-    @apply flex cursor-pointer items-center justify-center rounded-full no-underline select-none;
+    @apply centralize cursor-pointer rounded-full no-underline select-none;
     @apply ease-out-back transition-transform duration-300 will-change-transform hover:scale-108;
   }
 
@@ -110,7 +118,7 @@
   }
 
   .page-button {
-    @apply h-9 min-w-9 text-14/none inline-flex items-center justify-center;
+    @apply centralize h-9 min-w-9 text-14/none;
     @apply rounded-lg border-border text-fg bg-bg px-2.5 border no-underline select-none;
     @apply hover:fg-accent transition-colors duration-200;
   }
@@ -122,7 +130,7 @@
   }
 
   .chip {
-    @apply border-border bg-bg text-fg px-2.5 py-0.75 h-7 text-13/none inline-flex items-center rounded-full border;
+    @apply align border-border bg-bg text-fg px-2.5 py-0.75 h-7 text-13/none rounded-full border;
     @apply hover:fg-accent no-underline transition-colors duration-200 select-none;
   }
 
@@ -156,17 +164,17 @@
   }
 
   .sidebar-rail {
-    @apply w-19 pointer-events-auto flex min-h-dvh flex-col items-center justify-between;
+    @apply align w-19 pointer-events-auto min-h-dvh flex-col justify-between;
     @apply gap-4 border-border bg-bg px-2 py-4 -translate-x-full border-r transition duration-200;
   }
 
   .sidebar-drawer {
-    @apply text-14/none border-border bg-bg flex items-center overflow-hidden rounded-full border p-px no-underline;
+    @apply align text-14/none border-border bg-bg overflow-hidden rounded-full border p-px no-underline;
     @apply ease-out group-hover:translate-x-1.5 transition-transform duration-300 will-change-transform;
   }
 
   .sidebar-drawer-icon {
-    @apply text-muted size-10 flex items-center justify-center;
+    @apply centralize text-muted size-10;
   }
 
   .sidebar-drawer-label {
@@ -183,7 +191,7 @@
   }
 
   .accordion-head {
-    @apply gap-3 bg-bg flex w-full cursor-pointer items-center justify-between border-0;
+    @apply align gap-3 bg-bg w-full cursor-pointer justify-between border-0;
     @apply text-base text-fg font-semibold px-4.5 py-3.5 text-left;
   }
 
@@ -196,18 +204,18 @@
   }
 
   .tag {
-    @apply border-border bg-bg text-fg gap-1.25 flex items-center rounded-full border no-underline;
+    @apply align border-border bg-bg text-fg gap-1.25 rounded-full border no-underline;
     @apply h-9 px-3.5 py-1.5 text-14/none transition duration-200 select-none;
     @apply group-hover:-translate-y-0.5 group-hover:fg-accent group-hover:bg-opaque-fog;
   }
 
   .search-box {
-    @apply gap-2 rounded-xl border-border bg-bg px-4 text-fg py-2.5 flex items-center border;
+    @apply align gap-2 rounded-xl border-border bg-bg px-4 text-fg py-2.5 border;
     @apply focus-within:border-accent transition-colors duration-200;
   }
 
   .text-link {
-    @apply text-fg gap-1.5 px-4.5 py-2.5 text-14 flex items-center no-underline;
+    @apply align text-fg gap-1.5 px-4.5 py-2.5 text-14 no-underline;
     @apply hover:text-accent transition-colors duration-200;
   }
 
@@ -332,16 +340,17 @@ body.sidebar-open #sidebar-scrim {
   @apply my-5 text-14 block w-full border-collapse overflow-x-auto;
 }
 
+.post-content td:not(.lntd),
 .post-content th {
-  @apply font-bold bg-border border-border py-2 px-3 min-w-24 border text-left;
-}
-
-.post-content td:not(.lntd) {
   @apply border-border py-2 px-3 min-w-24 border text-left;
 }
 
+.post-content th {
+  @apply font-bold bg-border;
+}
+
 .post-content :not(pre) > code {
-  @apply font-mono bg-border px-0.75 py-0.5 text-14 rounded-sm box-decoration-clone wrap-anywhere;
+  @apply font-mono bg-border px-0.75 py-0.5 text-14 rounded-sm box-decoration-clone;
 }
 
 .post-content pre > code {
@@ -381,7 +390,7 @@ body.sidebar-open #sidebar-scrim {
 /* Table of Contents. */
 
 .post-toc nav#TableOfContents {
-  @apply wrap-anywhere;
+  @apply overflow-hidden leading-[1.4] wrap-break-word;
 }
 
 .post-toc nav#TableOfContents ul {
@@ -393,7 +402,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents a {
-  @apply text-muted text-13/[1.4] pl-2 inline-block min-w-full border-l-2 border-l-transparent no-underline;
+  @apply text-muted text-13 pl-2 inline-block min-w-full border-l-2 border-l-transparent no-underline;
   @apply hover:text-accent transition-colors duration-200;
 }
 
