@@ -5,7 +5,7 @@
     {{- with $prev }}
       <a class="post-nav-link" href="{{ .RelPermalink }}">
         <span class="post-nav-prompt"><i class="bi bi-arrow-left"></i> Previous</span>
-        <span class="line-clamp-1">{{ .Title }}</span>
+        <span class="max-w-full truncate">{{ .Title }}</span>
       </a>
     {{- end }}
   </div>
@@ -13,7 +13,7 @@
     {{- with $next }}
       <a class="post-nav-link mobile:items-end" href="{{ .RelPermalink }}">
         <span class="post-nav-prompt">Next <i class="bi bi-arrow-right"></i></span>
-        <span class="line-clamp-1">{{ .Title }}</span>
+        <span class="max-w-full truncate">{{ .Title }}</span>
       </a>
     {{- end }}
   </div>

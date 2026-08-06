@@ -14,16 +14,16 @@
       </p>
     </div>
     <hr class="bg-border my-2.5 h-px flex-none border-0" />
-    <h3 class="mb-1 text-base text-fg font-semibold line-clamp-1">
+    <h3 class="mb-1 text-base text-fg font-semibold truncate">
       {{ $page.Title }}
     </h3>
-    <p class="align meta-text-small gap-2 flex-wrap">
+    <div class="meta-info text-13 gap-2">
       {{- with $author }}
-        <span class="align gap-0.75"><i class="bi bi-person"></i>{{ . }}</span>
+        <span class="align gap-0.75 min-w-0"><i class="bi bi-person"></i><span class="truncate">{{ . }}</span></span>
       {{- end }}
-      <span class="align gap-0.75"
+      <span class="align gap-0.75 flex-none"
         ><i class="bi bi-calendar3"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
       >
-    </p>
+    </div>
   </a>
 </div>

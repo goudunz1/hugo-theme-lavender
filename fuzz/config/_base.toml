@@ -25,6 +25,7 @@ staticDir = ["fuzz/static", "static"]
   faviconPath = "/"
   markdownInlineMath = true
   searchEnabled = true
+  readingTime = true
 
   [params.pagination]
     tags = 24

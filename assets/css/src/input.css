@@ -108,7 +108,7 @@
   }
 
   .icon-button {
-    @apply size-10 text-muted bg-bg border-accent text-17/none border-2;
+    @apply size-10 text-muted bg-bg border-accent text-17 border-2;
     @apply centralize cursor-pointer rounded-full no-underline select-none;
     @apply ease-out-back transition-transform duration-300 will-change-transform hover:scale-108;
   }
@@ -119,7 +119,7 @@
   }
 
   .page-button {
-    @apply centralize h-9 min-w-9 text-14/none;
+    @apply centralize h-9 min-w-9 text-14;
     @apply rounded-lg border-border text-fg bg-bg px-2.5 border no-underline select-none;
     @apply hover:fg-accent transition-colors duration-200;
   }
@@ -151,15 +151,15 @@
   }
 
   .page-title {
-    @apply mb-1.25 text-29;
+    @apply mb-1.25 text-29 wrap-break-word;
   }
 
   .meta-text {
     @apply text-muted text-14;
   }
 
-  .meta-text-small {
-    @apply text-muted text-13;
+  .meta-info {
+    @apply align text-muted justify-start;
   }
 
   .caption {
@@ -176,7 +176,7 @@
   }
 
   .sidebar-drawer {
-    @apply align text-14/none border-border bg-bg overflow-hidden rounded-full border p-px no-underline;
+    @apply align text-14 border-border bg-bg overflow-hidden rounded-full border p-px no-underline;
     @apply ease-out group-hover:translate-x-1.5 transition-transform duration-300 will-change-transform;
   }
 
@@ -355,7 +355,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content pre > code {
-  @apply py-4 px-4.5 text-14 block overflow-x-auto;
+  @apply p-4 text-14 block overflow-x-auto;
 }
 
 .post-content pre:not(.chroma),
@@ -376,7 +376,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content .highlight .lntable .lntd:first-child {
-  @apply flex-0;
+  @apply flex-none;
 }
 
 .post-content .highlight .lntable .lntd:first-child code {
@@ -400,11 +400,11 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents li {
-  @apply my-0.75;
+  @apply my-2.5;
 }
 
 .post-toc nav#TableOfContents a {
-  @apply text-muted text-13/[1.4] pl-2 inline-block min-w-full border-l-2 border-l-transparent no-underline;
+  @apply text-muted text-13/[1.4] pl-2 block border-l-2 border-l-transparent no-underline;
   @apply hover:text-accent transition-colors duration-200;
 }
 

@@ -59,4 +59,4 @@ Merge multiple config files: later files override earlier ones.
 
 ---
 
-Stripes by DiceBear, licensed under CC0 1.0 .
+The avatar style Lorelei is a remix of: Lorelei by Lisa Wischofsky, licensed under CC0 1.0 .

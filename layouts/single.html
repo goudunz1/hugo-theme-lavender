@@ -14,15 +14,17 @@
     {{- $dateHuman := .Date | time.Format "2006-01-02" }}
     {{- $tocEnabled := site.Params.tableOfContents | default true }}
     {{- $math := .Params.math | default false }}
-    <article class="flex flex-1 flex-col">
+    <article class="flex flex-1 flex-col overflow-hidden">
       <h1 class="page-title">{{ .Title }}</h1>
-      <div class="align meta-text mb-6 gap-3 flex flex-wrap">
-        <span class="align gap-1.25"><i class="bi bi-person"></i>{{ $author }}</span>
-        <span class="align gap-1.25"
+      <div class="meta-info text-14 mb-6 gap-3">
+        <span class="align gap-1.25 min-w-0"
+          ><i class="bi bi-person"></i><span class="truncate">{{ $author }}</span></span
+        >
+        <span class="align gap-1.25 flex-none"
           ><i class="bi bi-calendar3"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
         >
-        {{- if .Params.readingTime | default false }}
-          <span class="align gap-1.25"><i class="bi bi-clock"></i>&nbsp;{{ .ReadingTime }} min read</span>
+        {{- if site.Params.readingTime | default false }}
+          <span class="align gap-1.25 flex-none"><i class="bi bi-clock"></i>{{ .ReadingTime }} min read</span>
         {{- end }}
       </div>
       {{- /* Two columns if possible, a single stack on mobile devices. */}}
@@ -37,8 +39,8 @@
           {{- end }}
           {{- if $tocEnabled }}
             {{- with .Fragments }}
-              {{- /* <p>{{ debug.Dump .Headings }}</p> */}}
-              {{- $toc := .ToHTML 2 5 false }}
+              {{- /* debug.Dump .Headings */}}
+              {{- $toc := .ToHTML 2 4 false }}
               {{- if strings.Contains $toc "href" }}
                 <div class="panel sidebar:sticky sidebar:top-6 sidebar:max-h-[calc(100dvh-3rem)] static max-h-none">
                   <div id="post-toc" class="post-toc h-full overflow-x-hidden overflow-y-scroll">

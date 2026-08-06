@@ -19,6 +19,7 @@ title = "My New Hugo Site"
   math = false
   markdownInlineMath = true
   searchEnabled = true
+  readingTime = true
 
   [params.pagination]
     posts = 12

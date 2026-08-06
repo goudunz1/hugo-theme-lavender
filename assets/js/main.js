@@ -113,7 +113,7 @@
     }
 
     // scrollPos = vert threshold that triggers active status
-    var scrollPos = window.scrollY + window.innerHeight * 0.25;
+    var scrollPos = window.scrollY + 1; // + window.innerHeight * 0.25;
 
     // We need the last <a> above scroll position.
     var current = headingEls[0].link;
