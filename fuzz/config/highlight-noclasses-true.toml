@@ -1,6 +1,6 @@
 # variant: noClasses=true (inline styles, no CSS class names)
 # The theme's syntax.css relies on class names; this tests degradation
 [markup.highlight]
-  noClasses = true
-  lineNos = true
-  codeFences = true
+noClasses = true
+lineNos = true
+codeFences = true

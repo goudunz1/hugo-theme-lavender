@@ -4,16 +4,16 @@
 # NOTE: arrays (social/aboutItems/friends) not overridden — Hugo config merge
 # appends rather than replaces array-of-tables entries.
 [params]
-  themeDefault = "light"
-  backToTop = false
-  tableOfContents = false
-  markdownInlineMath = false
-  faviconSvg = false
-  faviconPath = ""
-  avatar = ""
-  blogName = ""
-  author = ""
+themeDefault = "light"
+backToTop = false
+tableOfContents = false
+markdownInlineMath = false
+faviconSvg = false
+faviconPath = ""
+avatar = ""
+blogName = ""
+author = ""
 
-  [params.pagination]
-    posts = 0
-    tags = 1
+[params.pagination]
+posts = 0
+tags = 1

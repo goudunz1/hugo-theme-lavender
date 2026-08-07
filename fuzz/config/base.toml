@@ -1,12 +1,18 @@
-baseURL = "https://example.org/"
+# Play with:
+# hugo server --config fuzz/config/base.toml,fuzz/config/<variant>.toml -D --disableFastRender 
+
+baseURL = "http://127.0.0.1:1313/"
 languageCode = "en-US"
-title = "My Hugo Site"
+title = "Testing the Lavender Hugo theme"
+contentDir = "fuzz/content"
+publishDir = "fuzz/public"
+staticDir = ["fuzz/static", "static"]
 
 [params]
 # --- Site parameters ---
-blogName = "My Blog"
-avatar = "/favicon.svg"
-intro = "Welcome to my blog."
+blogName = "Test Blog"
+avatar = "/avatar.svg"
+intro = "Test site for the Lavender Hugo theme."
 themeDefault = "auto"
 faviconPath = "/"
 faviconSvg = true
@@ -14,14 +20,14 @@ searchEnabled = true
 backToTop = true
 markdownInlineMath = true
 # --- (Default values for) Page parameters ---
-author = "Anonymous"
+author = "Tester"
 tableOfContents = true
 math = false
 readingTime = true
 
 [params.pagination]
-posts = 12
-tags = 24
+posts = 9
+tags = 12
 
 [[params.social]]
 name = "GitHub"

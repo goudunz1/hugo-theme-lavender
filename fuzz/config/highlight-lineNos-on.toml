@@ -1,5 +1,5 @@
 # variant: lineNos enabled (table mode is Hugo default when lineNos=true)
 [markup.highlight]
-  noClasses = false
-  lineNos = true
-  codeFences = true
+noClasses = false
+lineNos = true
+codeFences = true

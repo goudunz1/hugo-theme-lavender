@@ -9,12 +9,12 @@
     {{- end }}
   {{- else }}
     {{- /* a post */}}
-    {{- $author := .Params.author | default site.Params.author | default "Author" }}
+    {{- $author := .Params.author | default site.Params.author | default "Anonymous" }}
     {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
     {{- $dateHuman := .Date | time.Format "2006-01-02" }}
-    {{- $tocEnabled := site.Params.tableOfContents | default true }}
-    {{- $math := .Params.math | default false }}
-    <article class="flex flex-1 flex-col overflow-hidden">
+    {{- $tocEnabled := .Params.tableOfContents | default site.Params.tableOfContents | default true }}
+    {{- $math := .Params.math | default site.Params.math | default false }}
+    <article class="flex flex-1 flex-col">
       <h1 class="page-title">{{ .Title }}</h1>
       <div class="meta-info text-14 mb-6 gap-3">
         <span class="align gap-1.25 min-w-0"
@@ -23,7 +23,8 @@
         <span class="align gap-1.25 flex-none"
           ><i class="bi bi-calendar3"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
         >
-        {{- if site.Params.readingTime | default false }}
+        {{- $showReadingTime := .Params.readingTime | default site.Params.readingTime | default true }}
+        {{- if $showReadingTime }}
           <span class="align gap-1.25 flex-none"><i class="bi bi-clock"></i>{{ .ReadingTime }} min read</span>
         {{- end }}
       </div>
@@ -38,17 +39,15 @@
             {{ partial "chips.html" (dict "links" . "caption" "Tags") }}
           {{- end }}
           {{- if $tocEnabled }}
-            {{- with .Fragments }}
-              {{- /* debug.Dump .Headings */}}
-              {{- $toc := .ToHTML 2 4 false }}
-              {{- if strings.Contains $toc "href" }}
-                <div class="panel sidebar:sticky sidebar:top-6 sidebar:max-h-[calc(100dvh-3rem)] static max-h-none">
-                  <div id="post-toc" class="post-toc h-full overflow-x-hidden overflow-y-scroll">
-                    <p class="caption">Contents</p>
-                    {{ $toc }}
-                  </div>
+            {{- /* debug.Dump .Fragments */}}
+            {{- $toc := .TableOfContents }}
+            {{- if strings.Contains $toc "href" }}
+              <div class="panel sidebar:sticky sidebar:top-6 sidebar:max-h-[calc(100dvh-3rem)] static max-h-none">
+                <div id="post-toc" class="post-toc h-full overflow-x-hidden overflow-y-scroll">
+                  <p class="caption">Contents</p>
+                  {{ $toc }}
                 </div>
-              {{- end }}
+              </div>
             {{- end }}
           {{- end }}
         </aside>

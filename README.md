@@ -1,4 +1,7 @@
-# ![Hugo Theme Lavender](static/favicon.svg){width=64,height=64} Hugo Theme Lavender
+<h1 style="display: flex; align-items: center; gap: 0.6em;">
+  <img src="static/favicon.svg" alt="" width="64" height="64" />
+  Hugo Theme Lavender
+</h1>
 
 A sidebar-driven Hugo blog theme with switchable light / dark palettes,
 built with **Tailwind CSS v4** and **Bootstrap Icons**.

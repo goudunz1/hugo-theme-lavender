@@ -1,8 +1,8 @@
 # variant: lineNos with anchor links on each line number
 [markup.highlight]
-  noClasses = false
-  lineNos = true
-  lineNumbersInTable = true
-  anchorLineNos = true
-  lineAnchors = "fuzz-anchor"
-  codeFences = true
+noClasses = false
+lineNos = true
+lineNumbersInTable = true
+anchorLineNos = true
+lineAnchors = "fuzz-anchor"
+codeFences = true

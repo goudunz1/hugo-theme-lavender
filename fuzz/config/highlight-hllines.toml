@@ -1,5 +1,0 @@
-# variant: lineNos on (for hl_lines testing in fenced blocks)
-[markup.highlight]
-  noClasses = false
-  lineNos = true
-  codeFences = true

@@ -1,4 +1,3 @@
 # variant: extreme pagination — only 1 tag per page, forces pagination on every term
-[params]
-  [params.pagination]
-    tags = 1
+[params.pagination]
+tags = 1
