@@ -1,9 +1,10 @@
-# Hugo Theme Lavender
+# ![Hugo Theme Lavender](static/favicon.svg){width=64,height=64} Hugo Theme Lavender
 
-A sidebar-driven Hugo blog theme with switchable light / dark palettes, built
-with **Tailwind CSS v4** and **Bootstrap Icons**. Drop it into your site as
-`themes/lavender`, build its assets once with Node/npm, and you're ready to
-go — Hugo **extended** is not required (minimum Hugo **0.146.0**).
+A sidebar-driven Hugo blog theme with switchable light / dark palettes,
+built with **Tailwind CSS v4** and **Bootstrap Icons**.
+Drop it into your site, build its assets once with npm, and you're ready to go.
+
+It requires minimum Hugo version **0.146.0**.
 
 ---
 
@@ -65,9 +66,6 @@ build them once with Node/npm.
    cd -
    ```
 
-   Without this step the site renders unstyled — a missing `theme.css` is
-   silently skipped by the head partial.
-
 3. Enable and configure it in your site's `hugo.toml`:
 
    ```toml
@@ -124,7 +122,7 @@ All options live under `[params]` unless noted otherwise.
 | `faviconSvg`          | `false`      | Also link `favicon.svg` (modern SVG favicon)                     |
 | `faviconPath`         | `""`         | Directory holding your favicon files, relative to `static/`      |
 | `markdownInlineMath`  | `true`       | Enable `$...$` inline math delimiters (see [Math](#math-latex))  |
-| `searchEnabled`       | `false`      | Enable the search page UI (indexing JS is still a work in progress) |
+| `searchEnabled`       | `false`      | Enable the search page UI (**work in progress**) |
 | `pagination.posts`    | `12`         | Posts per list page; falls back to Hugo's `[pagination]` config  |
 | `pagination.tags`     | `24`         | Entries per taxonomy term page                                   |
 | `[[params.social]]`   | —            | `{ name, icon, url }` — social icons on home/about               |
@@ -146,18 +144,35 @@ Menu entries come from `[[menus.main]]` and accept a Bootstrap Icons name via
 
 ### Special pages
 
-`about`, `links` and `search` are plain content pages that select their layout
-via front matter:
+To make Hugo generate your special page (e.g. `/about`), just put a plain
+content page under `content/` and select its layout via front matter.
+The theme will do the rest of the work.
 
 ```toml
 +++
 title = "About"
-layout = "about"    # or "links" / "search"
+layout = "about"
 +++
 ```
 
-Any Markdown body is rendered below the page-specific block (accordion, friend
-cards, search box).
+Currently supported layouts: `about`, `links`, `search`(**work in progess**).
+
+Note that any Markdown body of the page will be rendered below the page-specific
+block (accordion, friend cards, search box).
+
+A typical `content/` structure:
+
+```
+content/
+├── _index.md
+├── about.md
+├── links.md
+├── search.md
+└── posts/
+    ├── blog-A.md
+    ├── blog-B.md
+    └── blog-C.md
+```
 
 ### Post front matter
 

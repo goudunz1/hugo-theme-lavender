@@ -16,7 +16,7 @@ staticDir = ["fuzz/static", "static"]
 [params]
   blogName = "Fuzz Blog"
   author = "Fuzz Author"
-  avatar = "/favicon.svg"
+  avatar = "/avatar.svg"
   intro = "Fuzz-test site for the Lavender Hugo theme."
   themeDefault = "auto"
   backToTop = true
