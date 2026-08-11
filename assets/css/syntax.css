@@ -1,7 +1,10 @@
 /*
-  Code syntax highlight
-  The supplementary --chroma-* tokens cover syntax categories that have no direct palette counterpart.
+  Hugo v0.151.1 uses chroma v2.20.0
+  Based on
+  - hugo gen chromastyles --style=onedark
+  - https://github.com/alecthomas/chroma/blob/v2.20.0/types.go
 */
+
 :root {
   --chroma-type: #b45309;
   --chroma-name: #be123c;
@@ -32,18 +35,31 @@
   color: var(--c-fg);
   background-color: var(--c-bg);
 }
-/* LineLink */
-.chroma .lnlinks {
-  outline: none;
-  text-decoration: none;
-  color: inherit;
+/* Line */
+.chroma .line {
+  display: flex;
 }
-/* LineTableTD */
-.chroma .lntd {
-  vertical-align: top;
-  padding: 0;
-  margin: 0;
-  border: 0;
+/* LineNumbers */
+.chroma .ln {
+  white-space: pre;
+  -webkit-user-select: none;
+  user-select: none;
+  margin-right: 1rem;
+  padding: 0 0.4rem 0 0.4rem;
+  color: var(--c-muted);
+}
+/* LineNumbersTable */
+.chroma .lnt {
+  white-space: pre;
+  -webkit-user-select: none;
+  user-select: none;
+  margin-right: 1rem;
+  padding: 0 0.4rem 0 0.4rem;
+  color: var(--c-muted);
+}
+/* LineHighlight */
+.chroma .hl {
+  background-color: var(--c-accent-fog);
 }
 /* LineTable */
 .chroma .lntable {
@@ -52,32 +68,33 @@
   margin: 0;
   border: 0;
 }
-/* LineHighlight */
-.chroma .hl {
-  background-color: var(--c-accent-fog);
+/* LineTableTD */
+.chroma .lntd {
+  vertical-align: top;
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
-/* LineNumbersTable */
-.chroma .lnt {
-  white-space: pre;
-  -webkit-user-select: none;
-  user-select: none;
-  margin-right: 0.4em;
-  padding: 0 0.4em 0 0.4em;
+/* LineLink */
+.chroma .lnlinks {
+  outline: none;
+  text-decoration: none;
+  color: inherit;
+}
+/* TextWhitespace */
+.chroma .w {
   color: var(--c-muted);
 }
-/* LineNumbers */
-.chroma .ln {
-  white-space: pre;
-  -webkit-user-select: none;
-  user-select: none;
-  margin-right: 0.4em;
-  padding: 0 0.4em 0 0.4em;
-  color: var(--c-muted);
+/* Error */
+.chroma .err {
+  color: var(--chroma-deleted);
+  font-weight: bold;
 }
-/* Line */
-.chroma .line {
-  display: flex;
+/* Other */
+.chroma .x {
+  color: var(--c-fg);
 }
+
 /* Keyword */
 .chroma .k {
   color: var(--c-accent);
@@ -106,6 +123,7 @@
 .chroma .kt {
   color: var(--chroma-type);
 }
+
 /* Name */
 .chroma .n {
   color: var(--chroma-name);
@@ -113,6 +131,14 @@
 /* NameAttribute */
 .chroma .na {
   color: var(--chroma-name);
+}
+/* NameBuiltin */
+.chroma .nb {
+  color: var(--chroma-type);
+}
+/* NameBuiltinPseudo */
+.chroma .bp {
+  color: var(--chroma-type);
 }
 /* NameClass */
 .chroma .nc {
@@ -134,6 +160,20 @@
 .chroma .ne {
   color: var(--chroma-name);
 }
+/* NameFunction */
+.chroma .nf {
+  color: var(--chroma-func);
+  font-weight: bold;
+}
+/* NameFunctionMagic */
+.chroma .fm {
+  color: var(--chroma-operator);
+  font-weight: bold;
+}
+/* NameProperty */
+.chroma .py {
+  color: var(--chroma-name);
+}
 /* NameLabel */
 .chroma .nl {
   color: var(--chroma-name);
@@ -146,21 +186,9 @@
 .chroma .nx {
   color: var(--chroma-name);
 }
-/* NameProperty */
-.chroma .py {
-  color: var(--chroma-name);
-}
 /* NameTag */
 .chroma .nt {
   color: var(--chroma-name);
-}
-/* NameBuiltin */
-.chroma .nb {
-  color: var(--chroma-type);
-}
-/* NameBuiltinPseudo */
-.chroma .bp {
-  color: var(--chroma-type);
 }
 /* NameVariable */
 .chroma .nv {
@@ -182,16 +210,7 @@
 .chroma .vm {
   color: var(--chroma-name);
 }
-/* NameFunction */
-.chroma .nf {
-  color: var(--chroma-func);
-  font-weight: bold;
-}
-/* NameFunctionMagic */
-.chroma .fm {
-  color: var(--chroma-operator);
-  font-weight: bold;
-}
+
 /* LiteralString */
 .chroma .s {
   color: var(--chroma-string);
@@ -248,6 +267,7 @@
 .chroma .ss {
   color: var(--chroma-string);
 }
+
 /* LiteralNumber */
 .chroma .m {
   color: var(--chroma-number);
@@ -276,6 +296,7 @@
 .chroma .mo {
   color: var(--chroma-number);
 }
+
 /* Operator */
 .chroma .o {
   color: var(--chroma-operator);
@@ -284,6 +305,7 @@
 .chroma .ow {
   color: var(--chroma-operator);
 }
+
 /* Comment */
 .chroma .c {
   color: var(--c-muted);
@@ -296,14 +318,6 @@
 .chroma .cm {
   color: var(--c-muted);
 }
-/* CommentSingle */
-.chroma .c1 {
-  color: var(--c-muted);
-}
-/* CommentSpecial */
-.chroma .cs {
-  color: var(--c-muted);
-}
 /* CommentPreproc */
 .chroma .cp {
   color: var(--c-muted);
@@ -312,12 +326,57 @@
 .chroma .cpf {
   color: var(--c-muted);
 }
+/* CommentSingle */
+.chroma .c1 {
+  color: var(--c-muted);
+}
+/* CommentSpecial */
+.chroma .cs {
+  color: var(--c-muted);
+}
+
 /* GenericDeleted */
 .chroma .gd {
   color: var(--chroma-deleted);
+}
+/* GenericEmph */
+.chroma .ge {
+  font-style: italic;
+}
+/* GenericError */
+.chroma .gr {
+  color: var(--chroma-deleted);
+}
+/* GenericHeading */
+.chroma .gh {
+  color: var(--chroma-type);
 }
 /* GenericInserted */
 .chroma .gi {
   color: var(--chroma-string);
   font-weight: bold;
+}
+/* GenericOutput */
+.chroma .go {
+  color: var(--c-muted);
+}
+/* GenericPrompt */
+.chroma .gp {
+  color: var(--chroma-string);
+}
+/* GenericStrong */
+.chroma .gs {
+  font-weight: bold;
+}
+/* GenericSubheading */
+.chroma .gu {
+  color: var(--chroma-type);
+}
+/* GenericTraceback */
+.chroma .gt {
+  color: var(--chroma-deleted);
+}
+/* GenericUnderline */
+.chroma .gl {
+  text-decoration: underline;
 }
