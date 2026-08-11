@@ -19,6 +19,7 @@ faviconSvg = true
 searchEnabled = true
 backToTop = true
 markdownInlineMath = true
+useCdn = false
 # --- (Default values for) Page parameters ---
 author = "Tester"
 tableOfContents = true
@@ -31,17 +32,17 @@ tags = 12
 
 [[params.social]]
 name = "GitHub"
-icon = "github"
+icon = "brand-github"
 url = "https://github.com/"
 
 [[params.social]]
 name = "Twitter"
-icon = "twitter-x"
+icon = "brand-x"
 url = "https://twitter.com/"
 
 [[params.social]]
 name = "Email"
-icon = "envelope"
+icon = "mail"
 url = "mailto:you@example.com"
 
 [[params.aboutItems]]
@@ -78,13 +79,13 @@ desc = "Free, high quality, open source icon set."
 name = "Home"
 pageRef = "/"
 weight = 10
-params = { icon = "house-door" }
+params = { icon = "home" }
 
 [[menus.main]]
 name = "Posts"
 pageRef = "/posts"
 weight = 20
-params = { icon = "collection" }
+params = { icon = "files" }
 
 [[menus.main]]
 name = "Tags"
@@ -96,19 +97,19 @@ params = { icon = "tags" }
 name = "Categories"
 pageRef = "/categories"
 weight = 40
-params = { icon = "grid" }
+params = { icon = "layout-grid" }
 
 [[menus.main]]
 name = "About"
 pageRef = "/about"
 weight = 50
-params = { icon = "person" }
+params = { icon = "user" }
 
 [[menus.main]]
 name = "Links"
 pageRef = "/links"
 weight = 60
-params = { icon = "link-45deg" }
+params = { icon = "link" }
 
 [[menus.main]]
 name = "Search"
@@ -141,4 +142,4 @@ home = ["HTML"]
 
 [module.hugoVersion]
 extended = false
-min = "0.146.0"
+min = "0.151.1"

@@ -19,10 +19,10 @@
     </h3>
     <div class="meta-info text-13 gap-2">
       {{- with $author }}
-        <span class="align gap-0.75 min-w-0"><i class="bi bi-person"></i><span class="truncate">{{ . }}</span></span>
+        <span class="align gap-0.75 min-w-0"><i class="ti ti-user"></i><span class="truncate">{{ . }}</span></span>
       {{- end }}
       <span class="align gap-0.75 flex-none"
-        ><i class="bi bi-calendar3"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
+        ><i class="ti ti-calendar"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
       >
     </div>
   </a>

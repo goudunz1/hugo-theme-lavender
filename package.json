@@ -1,22 +1,21 @@
 {
   "name": "hugo-theme-lavender",
   "version": "1.0.0",
-  "description": "A sidebar-driven Hugo blog theme with light/dark palettes, built with Tailwind CSS v4 and Bootstrap Icons.",
+  "description": "A sidebar-driven Hugo blog theme with light/dark palettes, built with Tailwind CSS v4 and Tabler Icons.",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "build": "npm run build:tailwind && npm run build:icons && npm run build:fonts",
+    "build": "npm run build:tailwind",
     "build:tailwind": "tailwindcss -i ./assets/css/src/input.css -o ./assets/css/theme.css",
-    "build:icons": "node scripts/copy-icons.js",
-    "build:fonts": "node scripts/copy-fonts.js",
+    "build:selfhost": "node scripts/copy-deps.js",
     "watch": "tailwindcss -i ./assets/css/src/input.css -o ./assets/css/theme.css --watch",
-    "clean": "rimraf assets/css/theme.css static/lib"
+    "clean": "rimraf assets/css/theme.css assets/lib static/lib"
   },
   "dependencies": {
     "@fontsource-variable/fredoka": "^5.2.10",
     "@fontsource/maple-mono": "^5.2.6",
+    "@tabler/icons-webfont": "^3.46.0",
     "@tailwindcss/cli": "^4.3.1",
-    "bootstrap-icons": "^1.13.1",
     "minisearch": "^7.2.0",
     "rimraf": "^6.0.1",
     "tailwindcss": "^4.3.1"

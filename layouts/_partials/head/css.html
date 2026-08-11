@@ -1,20 +1,15 @@
-{{- with resources.Get "css/theme.css" }}
-  {{- if hugo.IsDevelopment }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}" />
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
-    {{- end }}
-  {{- end }}
+{{ partial "head/res.html" "css/theme.css" }}
+{{ partial "head/res.html" "css/syntax.css" }}
+{{- /*
+  Third-party CSS (Fredoka + Maple Mono fonts, Tabler Icons): served from jsDelivr
+  when `useCdn = true` (default), or self-hosted from assets/lib/ when `false`.
+*/}}
+{{- if site.Params.useCdn | default true }}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fredoka@5.2.10/wght.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/maple-mono@5.2.6/latin.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.46.0/dist/tabler-icons.min.css" />
+{{- else }}
+  {{ partial "head/res.html" "lib/css/fredoka-variable.css" }}
+  {{ partial "head/res.html" "lib/css/maple-mono.css" }}
+  {{ partial "head/res.html" "lib/css/tabler-icons.css" }}
 {{- end }}
-{{- with resources.Get "css/syntax.css" }}
-  {{- if hugo.IsDevelopment }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}" />
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
-    {{- end }}
-  {{- end }}
-{{- end }}
-<link rel="stylesheet" href="{{ `lib/fonts/fonts.css` | relURL }}" />
-<link rel="stylesheet" href="{{ `lib/bootstrap-icons/bootstrap-icons.min.css` | relURL }}" />

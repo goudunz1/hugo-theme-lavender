@@ -1,0 +1,38 @@
+# English translations for theme strings.
+# See https://gohugo.io/functions/i18n/ — keys fall back to the key name if a language is missing here.
+
+[backToTop]
+other = "Back to top"
+
+[oldBrowserDismiss]
+other = "Dismiss"
+
+[oldBrowserText]
+other = "Your browser is outdated and may not render this site correctly. Please upgrade to a modern browser."
+
+[gotoPage]
+other = "Go to page"
+
+[minRead]
+other = "{{ .Count }} min read"
+
+[searchLoadMore]
+other = "Load more"
+
+[searchPlaceholder]
+other = "Search posts..."
+
+[searchStatusCount]
+other = "%d posts found for “%s”"
+
+[searchStatusInitial]
+other = "Type to search..."
+
+[searchStatusNone]
+other = "No posts match “%s”"
+
+[searchStatusOne]
+other = "1 post found for “%s”"
+
+[wordCount]
+other = "{{ .Count }} words"

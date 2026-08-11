@@ -1,10 +1,1 @@
-{{- with resources.Get "js/main.js" }}
-  {{- if hugo.IsDevelopment }}
-    {{- /* defer: Wait until DOM is loaded, because we need to query DOM elements. */}}
-    <script src="{{ .RelPermalink }}" defer></script>
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" defer></script>
-    {{- end }}
-  {{- end }}
-{{- end }}
+{{ partial "head/res.html" "js/main.js" }}

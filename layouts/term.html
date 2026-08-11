@@ -1,6 +1,6 @@
 {{- define "main" }}
   {{- $paginator := "" }}
-  {{- $configuredSize := index site.Params.pagination "tags" }}
+  {{- $configuredSize := index site.Params.pagination "posts" }}
   {{- if $configuredSize }}
     {{- $s := int $configuredSize }}
     {{- if lt $s 1 }}

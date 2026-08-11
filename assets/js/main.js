@@ -34,9 +34,9 @@
 
     if (burger) {
       if (open_or_close) {
-        burgerIcon.setAttribute("class", "bi bi-x-lg");
+        burgerIcon.setAttribute("class", "ti ti-x");
       } else {
-        burgerIcon.setAttribute("class", "bi bi-list");
+        burgerIcon.setAttribute("class", "ti ti-list");
       }
     }
   }
@@ -178,6 +178,42 @@
         */
         body.style.maxHeight = open ? body.scrollHeight + "px" : "0px";
       });
+    });
+  }
+
+  // Pagination jump-to-page
+  var gotoForm = document.getElementById("pagination-goto");
+
+  if (gotoForm) {
+    var gotoInput = gotoForm.querySelector("input");
+    var maxPage = parseInt(gotoForm.getAttribute("data-max") || "1", 10);
+    var pageUrls = {};
+    var pagesAttr = gotoForm.getAttribute("data-pages") || "";
+
+    pagesAttr.split("|").forEach(function (entry) {
+      if (!entry) return;
+      var sep = entry.indexOf("=");
+      if (sep > 0) pageUrls[parseInt(entry.slice(0, sep), 10)] = entry.slice(sep + 1);
+    });
+
+    // Only digits are allowed; anything else is stripped as you type.
+    gotoInput.addEventListener("input", function () {
+      var clean = gotoInput.value.replace(/[^0-9]/g, "");
+      if (clean !== gotoInput.value) gotoInput.value = clean;
+    });
+
+    gotoForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var page = parseInt(gotoInput.value, 10);
+
+      if (!page || page < 1 || page > maxPage) {
+        gotoInput.value = "";
+        gotoInput.focus();
+        return;
+      }
+
+      var url = pageUrls[page];
+      if (url) window.location.href = url;
     });
   }
 })();

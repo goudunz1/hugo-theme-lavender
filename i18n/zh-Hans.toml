@@ -1,0 +1,38 @@
+# 中文（简体）翻译。
+# 主题默认语言是 en-US；把 site.languageCode 改为 zh-Hans（或添加 [languages]）即可使用此文件。
+
+[backToTop]
+other = "回到顶部"
+
+[oldBrowserDismiss]
+other = "知道了"
+
+[oldBrowserText]
+other = "您的浏览器版本过旧，可能无法正常显示本网站。请升级到现代浏览器。"
+
+[gotoPage]
+other = "跳转到页面"
+
+[minRead]
+other = "{{ .Count }} 分钟"
+
+[searchLoadMore]
+other = "加载更多"
+
+[searchPlaceholder]
+other = "搜索文章..."
+
+[searchStatusCount]
+other = "找到 %d 篇关于“%s”的文章"
+
+[searchStatusInitial]
+other = "输入关键词开始搜索..."
+
+[searchStatusNone]
+other = "没有找到“%s”相关的文章"
+
+[searchStatusOne]
+other = "找到 1 篇关于“%s”的文章"
+
+[wordCount]
+other = "{{ .Count }} 字"

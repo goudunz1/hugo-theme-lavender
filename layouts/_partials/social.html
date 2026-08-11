@@ -1,7 +1,7 @@
 {{- with site.Params.social }}
   <div id="social" class="centralize mt-2 gap-3 flex-wrap">
     {{- range . }}
-      {{- $icon := .icon | default "link-45deg" }}
+      {{- $icon := .icon | default "link" }}
       {{- $isExternal := not (hasPrefix .url (or site.BaseURL "/")) }}
       <a
         class="icon-button size-11"
@@ -10,7 +10,7 @@
         {{- if $isExternal }}
           target="_blank" rel="noopener"
         {{- end }}>
-        <i class="bi bi-{{ $icon }}"></i>
+        <i class="ti ti-{{ $icon }}"></i>
       </a>
     {{- end }}
   </div>

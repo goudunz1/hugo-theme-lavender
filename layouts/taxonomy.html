@@ -85,8 +85,8 @@
     {{- end }}
     {{- /* 5. Render buckets; Uncategorized uses folder2-open icon. */}}
     {{- range $bucketOrder }}
-      {{- $icon := "grid" }}
-      {{- if eq . "Uncategorized" }}{{- $icon = "folder2-open" }}{{- end }}
+      {{- $icon := "layout-grid" }}
+      {{- if eq . "Uncategorized" }}{{- $icon = "folder-open" }}{{- end }}
       {{ partial "separator.html" (dict "groupTitle" . "groupIcon" $icon) }}
       {{- $pages := index $buckets . }}
       {{ partial "post-cards.html" $pages }}
@@ -111,7 +111,7 @@
       {{- range $paginator.Pages }}
         <div class="group max-w-full">
           <a href="{{ .RelPermalink }}" class="tag">
-            <i class="bi bi-tag"></i><span class="truncate">{{ .LinkTitle }}</span
+            <i class="ti ti-tag"></i><span class="truncate">{{ .LinkTitle }}</span
             ><span class="text-muted text-13 group-hover:text-accent transition-colors duration-200"
               >{{ .Pages.Len }}</span
             >

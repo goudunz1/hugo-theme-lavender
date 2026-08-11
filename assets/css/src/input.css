@@ -43,7 +43,8 @@
   --c-accent-fog: rgba(92, 191, 111, 0.25);
   --c-border: #e2e4e8;
   --c-shadow: rgba(0, 0, 0, 0.08);
-  --f-sans: Fredoka, "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
+  --f-sans:
+    "Fredoka Variable", "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
   --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
@@ -104,7 +105,7 @@
 
 @layer components {
   .hero-page {
-    @apply centralize gap-5 px-4 pt-10 pb-4 flex-1 flex-col text-center;
+    @apply centralize gap-5 p-4 pt-10 flex-1 flex-col text-center;
   }
 
   .icon-button {
@@ -213,6 +214,14 @@
   .search-box {
     @apply align gap-2 rounded-xl border-border bg-bg px-4 text-fg py-2.5 border;
     @apply focus-within:border-accent transition-colors duration-200;
+  }
+
+  .input-box {
+    @apply align border-border bg-bg focus-within:border-accent border transition-colors duration-200;
+  }
+
+  .input-box input {
+    @apply placeholder:text-muted text-fg focus:outline-none;
   }
 
   .text-link {
@@ -335,7 +344,59 @@ body.sidebar-open #sidebar-scrim {
   @apply my-8 bg-border h-px border-0;
 }
 
-/* Table & Syntax highlight. */
+/* Inline code blocks */
+.post-content :not(pre) > code {
+  @apply font-mono bg-border px-0.75 py-0.5 text-14 rounded-sm box-decoration-clone;
+}
+
+/* Code blocks no highlight */
+.post-content pre {
+  @apply text-14 my-5 bg-bg border-border rounded-xl overflow-x-hidden border tab-4;
+}
+
+.post-content pre > code {
+  @apply p-4 block overflow-x-auto;
+}
+
+/* Code blocks highlight */
+.post-content .highlight {
+  @apply my-5 bg-bg border-border rounded-xl overflow-x-hidden border;
+}
+
+.post-content .highlight pre {
+  @apply my-0 overflow-x-auto border-none bg-transparent;
+}
+
+.post-content .highlight code {
+  @apply flex w-fit min-w-full flex-col overflow-x-visible;
+}
+
+/* Code blocks highlight with line-table */
+.post-content .highlight .lntable,
+.post-content .highlight .lntable tbody,
+.post-content .highlight .lntd {
+  @apply block;
+}
+
+.post-content .highlight .lntable tr {
+  @apply flex;
+}
+
+.post-content .highlight .lntd:first-child {
+  @apply flex-none;
+}
+
+.post-content .highlight .lntd:first-child code {
+  @apply pr-0 text-right;
+}
+
+.post-content .highlight .lntd:last-child {
+  @apply min-w-0 flex-1;
+}
+
+.post-content .highlight .lntd:last-child code {
+  @apply pl-0;
+}
 
 .post-content table:not(.lntable) {
   @apply my-5 text-14 block w-full border-collapse overflow-x-auto;
@@ -348,44 +409,6 @@ body.sidebar-open #sidebar-scrim {
 
 .post-content th {
   @apply font-bold bg-border;
-}
-
-.post-content :not(pre) > code {
-  @apply font-mono bg-border px-0.75 py-0.5 text-14 rounded-sm box-decoration-clone;
-}
-
-.post-content pre > code {
-  @apply p-4 text-14 block overflow-x-auto;
-}
-
-.post-content pre:not(.chroma),
-.post-content .highlight {
-  /* overflow-hidden clips the inner code scrollbar to the rounded corner. */
-  @apply my-5 bg-bg border-border rounded-xl overflow-hidden border tab-4;
-}
-
-/* Hugo line-table: render as blocks so the inner scrollbar behaves. */
-.post-content .highlight .lntable,
-.post-content .highlight .lntable tbody,
-.post-content .highlight .lntable .lntd {
-  @apply block;
-}
-
-.post-content .highlight .lntable tr {
-  @apply flex;
-}
-
-.post-content .highlight .lntable .lntd:first-child {
-  @apply flex-none;
-}
-
-.post-content .highlight .lntable .lntd:first-child code {
-  @apply pr-0 flex flex-col [overflow-x:unset];
-}
-
-.post-content .highlight .lntable .lntd:last-child {
-  /* min-w-0 lets the <td> shrink to activate the inner scrollbar. */
-  @apply min-w-0 flex-1;
 }
 
 /* Table of Contents. */
