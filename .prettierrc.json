@@ -3,9 +3,9 @@
   "printWidth": 120,
   "bracketSameLine": true,
   "htmlWhitespaceSensitivity": "css",
-  "tailwindStylesheet": "./assets/css/theme.css",
-  "tailwindFunctions": ["clsx", "cn"],
+  "tailwindStylesheet": "assets/css/theme.css",
   "overrides": [
-    { "files": ["layouts/**/*.html"], "options": { "parser": "go-template" } }
+    { "files": ["layouts/**/*.html"], "options": { "parser": "go-template" } },
+    { "files": ["layouts/index.json"], "options": { "parser": "go-template" } }
   ]
 }

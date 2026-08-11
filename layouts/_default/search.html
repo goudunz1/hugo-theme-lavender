@@ -11,21 +11,39 @@
       Search is disabled. Set <code>searchEnabled = true</code> in <code>hugo.toml</code> to enable it.
     </p>
   {{- else }}
-    <div class="post-content">
+    <div>
       <div class="mb-6">
-        <div class="search-box">
-          <i class="bi bi-search text-muted"></i>
+        <div class="input-box gap-2 rounded-xl px-4 py-2.5">
+          <i class="ti ti-search text-muted"></i>
           <input
             type="search"
             id="search-input"
-            placeholder="Search posts..."
+            placeholder="{{ i18n `searchPlaceholder` }}"
             autocomplete="off"
             autofocus
-            class="bg-bg text-base placeholder:text-muted flex-1 focus:outline-none" />
+            class="text-base flex-1" />
         </div>
       </div>
-      <p id="search-status" class="meta-text mb-4"></p>
-      <div id="search-results" class="gap-4 mobile:grid-cols-2 sidebar:grid-cols-3 grid grid-cols-1"></div>
+      <p id="search-status" class="meta-text mb-4">{{ i18n "searchStatusInitial" }}</p>
+      <div
+        id="search-results"
+        class="gap-4 mobile:grid-cols-2 sidebar:grid-cols-3 grid grid-cols-1"
+        data-index-url="{{ `index.json` | relURL }}"
+        data-i18n-none="{{ i18n `searchStatusNone` }}"
+        data-i18n-count="{{ i18n `searchStatusCount` }}"
+        data-i18n-one="{{ i18n `searchStatusOne` }}"></div>
+      <div class="centralize mt-6">
+        <button id="search-more" type="button" class="page-button cursor-pointer" hidden>{{ i18n "searchLoadMore" }}</button>
+      </div>
     </div>
+    {{- /* MiniSearch (CDN or self-hosted, per useCdn) then the page's own search
+      script — both deferred, in order.
+    */}}
+    {{- if site.Params.useCdn | default true }}
+      <script defer src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js"></script>
+    {{- else }}
+      {{ partial "head/res.html" "lib/js/minisearch.js" }}
+    {{- end }}
+    {{ partial "head/res.html" "js/search.js" }}
   {{- end }}
 {{- end }}

@@ -4,10 +4,12 @@
 </h1>
 
 A sidebar-driven Hugo blog theme with switchable light / dark palettes,
-built with **Tailwind CSS v4** and **Bootstrap Icons**.
+built with **Tailwind CSS v4** and **Tabler Icons**.
 Drop it into your site, build its assets once with npm, and you're ready to go.
 
 It requires minimum Hugo version **0.146.0**.
+
+**NOTE:** This project is in active development, take care of new features and bug fixes.
 
 ---
 
@@ -31,14 +33,16 @@ It requires minimum Hugo version **0.146.0**.
 - **Taxonomies**: tags as a paginated inline cloud; categories as an expanded
   list grouped by category (uncategorized posts get their own pseudo-category).
 - **Special pages**: `about` (hero + accordion of `params.aboutItems`), `links`
-  (friend-site cards from `params.friends`), `search` (work in progress), and a
-  styled 404.
+  (friend-site cards from `params.friends`), `search` (client-side full-text
+  search over a build-time `index.json` via MiniSearch), and a styled 404.
 - **Math**: MathJax 4 loaded per page (only when `math: true`), with optional
   `$...$` inline delimiters.
 - **Code**: hand-written Chroma syntax theme matching both palettes.
-- **Self-hosted assets**: fonts (Fredoka, Maple Mono) and Bootstrap Icons are
-  built into `static/lib/` and served as plain files — no third-party CDN
-  except MathJax on math pages.
+- **Optional CDN / self-hosted deps** (`useCdn`): Tabler Icons, the Fredoka and
+  Maple Mono fonts, and MiniSearch are served from jsDelivr by default; set
+  `useCdn = false` to self-host them from `assets/lib/` + `static/lib/` (built
+  with `npm run build:selfhost`). No third-party CDN other than these and MathJax
+  on math pages.
 - **Fuzz-tested**: ships with a 50-post fuzz site plus config variants that
   exercise every Markdown feature, math delimiters, the Chroma highlight matrix,
   taxonomy stress patterns and boundary params (see [Fuzz testing](#fuzz-testing)).
@@ -49,9 +53,9 @@ It requires minimum Hugo version **0.146.0**.
 
 ## Quick start
 
-The theme's compiled assets (`assets/css/theme.css` and everything under
-`static/lib/`) are **git-ignored build artifacts**, so after cloning you must
-build them once with Node/npm.
+The theme's compiled assets (`assets/css/theme.css`, `assets/lib/`, `static/lib/`)
+are **git-ignored build artifacts**, so after cloning you must build them with
+Node/npm.
 
 1. Drop the theme into your Hugo site:
 
@@ -65,9 +69,14 @@ build them once with Node/npm.
    ```bash
    cd themes/lavender
    npm install
-   npm run build   # generates theme.css, copies fonts + icons to static/lib
+   npm run build          # generates theme.css
+   npm run build:selfhost # only needed if you self-host (useCdn = false)
    cd -
    ```
+
+   The default `useCdn = true` setup only needs `theme.css`; the `build:selfhost`
+   step (vendor CSS/JS to `assets/lib/`, fonts to `static/lib/`) is for sites
+   that want to avoid the CDN.
 
 3. Enable and configure it in your site's `hugo.toml`:
 
@@ -83,14 +92,14 @@ build them once with Node/npm.
 
      [[params.social]]
        name = "GitHub"
-       icon = "github"               # any Bootstrap Icons name
+       icon = "brand-github"         # any Tabler Icons name
        url  = "https://github.com/you"
 
    [[menus.main]]
      name = "Home"
      pageRef = "/"
      weight = 10
-     params = { icon = "house-door" }
+     params = { icon = "home" }
    # ...Posts / Tags / Categories / About / Links / Search
    ```
 
@@ -125,7 +134,10 @@ All options live under `[params]` unless noted otherwise.
 | `faviconSvg`          | `false`      | Also link `favicon.svg` (modern SVG favicon)                     |
 | `faviconPath`         | `""`         | Directory holding your favicon files, relative to `static/`      |
 | `markdownInlineMath`  | `true`       | Enable `$...$` inline math delimiters (see [Math](#math-latex))  |
-| `searchEnabled`       | `false`      | Enable the search page UI (**work in progress**) |
+| `searchEnabled`       | `false`      | Enable the search page (build-time `index.json` + MiniSearch)   |
+| `useCdn`              | `true`       | Serve Tabler Icons, Fredoka/Maple Mono and MiniSearch from jsDelivr; `false` self-hosts them |
+| `oldBrowserNotice`    | `true`       | Show a dismissible banner for browsers missing modern CSS       |
+| `seo`                 | —            | `{ description, keywords, robots, image, ogLocale, twitterCard }` |
 | `pagination.posts`    | `12`         | Posts per list page; falls back to Hugo's `[pagination]` config  |
 | `pagination.tags`     | `24`         | Entries per taxonomy term page                                   |
 | `[[params.social]]`   | —            | `{ name, icon, url }` — social icons on home/about               |
@@ -134,15 +146,15 @@ All options live under `[params]` unless noted otherwise.
 
 ### Menus
 
-Menu entries come from `[[menus.main]]` and accept a Bootstrap Icons name via
-`params.icon` (browse names at <https://icons.getbootstrap.com>):
+Menu entries come from `[[menus.main]]` and accept a Tabler Icons name via
+`params.icon` (browse names at <https://tabler.io/icons>):
 
 ```toml
 [[menus.main]]
   name = "Posts"
   pageRef = "/posts"
   weight = 20
-  params = { icon = "collection" }
+  params = { icon = "files" }
 ```
 
 ### Special pages
@@ -158,7 +170,7 @@ layout = "about"
 +++
 ```
 
-Currently supported layouts: `about`, `links`, `search`(**work in progess**).
+Currently supported layouts: `about`, `links`, `search`.
 
 Note that any Markdown body of the page will be rendered below the page-specific
 block (accordion, friend cards, search box).
@@ -193,8 +205,63 @@ readingTime = true    # show "N min read" in the post header
 +++
 ```
 
+The post header also shows a **word count** (`{{ i18n "wordCount" }}`). Hugo
+counts CJK characters and emoji as words, so Chinese/Japanese/Korean text is
+counted correctly out of the box.
+
 The default archetype in [`archetypes/default.md`](./archetypes/default.md)
 scaffolds these fields for `hugo new`.
+
+### Search
+
+The search page (`layout = "search"`) is a client-side full-text search:
+
+- At build time the theme emits `/index.json` (a list of `title`, `url`, `date`
+  and plain-text `content` for every post in a section). It is generated only
+  when `searchEnabled = true` (the file is an empty array otherwise).
+- On the search page, **MiniSearch** (loaded from jsDelivr CDN, or self-hosted
+  from `assets/lib/js/minisearch.js` when `useCdn = false`) indexes that JSON
+  and searches as you type. The tokenizer is unicode-aware: CJK text is split
+  into single characters, so `搜索` matches posts containing `搜索功能`.
+- Results are rendered as post cards, six at a time, with a **Load more**
+  button to reveal the next batch.
+
+```toml
+[params]
+  searchEnabled = true   # + a Search menu entry pointing at /search
+```
+
+### Internationalization
+
+The theme ships `i18n/en.toml` and `i18n/zh-Hans.toml` for the strings it
+renders (word count, reading time, search status, back-to-top, old-browser
+notice, pagination). The default single-language site uses `en.toml`; add your
+own `i18n/<lang>.toml` to translate. For a Chinese site:
+
+```toml
+defaultContentLanguage = "zh-Hans"
+[languages.zh-Hans]
+  languageCode = "zh-Hans"
+  title = "我的博客"
+```
+
+### SEO
+
+A lightweight SEO framework is emitted on every page — a description (from
+`description` front matter, falling back to `params.seo.description`), keywords,
+robots, canonical link, Open Graph, Twitter Card, and JSON-LD (`WebSite` on the
+home page, `BlogPosting` on posts). Fields the theme cannot guess are left empty
+until you fill them in:
+
+```toml
+[params.seo]
+  description = "My blog about X."
+  keywords = ["hugo", "blog"]
+  robots = "index, follow"
+  image = "/og-image.png"
+  ogLocale = "en_US"
+  twitterCard = "summary_large_image"
+```
 
 ### Math (LaTeX)
 
@@ -284,9 +351,9 @@ Regardless of `--minify`, the theme's CSS/JS assets are minified and
 fingerprinted automatically whenever the build is not a development server (see
 the next section).
 
-Note that the theme's `hugo.toml` sets `[outputs] home = ["HTML"]`, which
-disables the default RSS output for the home page. Re-add `"RSS"` there (or in
-your site config) if you want a feed.
+Note that the theme's `hugo.toml` sets `[outputs] home = ["HTML", "JSON"]`, which
+disables the default RSS output for the home page and adds the `/index.json`
+search index. Re-add `"RSS"` there (or in your site config) if you want a feed.
 
 ---
 
@@ -342,53 +409,66 @@ hugo-theme-lavender/
 │   │   ├── src/input.css     # ★ Tailwind v4 source (tokens + components)
 │   │   ├── theme.css         # ★ Generated Tailwind output (git-ignored)
 │   │   └── syntax.css        # Hand-written Chroma theme for both palettes
-│   └── js/
-│       └── main.js           # All client behavior (framework-free ES5)
+│   ├── js/
+│   │   ├── main.js           # All client behavior (framework-free ES5)
+│   │   └── search.js         # Search page: MiniSearch wiring (search page only)
+│   └── lib/                  # ★ Copied by `npm run build:selfhost` (git-ignored)
+│       ├── css/              # Non-min vendor CSS, minified/fingerprinted by Hugo:
+│       │   ├── tabler-icons.css       #   Tabler Icons webfont
+│       │   ├── fredoka-variable.css   #   Fredoka Variable @font-face
+│       │   └── maple-mono.css         #   Maple Mono @font-face
+│       └── js/
+│           └── minisearch.js # MiniSearch UMD (self-host mode)
 │
 ├── layouts/
-│   ├── baseof.html           # Shell: <head> + sidebar + main + footer + back-to-top
-│   ├── home.html             # Home hero (avatar, bio, social)
-│   ├── single.html           # Root pages → plain; posts → article + sticky TOC
-│   ├── section.html          # Posts grouped by year + pagination
-│   ├── taxonomy.html         # Categories expanded / tags cloud
-│   ├── term.html             # One tag/category: posts grouped by year
-│   ├── 404.html              # Styled not-found page
+│   ├── baseof.html             # Shell: <head> + sidebar + main + footer + back-to-top
+│   ├── home.html               # Home hero (avatar, bio, social)
+│   ├── single.html             # Root pages → plain; posts → article + sticky TOC
+│   ├── section.html            # Posts grouped by year + pagination
+│   ├── taxonomy.html           # Categories expanded / tags cloud
+│   ├── term.html               # One tag/category: posts grouped by year
+│   ├── 404.html                # Styled not-found page
+│   ├── index.json              # Search index (title/url/date/content per post)
 │   ├── _default/
-│   │   ├── about.html        # Hero + aboutItems accordion
-│   │   ├── links.html        # friends card grid
-│   │   └── search.html       # Search page (work in progress)
+│   │   ├── about.html          # Hero + aboutItems accordion
+│   │   ├── links.html          # friends card grid
+│   │   └── search.html         # Search page (MiniSearch over index.json)
 │   └── _partials/
-│       ├── head.html         # <meta>, favicons, <title>, inline palette bootstrap
-│       ├── head/css.html     # theme.css + syntax.css (minified/fingerprinted in prod)
-│       ├── head/js.html      # main.js (deferred, minified/fingerprinted in prod)
-│       ├── sidebar.html      # Rail: avatar + menu + theme toggle; burger + scrim
-│       ├── sidebar-menu.html # Renders menus.main with active-state highlight
-│       ├── avatar.html       # Big avatar (home/about)
-│       ├── social.html       # Social icon row
-│       ├── chips.html        # Category/tag chip links (post sidebar)
-│       ├── separator.html    # Year-group separator on list pages
-│       ├── post-card.html    # A single fixed-height list card
-│       ├── post-cards.html   # Card grid wrapper
-│       ├── post-nav.html     # Previous/Next post links
-│       ├── pagination.html   # Numbered pagination + prev/next arrows
-│       ├── math.html         # Conditional MathJax snippet
-│       └── footer.html       # Gradient separator + copyright
+│       ├── head.html           # <meta>, favicons, <title>, palette + feature detection
+│       ├── head/css.html       # theme.css + syntax.css (minified/fingerprinted in prod)
+│       ├── head/js.html        # main.js (deferred, minified/fingerprinted in prod)
+│       ├── head/seo.html       # SEO meta + Open Graph/Twitter/JSON-LD framework
+│       ├── sidebar.html        # Rail: avatar + menu + theme toggle; burger + scrim
+│       ├── sidebar-menu.html   # Renders menus.main with active-state highlight
+│       ├── avatar.html         # Big avatar (home/about)
+│       ├── social.html         # Social icon row
+│       ├── chips.html          # Category/tag chip links (post sidebar)
+│       ├── separator.html      # Year-group separator on list pages
+│       ├── post-card.html      # A single fixed-height list card
+│       ├── post-cards.html     # Card grid wrapper
+│       ├── post-nav.html       # Previous/Next post links
+│       ├── pagination.html     # Numbered pagination + prev/next arrows + jump-to-page
+│       ├── math.html           # Conditional MathJax snippet
+│       ├── search-scripts.html # Injects search.js (deferred, minified/fingerprinted)
+│       ├── head/vendor-css.html # Emits a self-hosted vendor CSS <link> (useCdn = false)
+│       └── footer.html         # Gradient separator + copyright
 │
 ├── static/
-│   └── lib/                  # ★ Built by npm run build, served verbatim (git-ignored)
-│       ├── bootstrap-icons/  # Icon font + CSS (build:icons)
-│       └── fonts/            # Fredoka + Maple Mono woff2 + fonts.css (build:fonts)
+│   └── lib/                    # ★ Copied by `npm run build:selfhost`, served verbatim (git-ignored)
+│       ├── tabler-icons/       # tabler-icons.woff2
+│       ├── fredoka-variable/   # Fredoka Variable woff2 (hebrew/latin-ext/latin)
+│       └── maple-mono/         # Maple Mono woff2 (latin 100–800)
 │
 ├── scripts/
-│   ├── copy-icons.js         # node_modules/bootstrap-icons → static/lib
-│   └── copy-fonts.js         # @fontsource packages → static/lib/fonts
+│   └── copy-deps.js            # node_modules → assets/lib + static/lib (build:selfhost)
 │
-├── fuzz/                     # Fuzz test site (content + config variants)
-│   ├── content/              # 50 fuzz posts + about/links/search pages
-│   ├── config/               # _base.toml + 9 mergeable variants
-│   └── README.md             # Fuzz documentation
+├── fuzz/                       # Fuzz test site (content + config variants)
+│   ├── content/                # 50 fuzz posts + about/links/search pages
+│   ├── config/                 # _base.toml + 9 mergeable variants
+│   └── README.md               # Fuzz documentation
 │
-└── data/  i18n/              # Reserved (empty)
+├── data/                       # Reserved (empty)
+└── i18n/                       # en.toml + zh-Hans.toml (theme strings)
 ```
 
 The `fuzz/` site doubles as the development playground — there is no separate
@@ -407,16 +487,27 @@ stylesheet, or bump the vendored packages. Everything is **local** to this
 folder — nothing is installed globally.
 
 ```bash
-npm install          # one-time: tailwindcss, bootstrap-icons, fonts, prettier
-npm run build        # theme.css + copy icons + copy fonts
+npm install          # one-time: tailwindcss, tabler icons, fonts, prettier
+npm run build        # theme.css (Tailwind)
+npm run build:selfhost  # optional: copy vendor deps for useCdn = false
 npm run watch        # rebuild theme.css on every change
+npm run clean        # remove theme.css + the self-hosted copies
 ```
 
-| script           | what it does                                                        |
-| ---------------- | ------------------------------------------------------------------- |
-| `build:tailwind` | `tailwindcss -i assets/css/src/input.css -o assets/css/theme.css`   |
-| `build:icons`    | copies Bootstrap Icons CSS + fonts to `static/lib/bootstrap-icons/` |
-| `build:fonts`    | copies Fredoka / Maple Mono woff2 + `fonts.css` to `static/lib/fonts/` |
+| script            | what it does                                                        |
+| ----------------- | ------------------------------------------------------------------- |
+| `build:tailwind`  | `tailwindcss -i assets/css/src/input.css -o assets/css/theme.css`   |
+| `build:selfhost`  | `node scripts/copy-deps.js` → non-min vendor CSS/JS to `assets/lib/`, woff2 to `static/lib/` |
+
+`npm run build` only produces `theme.css` — that's all a `useCdn = true` site
+needs. Only run `build:selfhost` when you self-host (`useCdn = false`): it copies
+the Tabler Icons / Fredoka / Maple Mono / MiniSearch vendor files that Hugo then
+minifies, fingerprints and serves.
+
+> When you bump a vendored package (`@tabler/icons-webfont`, `@fontsource-*`,
+> `minisearch`), re-run `npm run build:selfhost` **and** update the pinned CDN
+> URLs in `layouts/_partials/head/css.html` / `layouts/_default/search.html`
+> (the version in each jsDelivr link).
 
 ### Coding principles and style
 
@@ -475,9 +566,12 @@ theme's CSS/JS loading strategy is shaped by that:
   deployed sites get cache-busting hashes.
 - **Conditional heavy assets.** MathJax is only included on pages with
   `math: true`; it is never loaded site-wide.
-- **Self-hosted static assets.** Fonts (Fredoka, Maple Mono) and Bootstrap
-  Icons are copied into `static/lib/` by the build and served verbatim — no
-  external font/icon CDN round-trips.
+- **CDN or self-hosted vendor assets.** Third-party deps (Tabler Icons, the
+  Fredoka/Maple Mono fonts, MiniSearch) load from jsDelivr when `useCdn = true`
+  (default). With `useCdn = false` they self-host: the non-minified CSS/JS are
+  copied into `assets/lib/` (minified + fingerprinted by Hugo, so they are only
+  published when referenced) and the woff2 fonts into `static/lib/` (served
+  verbatim).
 - **Per-site caching.** Head asset partials are rendered through
   `partialCached`, because their output is identical on every page.
 
@@ -507,7 +601,7 @@ clicking `#sidebar-scrim` or any `<a>` inside `#sidebar` always closes it; and
 it auto-closes when the viewport grows past 900 px.
 
 - `#sidebar-burger` may contain a `#sidebar-burger-icon` element, whose icon is
-  swapped between `bi-list` (☰) and `bi-x-lg` (✕) as the drawer opens/closes.
+  swapped between `ti-list` (☰) and `ti-x` (✕) as the drawer opens/closes.
 - `.sidebar--open` is applied to `#sidebar` — CSS translates the drawer in/out.
 - `.sidebar-open` is applied to `<body>` — CSS disables body scrolling so only
   the sidebar scrolls while it's open.

@@ -138,7 +138,7 @@ endLevel = 4
 ordered = false
 
 [outputs]
-home = ["HTML"]
+home = ["HTML", "JSON"]
 
 [module.hugoVersion]
 extended = false

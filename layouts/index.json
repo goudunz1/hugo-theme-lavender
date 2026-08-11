@@ -1,0 +1,9 @@
+{{- /* JSON search index, generated at build time. Emits an empty array when search is disabled. */}}
+{{- $enabled := site.Params.searchEnabled | default false }}
+{{- $entries := slice }}
+{{- if $enabled }}
+  {{- range where site.RegularPages "Section" "ne" "" }}
+    {{- $entries = $entries | append (dict "title" .Title "url" .RelPermalink "date" (.Date.Format "2006-01-02") "content" (.Plain | plainify)) }}
+  {{- end }}
+{{- end }}
+{{- $entries | jsonify }}
