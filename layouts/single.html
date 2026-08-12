@@ -17,19 +17,19 @@
     <article class="flex flex-1 flex-col">
       <h1 class="page-title">{{ .Title }}</h1>
       <div class="meta-info text-14 mb-6 gap-3 flex-wrap">
-        <span class="align gap-1.25 min-w-0"
+        <span class="align_by_flex gap-1.25 min-w-0"
           ><i class="ti ti-user"></i><span class="truncate">{{ $author }}</span></span
         >
-        <span class="align gap-1.25 flex-none"
+        <span class="align_by_flex gap-1.25 flex-none"
           ><i class="ti ti-calendar"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
         >
         {{- $showReadingTime := .Params.readingTime | default site.Params.readingTime | default true }}
         {{- if $showReadingTime }}
-          <span class="align gap-1.25 flex-none"
+          <span class="align_by_flex gap-1.25 flex-none"
             ><i class="ti ti-clock"></i>{{ i18n "minRead" (dict "Count" .ReadingTime) }}</span
           >
         {{- end }}
-        <span class="align gap-1.25 flex-none"
+        <span class="align_by_flex gap-1.25 flex-none"
           ><i class="ti ti-file-text"></i>{{ i18n "wordCount" (dict "Count" .WordCount) }}</span
         >
       </div>

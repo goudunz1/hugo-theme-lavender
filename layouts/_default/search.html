@@ -32,8 +32,10 @@
         data-i18n-none="{{ i18n `searchStatusNone` }}"
         data-i18n-count="{{ i18n `searchStatusCount` }}"
         data-i18n-one="{{ i18n `searchStatusOne` }}"></div>
-      <div class="centralize mt-6">
-        <button id="search-more" type="button" class="page-button cursor-pointer" hidden>{{ i18n "searchLoadMore" }}</button>
+      <div class="center_by_flex mt-6">
+        <button id="search-more" type="button" class="page-button cursor-pointer" hidden>
+          {{ i18n "searchLoadMore" }}
+        </button>
       </div>
     </div>
     {{- /* MiniSearch (CDN or self-hosted, per useCdn) then the page's own search

@@ -87,64 +87,69 @@
   }
 }
 
-@utility bg-opaque-fog {
+@utility bg_half_accent {
   @apply bg-bg from-accent-fog to-accent-fog bg-linear-0;
 }
 
-@utility fg-accent {
+@utility fg_accent {
   @apply text-accent border-accent;
 }
 
-@utility align {
+@utility align_by_flex {
   @apply flex items-center;
 }
 
-@utility centralize {
+@utility center_by_flex {
   @apply flex items-center justify-center;
+}
+
+@utility default_box {
+  @apply border-border bg-bg border;
+}
+
+@utility quiet_link {
+  @apply no-underline select-none;
 }
 
 @layer components {
   .hero-page {
-    @apply centralize gap-5 p-4 pt-10 flex-1 flex-col text-center;
+    @apply center_by_flex gap-5 p-4 pt-10 flex-1 flex-col text-center;
   }
 
   .icon-button {
-    @apply size-10 text-muted bg-bg border-accent text-17 border-2;
-    @apply centralize cursor-pointer rounded-full no-underline select-none;
-    @apply ease-out-back transition-transform duration-300 will-change-transform hover:scale-108;
+    @apply center_by_flex quiet_link size-10 text-muted bg-bg border-accent text-17 rounded-full border-2;
+    @apply ease-out-back cursor-pointer transition-transform duration-300 will-change-transform hover:scale-108;
   }
 
   .image-button {
-    @apply p-0.5 size-15 bg-bg block overflow-hidden rounded-full border-2 no-underline select-none;
+    @apply quiet_link p-0.5 size-15 bg-bg block overflow-hidden rounded-full border-2;
     @apply ease-out-back transition-transform duration-300 will-change-transform hover:scale-105;
   }
 
   .page-button {
-    @apply centralize h-9 min-w-9 text-14;
-    @apply rounded-lg border-border text-fg bg-bg px-2.5 border no-underline select-none;
-    @apply hover:fg-accent transition-colors duration-200;
+    @apply center_by_flex default_box quiet_link h-9 min-w-9 text-14 rounded-lg text-fg px-2.5;
+    @apply hover:fg_accent transition-colors duration-200;
   }
 
   .card {
-    @apply rounded-xl border-border bg-bg flex h-fit overflow-hidden border no-underline;
+    @apply default_box rounded-xl flex h-fit overflow-hidden no-underline;
     @apply transition duration-200 will-change-transform;
     @apply group-hover:border-accent group-hover:shadow-card group-hover:-translate-y-0.5;
   }
 
   .chip {
-    @apply align border-border bg-bg text-fg px-2.5 py-0.75 h-7 text-13 rounded-full border;
-    @apply hover:fg-accent no-underline transition-colors duration-200 select-none;
+    @apply align_by_flex default_box quiet_link text-fg px-2.5 py-0.75 h-7 text-13 rounded-full;
+    @apply hover:fg_accent transition-colors duration-200;
   }
 
   .tag {
-    @apply align border-border bg-bg text-fg gap-1.25 h-9 px-3.5 py-1.5 text-14 rounded-full border;
-    @apply no-underline transition duration-200 select-none;
-    @apply group-hover:-translate-y-0.5 group-hover:fg-accent group-hover:bg-opaque-fog;
+    @apply align_by_flex default_box quiet_link text-fg gap-1.25 h-9 px-3.5 py-1.5 text-14 rounded-full;
+    @apply group-hover:-translate-y-0.5 group-hover:fg_accent group-hover:bg_half_accent transition duration-200;
   }
 
   .post-nav-link {
-    @apply rounded-xl border-border bg-bg text-fg gap-0.75 px-3.5 py-2.5 flex flex-col border no-underline;
-    @apply group-hover:fg-accent transition-colors duration-200;
+    @apply default_box rounded-xl text-fg gap-0.75 px-3.5 py-2.5 flex flex-col no-underline;
+    @apply group-hover:fg_accent transition-colors duration-200;
   }
 
   .post-nav-prompt {
@@ -160,7 +165,7 @@
   }
 
   .meta-info {
-    @apply align text-muted justify-start;
+    @apply align_by_flex text-muted justify-start;
   }
 
   .caption {
@@ -168,21 +173,21 @@
   }
 
   .panel {
-    @apply rounded-xl border-border bg-bg px-4 py-3.5 overflow-hidden border;
+    @apply default_box rounded-xl px-4 py-3.5 overflow-hidden;
   }
 
   .sidebar-rail {
-    @apply align w-19 pointer-events-auto min-h-dvh flex-col justify-between;
+    @apply align_by_flex w-19 pointer-events-auto min-h-dvh flex-col justify-between;
     @apply gap-4 border-border bg-bg px-2 py-4 -translate-x-full border-r transition duration-200;
   }
 
   .sidebar-drawer {
-    @apply align text-14 border-border bg-bg overflow-hidden rounded-full border p-px no-underline;
+    @apply default_box align_by_flex text-14 overflow-hidden rounded-full p-px no-underline;
     @apply ease-out group-hover:translate-x-1.5 transition-transform duration-300 will-change-transform;
   }
 
   .sidebar-drawer-icon {
-    @apply centralize text-muted size-10;
+    @apply center_by_flex text-muted size-10;
   }
 
   .sidebar-drawer-label {
@@ -195,12 +200,12 @@
   }
 
   .accordion {
-    @apply rounded-xl border-border bg-bg overflow-hidden border transition-colors duration-200;
+    @apply default_box rounded-xl overflow-hidden transition-colors duration-200;
   }
 
   .accordion-head {
-    @apply align gap-3 bg-bg w-full cursor-pointer justify-between border-0;
-    @apply text-base text-fg font-semibold px-4.5 py-3.5 text-left;
+    @apply align_by_flex gap-3 bg-bg w-full cursor-pointer justify-between border-0;
+    @apply text-17 text-fg font-semibold px-4.5 py-3.5 text-left;
   }
 
   .accordion-body {
@@ -211,13 +216,8 @@
     @apply text-muted transition duration-200;
   }
 
-  .search-box {
-    @apply align gap-2 rounded-xl border-border bg-bg px-4 text-fg py-2.5 border;
-    @apply focus-within:border-accent transition-colors duration-200;
-  }
-
   .input-box {
-    @apply align border-border bg-bg focus-within:border-accent border transition-colors duration-200;
+    @apply align_by_flex default_box focus-within:border-accent transition-colors duration-200;
   }
 
   .input-box input {
@@ -225,7 +225,7 @@
   }
 
   .text-link {
-    @apply align text-fg gap-1.5 px-4.5 py-2.5 text-14 no-underline;
+    @apply align_by_flex text-fg gap-1.5 px-4.5 py-2.5 text-14 no-underline;
     @apply hover:text-accent transition-colors duration-200;
   }
 
@@ -241,7 +241,7 @@
 /* JS-toggled state classes — kept out of @layer so they override utilities. */
 
 .sidebar-link--active .sidebar-drawer {
-  @apply border-accent bg-opaque-fog;
+  @apply border-accent bg_half_accent;
 }
 
 .sidebar-link--active .sidebar-drawer-icon,
@@ -328,7 +328,8 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content blockquote {
-  @apply my-5 px-4 text-muted py-1.5 border-l-accent bg-accent-fog rounded-r-lg rounded-l-none border-l-[3px];
+  @apply my-5 px-4 text-muted py-1.5 bg-accent-fog;
+  @apply border-l-accent rounded-r-lg rounded-l-none border-l-[3px];
 }
 
 .post-content blockquote p {
@@ -351,7 +352,7 @@ body.sidebar-open #sidebar-scrim {
 
 /* Code blocks no highlight */
 .post-content pre {
-  @apply text-14 my-5 bg-bg border-border rounded-xl overflow-x-hidden border tab-4;
+  @apply default_box text-14 my-5 rounded-xl overflow-x-hidden tab-4;
 }
 
 .post-content pre > code {
@@ -360,11 +361,11 @@ body.sidebar-open #sidebar-scrim {
 
 /* Code blocks highlight */
 .post-content .highlight {
-  @apply my-5 bg-bg border-border rounded-xl overflow-x-hidden border;
+  @apply default_box my-5 rounded-xl overflow-x-hidden;
 }
 
 .post-content .highlight pre {
-  @apply my-0 overflow-x-auto border-none bg-transparent;
+  @apply my-0 overflow-x-auto rounded-none border-none bg-transparent;
 }
 
 .post-content .highlight code {

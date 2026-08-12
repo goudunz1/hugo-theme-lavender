@@ -53,7 +53,7 @@ It requires minimum Hugo version **0.146.0**.
 
 ## Quick start
 
-The theme's compiled assets (`assets/css/theme.css`, `assets/lib/`, `static/lib/`)
+The theme's compiled assets (`assets/css/main.css`, `assets/lib/`, `static/lib/`)
 are **git-ignored build artifacts**, so after cloning you must build them with
 Node/npm.
 
@@ -69,12 +69,12 @@ Node/npm.
    ```bash
    cd themes/lavender
    npm install
-   npm run build          # generates theme.css
+   npm run build          # generates main.css
    npm run build:selfhost # only needed if you self-host (useCdn = false)
    cd -
    ```
 
-   The default `useCdn = true` setup only needs `theme.css`; the `build:selfhost`
+   The default `useCdn = true` setup only needs `main.css`; the `build:selfhost`
    step (vendor CSS/JS to `assets/lib/`, fonts to `static/lib/`) is for sites
    that want to avoid the CDN.
 
@@ -407,7 +407,7 @@ hugo-theme-lavender/
 ├── assets/                   # Processed by Hugo's asset pipeline
 │   ├── css/
 │   │   ├── src/input.css     # ★ Tailwind v4 source (tokens + components)
-│   │   ├── theme.css         # ★ Generated Tailwind output (git-ignored)
+│   │   ├── main.css         # ★ Generated Tailwind output (git-ignored)
 │   │   └── syntax.css        # Hand-written Chroma theme for both palettes
 │   ├── js/
 │   │   ├── main.js           # All client behavior (framework-free ES5)
@@ -435,7 +435,7 @@ hugo-theme-lavender/
 │   │   └── search.html         # Search page (MiniSearch over index.json)
 │   └── _partials/
 │       ├── head.html           # <meta>, favicons, <title>, palette + feature detection
-│       ├── head/css.html       # theme.css + syntax.css (minified/fingerprinted in prod)
+│       ├── head/css.html       # main.css + syntax.css (minified/fingerprinted in prod)
 │       ├── head/js.html        # main.js (deferred, minified/fingerprinted in prod)
 │       ├── head/seo.html       # SEO meta + Open Graph/Twitter/JSON-LD framework
 │       ├── sidebar.html        # Rail: avatar + menu + theme toggle; burger + scrim
@@ -488,18 +488,18 @@ folder — nothing is installed globally.
 
 ```bash
 npm install          # one-time: tailwindcss, tabler icons, fonts, prettier
-npm run build        # theme.css (Tailwind)
+npm run build        # main.css (Tailwind)
 npm run build:selfhost  # optional: copy vendor deps for useCdn = false
-npm run watch        # rebuild theme.css on every change
-npm run clean        # remove theme.css + the self-hosted copies
+npm run watch        # rebuild main.css on every change
+npm run clean        # remove main.css + the self-hosted copies
 ```
 
 | script            | what it does                                                        |
 | ----------------- | ------------------------------------------------------------------- |
-| `build:tailwind`  | `tailwindcss -i assets/css/src/input.css -o assets/css/theme.css`   |
+| `build:tailwind`  | `tailwindcss -i assets/css/src/input.css -o assets/css/main.css`   |
 | `build:selfhost`  | `node scripts/copy-deps.js` → non-min vendor CSS/JS to `assets/lib/`, woff2 to `static/lib/` |
 
-`npm run build` only produces `theme.css` — that's all a `useCdn = true` site
+`npm run build` only produces `main.css` — that's all a `useCdn = true` site
 needs. Only run `build:selfhost` when you self-host (`useCdn = false`): it copies
 the Tabler Icons / Fredoka / Maple Mono / MiniSearch vendor files that Hugo then
 minifies, fingerprints and serves.
@@ -541,7 +541,7 @@ minifies, fingerprints and serves.
   (`assets/js/main.js`) — `var`, `function`, and
   `Array.prototype.slice.call(...)` instead of modern syntax, no build step,
   every feature guarded by DOM existence checks.
-- **Git-ignored artifacts**: `theme.css` and `static/lib/**` are never
+- **Git-ignored artifacts**: `main.css` and `static/lib/**` are never
   committed; run `npm run build` after cloning and after touching `input.css`
   or the vendored packages.
 ---
@@ -560,7 +560,7 @@ theme's CSS/JS loading strategy is shaped by that:
 - **`main.js` is deferred and page-agnostic.** It is loaded once per page with
   `defer` ([`head/js.html`](./layouts/_partials/head/js.html)) and every feature
   is guarded by an existence check, so one bundle serves all page types.
-- **Minify + fingerprint only in production.** `theme.css`, `syntax.css` and
+- **Minify + fingerprint only in production.** `main.css`, `syntax.css` and
   `main.js` are piped through `minify | fingerprint` (with SRI `integrity`)
   unless `hugo.IsDevelopment`, so `hugo server` gives you readable files while
   deployed sites get cache-busting hashes.

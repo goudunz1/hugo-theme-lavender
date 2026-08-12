@@ -1,6 +1,6 @@
 {{- $paginator := .Paginator }}
 {{- if gt $paginator.TotalPages 1 }}
-  <nav id="pagination" class="centralize mt-10 gap-1.5 flex-wrap">
+  <nav id="pagination" class="center_by_flex mt-10 gap-1.5 flex-wrap">
     {{- if $paginator.HasPrev }}
       <a class="page-button" href="{{ $paginator.Prev.URL }}" rel="prev">
         <i class="ti ti-chevron-left"></i>
@@ -35,7 +35,7 @@
         <span class="page-button text-muted pointer-events-none border-none">&hellip;</span>
       {{- end }}
       {{- if eq . $cur }}
-        <div class="page-button border-accent text-accent bg-opaque-fog font-semibold pointer-events-none">
+        <div class="page-button border-accent text-accent bg_half_accent font-semibold pointer-events-none">
           {{ . }}
         </div>
       {{- else }}
@@ -61,7 +61,7 @@
     */}}
     <form
       id="pagination-goto"
-      class="align gap-1.5"
+      class="align_by_flex gap-1.5"
       data-max="{{ $total }}"
       data-pages="{{- range $paginator.Pagers }}
         {{ .PageNumber }}={{ .URL }}{{ if not (eq .PageNumber $total) }}|{{ end }}
