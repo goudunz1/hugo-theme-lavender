@@ -36,7 +36,7 @@
     var pref ="{{ site.Params.themeDefault | default `auto` }}";
     var stored = null;
     try {
-      stored = localStorage.getItem("theme-palette");
+      stored = localStorage.getItem("palette");
     } catch (e) {}
     var dark;
     if (stored === "light" || stored === "dark") {

@@ -2,11 +2,10 @@
   <div class="mb-2">
     <h1 class="page-title">{{ .Title }}</h1>
     <p class="meta-text">
-      {{ .Pages.Len }}
       {{- if eq .Data.Singular "category" }}
-        categories
+        {{ i18n "categoryCount" (dict "Count" .Pages.Len) }}
       {{- else }}
-        tags
+        {{ i18n "tagCount" (dict "Count" .Pages.Len) }}
       {{- end }}
     </p>
   </div>
@@ -86,7 +85,9 @@
     {{- /* 5. Render buckets; Uncategorized uses folder2-open icon. */}}
     {{- range $bucketOrder }}
       {{- $icon := "layout-grid" }}
-      {{- if eq . "Uncategorized" }}{{- $icon = "folder-open" }}{{- end }}
+      {{- if eq . "Uncategorized" }}
+        {{- $icon = "folder-open" }}
+      {{- end }}
       {{ partial "separator.html" (dict "groupTitle" . "groupIcon" $icon) }}
       {{- $pages := index $buckets . }}
       {{ partial "post-cards.html" $pages }}

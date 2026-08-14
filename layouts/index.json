@@ -3,7 +3,13 @@
 {{- $entries := slice }}
 {{- if $enabled }}
   {{- range where site.RegularPages "Section" "ne" "" }}
-    {{- $entries = $entries | append (dict "title" .Title "url" .RelPermalink "date" (.Date.Format "2006-01-02") "content" (.Plain | plainify)) }}
+    {{- $entries = $entries | append (dict
+      "title" .Title
+      "url" .RelPermalink
+      "date" (.Date.Format "2006-01-02T15:04:05-07:00")
+      "content" (.Plain | plainify)
+      )
+    }}
   {{- end }}
 {{- end }}
 {{- $entries | jsonify }}

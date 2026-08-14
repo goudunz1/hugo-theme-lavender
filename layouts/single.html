@@ -33,15 +33,15 @@
           ><i class="ti ti-file-text"></i>{{ i18n "wordCount" (dict "Count" .WordCount) }}</span
         >
       </div>
-      {{- /* Two columns if possible, a single stack on mobile devices. */}}
+      {{- /* Two columns if possible, a single stack on desktop devices. */}}
       <div class="gap-10 sidebar:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1 content-start">
         <div class="post-content">{{ .Content }}</div>
         <aside class="gap-6 sidebar:order-0 order-first flex flex-col">
           {{- with .GetTerms "categories" }}
-            {{ partial "chips.html" (dict "links" . "caption" "Categories") }}
+            {{ partial "chips.html" (dict "links" . "caption" (i18n "categoryAlias")) }}
           {{- end }}
           {{- with .GetTerms "tags" }}
-            {{ partial "chips.html" (dict "links" . "caption" "Tags") }}
+            {{ partial "chips.html" (dict "links" . "caption" (i18n "tagAlias")) }}
           {{- end }}
           {{- if $tocEnabled }}
             {{- /* debug.Dump .Fragments */}}
@@ -49,7 +49,7 @@
             {{- if strings.Contains $toc "href" }}
               <div class="panel sidebar:sticky sidebar:top-6 sidebar:max-h-[calc(100dvh-3rem)] static max-h-none">
                 <div id="post-toc" class="post-toc h-full overflow-x-hidden overflow-y-scroll">
-                  <p class="caption">Contents</p>
+                  <p class="caption">{{ i18n "tocAlias" }}</p>
                   {{ $toc }}
                 </div>
               </div>

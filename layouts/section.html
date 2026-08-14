@@ -14,7 +14,9 @@
   {{- end }}
   <div class="mb-2">
     <h1 class="page-title">{{ .Title }}</h1>
-    <p class="meta-text">{{ .Pages.Len }}&nbsp;entries</p>
+    <p class="meta-text">
+      {{ i18n "entryCount" (dict "Count" .Pages.Len) }}
+    </p>
   </div>
   {{- with .Content }}
     <div class="post-content">{{ . }}</div>

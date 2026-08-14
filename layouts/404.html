@@ -1,11 +1,11 @@
 {{- define "main" }}
   <section class="hero-page">
     <p class="text-accent font-bold text-96/[1.1] select-none">404</p>
-    <h1 class="font-bold text-19">Page not found</h1>
-    <p class="meta-text max-w-160">The page you&rsquo;re looking for doesn&rsquo;t exist or may have been moved.</p>
+    <h1 class="font-bold text-19">{{ i18n "pageNotFound" }}</h1>
+    <p class="meta-text max-w-160">{{ i18n "pageNotFoundText" | safeHTML }}</p>
     <a class="text-link mt-2" href="{{ `` | relLangURL }}">
       <i class="ti ti-home"></i>
-      Back home
+      {{ i18n "backHome" }}
     </a>
   </section>
 {{- end }}

@@ -1,18 +1,24 @@
 {{- $prev := .prev }}
 {{- $next := .next }}
-<nav class="mt-10 gap-4 border-border pt-6 mobile:grid-cols-2 grid grid-cols-1 border-t">
+<nav class="mt-10 gap-4 border-border pt-6 desktop:grid-cols-2 grid grid-cols-1 border-t">
   <div class="group">
     {{- with $prev }}
       <a class="post-nav-link" href="{{ .RelPermalink }}">
-        <span class="post-nav-prompt"><i class="ti ti-arrow-left"></i> Previous</span>
+        <span class="post-nav-prompt">
+          <i class="ti ti-arrow-left"></i>
+          {{ i18n "previousPage" }}
+        </span>
         <span class="max-w-full truncate">{{ .Title }}</span>
       </a>
     {{- end }}
   </div>
   <div class="group">
     {{- with $next }}
-      <a class="post-nav-link mobile:items-end" href="{{ .RelPermalink }}">
-        <span class="post-nav-prompt">Next <i class="ti ti-arrow-right"></i></span>
+      <a class="post-nav-link desktop:items-end" href="{{ .RelPermalink }}">
+        <span class="post-nav-prompt">
+          {{ i18n "nextPage" }}
+          <i class="ti ti-arrow-right"></i>
+        </span>
         <span class="max-w-full truncate">{{ .Title }}</span>
       </a>
     {{- end }}

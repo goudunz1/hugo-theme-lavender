@@ -1,10 +1,12 @@
 {{- define "main" }}
   <div class="mb-6">
     <h1 class="page-title">{{ .Title }}</h1>
-    <p class="meta-text">A list of friends &amp; friendly sites.</p>
+    {{- with .Description }}
+      <p class="meta-text">{{ . }}</p>
+    {{- end }}
   </div>
   {{- with site.Params.friends }}
-    <div class="mb-8 gap-4 mobile:grid-cols-2 grid grid-cols-1">
+    <div class="mb-8 gap-4 desktop:grid-cols-2 grid grid-cols-1">
       {{- range . }}
         {{- $name := .name }}
         {{- $url := .url }}

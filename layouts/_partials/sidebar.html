@@ -13,7 +13,7 @@
       </a>
     {{- end }}
     {{ partial "sidebar-menu.html" (dict "menuID" "main" "page" .) }}
-    <button type="button" id="theme-toggle" class="icon-button size-11" title="Toggle color theme">
+    <button type="button" id="theme-toggle" class="icon-button size-11" title="{{ i18n `toggleColorTheme` }}">
       <i class="ti ti-sun hidden dark:block"></i>
       <i class="ti ti-moon-stars block dark:hidden"></i>
     </button>
@@ -23,7 +23,7 @@
   type="button"
   id="sidebar-burger"
   class="icon-button text-fg right-3 top-3 sidebar:hidden fixed z-60"
-  title="Open menu">
+  title="{{ i18n `openMenu` }}">
   <i id="sidebar-burger-icon" class="ti ti-list block"></i>
 </button>
 <div id="sidebar-scrim" class="inset-0 bg-black/45 fixed z-40 hidden"></div>

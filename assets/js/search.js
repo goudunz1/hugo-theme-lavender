@@ -95,11 +95,11 @@
       var doc = matches[i];
       html +=
         '<div class="group">' +
-        '<a class="card mobile:h-56 mobile:min-h-0 min-h-48 px-4 py-3.5 flex-col" href="' +
+        '<a class="card desktop:h-56 desktop:min-h-0 min-h-48 px-4 py-3.5 flex-col" href="' +
         escapeHtml(doc.url) +
         '">' +
         '<div class="flex-1">' +
-        '<p class="meta-text mobile:line-clamp-5 line-clamp-4 wrap-break-word">' +
+        '<p class="meta-text desktop:line-clamp-5 line-clamp-4 wrap-break-word">' +
         escapeHtml(snippetOf(doc)) +
         "</p>" +
         "</div>" +

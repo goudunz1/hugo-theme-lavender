@@ -2,7 +2,6 @@
 # hugo server --config fuzz/config/base.toml,fuzz/config/<variant>.toml -D --disableFastRender 
 
 baseURL = "http://127.0.0.1:1313/"
-languageCode = "en-US"
 title = "Testing the Lavender Hugo theme"
 contentDir = "fuzz/content"
 publishDir = "fuzz/public"

@@ -17,7 +17,8 @@
       {{- with .Parent }}
         <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
       {{- end }}
-      &middot;&nbsp;{{ .Pages.Len }}&nbsp;entries
+      &middot;
+      {{ i18n "entryCount" (dict "Count" .Pages.Len) }}
     </p>
   </div>
   {{- range $paginator.Pages.GroupByDate "2006" }}

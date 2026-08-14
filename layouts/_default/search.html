@@ -7,9 +7,7 @@
     {{- end }}
   </div>
   {{- if not $enabled }}
-    <p class="meta-text">
-      Search is disabled. Set <code>searchEnabled = true</code> in <code>hugo.toml</code> to enable it.
-    </p>
+    <p class="meta-text">{{ i18n "searchDisabledText" | safeHTML }}</p>
   {{- else }}
     <div>
       <div class="mb-6">
@@ -27,7 +25,7 @@
       <p id="search-status" class="meta-text mb-4">{{ i18n "searchStatusInitial" }}</p>
       <div
         id="search-results"
-        class="gap-4 mobile:grid-cols-2 sidebar:grid-cols-3 grid grid-cols-1"
+        class="gap-4 desktop:grid-cols-2 sidebar:grid-cols-3 grid grid-cols-1"
         data-index-url="{{ `index.json` | relURL }}"
         data-i18n-none="{{ i18n `searchStatusNone` }}"
         data-i18n-count="{{ i18n `searchStatusCount` }}"

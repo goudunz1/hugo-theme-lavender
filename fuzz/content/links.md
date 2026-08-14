@@ -1,6 +1,7 @@
 ---
 title: "Links"
 layout: 'links'
+description: 'A list of friends and friendly sites.'
 ---
 
 ## Useful Links

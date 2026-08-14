@@ -1,6 +1,7 @@
 ---
 title: "About"
 layout: 'about'
+description: 'About this fuzz site.'
 ---
 
 ## About This Fuzz Site

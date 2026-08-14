@@ -2,6 +2,9 @@
   <section class="hero-page justify-start">
     {{ partial "avatar.html" . }}
     <h1 class="font-bold text-40">{{ .Title }}</h1>
+    {{- with .Description }}
+      <p class="meta-text">{{ . }}</p>
+    {{- end }}
     {{- with site.Params.aboutItems }}
       <div class="mt-6 max-w-160 gap-2.5 mx-auto flex w-full flex-col text-left">
         {{- range $i, $item := . }}

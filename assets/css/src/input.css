@@ -8,7 +8,7 @@
 /* sidebar/rail switch breakpoint */
 @theme {
   --breakpoint-sidebar: 900px;
-  --breakpoint-mobile: 500px;
+  --breakpoint-desktop: 500px;
 }
 
 @theme inline {
