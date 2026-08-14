@@ -4,3 +4,4 @@
 noClasses = true
 lineNos = true
 codeFences = true
+style = "github-dark"
