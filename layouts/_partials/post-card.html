@@ -18,11 +18,9 @@
       {{ $page.Title }}
     </h3>
     <div class="meta-info text-13 gap-2">
-      {{- with $author }}
-        <span class="align_by_flex gap-0.75 min-w-0"
-          ><i class="ti ti-user"></i><span class="truncate">{{ . }}</span></span
-        >
-      {{- end }}
+      <span class="align_by_flex gap-0.75 min-w-0"
+        ><i class="ti ti-user"></i><span class="truncate">{{ . }}</span></span
+      >
       <span class="align_by_flex gap-0.75 flex-none"
         ><i class="ti ti-calendar"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
       >

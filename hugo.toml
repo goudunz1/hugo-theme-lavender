@@ -18,6 +18,7 @@ author = "Anonymous"
 tableOfContents = true
 math = false
 readingTime = true
+wordCount = true
 
 [params.pagination]
 posts = 12

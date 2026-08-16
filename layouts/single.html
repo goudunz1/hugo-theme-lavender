@@ -1,9 +1,7 @@
 {{- define "main" }}
   {{- if eq .Section "" }}
-    {{- /* root page, whose layout has no corresponding template */}}
-    <div class="mb-6">
-      <h1 class="page-title">{{ .Title }}</h1>
-    </div>
+    {{- /* standalone pages, of which there's no corresponding template */}}
+    {{ partial "title-and-desc.html" . }}
     {{- with .Content }}
       <div class="post-content">{{ . }}</div>
     {{- end }}
@@ -29,9 +27,12 @@
             ><i class="ti ti-clock"></i>{{ i18n "minRead" (dict "Count" .ReadingTime) }}</span
           >
         {{- end }}
-        <span class="align_by_flex gap-1.25 flex-none"
-          ><i class="ti ti-file-text"></i>{{ i18n "wordCount" (dict "Count" .WordCount) }}</span
-        >
+        {{- $showWordCount := .Params.wordCount | default site.Params.wordCount | default true }}
+        {{- if $showWordCount }}
+          <span class="align_by_flex gap-1.25 flex-none"
+            ><i class="ti ti-file-text"></i>{{ i18n "wordCount" (dict "Count" .WordCount) }}</span
+          >
+        {{- end }}
       </div>
       {{- /* Two columns if possible, a single stack on desktop devices. */}}
       <div class="gap-10 sidebar:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1 content-start">

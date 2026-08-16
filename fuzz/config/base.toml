@@ -24,6 +24,7 @@ author = "Tester"
 tableOfContents = true
 math = false
 readingTime = true
+wordCount = true
 
 [params.pagination]
 posts = 9

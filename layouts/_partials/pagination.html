@@ -59,7 +59,11 @@
       Jump-to-page: an inline input + submit button. JS filters non-digits and clamps to the valid range (see main.js).
       The page-number -> URL mapping is passed as embedded JSON (parsed in main.js) instead of a delimited string.
     */}}
-    <form id="pagination-goto" class="align_by_flex gap-1.5">
+    {{- $pageUrls := dict }}
+    {{- range $paginator.Pagers }}
+      {{- $pageUrls = merge $pageUrls (dict (string .PageNumber) .URL) }}
+    {{- end }}
+    <form id="pagination-goto" class="align_by_flex gap-1.5" data-pages="{{ $pageUrls | jsonify | safeJS }}">
       <div class="input-box rounded-lg h-9 w-18 px-2.5">
         <input
           id="pagination-goto-input"
@@ -73,12 +77,6 @@
       <button type="submit" class="page-button cursor-pointer" title="{{ i18n `gotoPage` }}">
         <i class="ti ti-corner-down-left"></i>
       </button>
-      {{- $pageUrls := dict }}
-      {{- range $paginator.Pagers }}
-        {{- $pageUrls = merge $pageUrls (dict (string .PageNumber) .URL) }}
-      {{- end }}
-      {{- $paginationData := dict "total" $total "pages" $pageUrls }}
-      <script type="application/json" id="pagination-data">{{ $paginationData | jsonify | safeJS }}</script>
     </form>
   </nav>
 {{- end }}

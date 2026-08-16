@@ -1,3 +1,5 @@
+// main.js: ES5 compatible
+
 const sidebarBreakpoint = 900;
 const backToTopThreshold = 400;
 
@@ -7,15 +9,40 @@ const backToTopThreshold = 400;
   // Theme toggle
   (function () {
     var root = document.documentElement;
+    var body = document.body;
     var toggle = document.getElementById("theme-toggle");
+
     if (toggle) {
-      toggle.addEventListener("click", function () {
-        var isDark = root.classList.contains("dark");
-        root.classList.toggle("dark", !isDark);
+      function toggleTheme() {
+        var isDark = root.classList.toggle("dark");
         // To keep chosen palette consistent across multiple pages
         try {
-          localStorage.setItem("palette", !isDark ? "dark" : "light");
+          localStorage.setItem("palette", isDark ? "dark" : "light");
         } catch (e) {}
+      }
+
+      function beforeToggle() {
+        root.classList.add("theme-toggling");
+      }
+
+      function afterToggle() {
+        root.classList.remove("theme-toggling");
+      }
+
+      toggle.addEventListener("click", function () {
+        // Cross-fade the whole page via the View Transitions API when available.
+        if (document.startViewTransition) {
+          // Freeze per-element transitions temporarily,
+          // so the snapshots capture final colors and no residual transitions play.
+          beforeToggle();
+          var vt = document.startViewTransition(function () {
+            toggleTheme();
+          });
+          vt.finished.then(afterToggle, afterToggle); // ES5 equivalence of finally()
+        } else {
+          body.classList.add("theme-toggle-legacy");
+          toggleTheme();
+        }
       });
     }
   })();
@@ -27,21 +54,20 @@ const backToTopThreshold = 400;
     var sidebar = document.getElementById("sidebar");
     var scrim = document.getElementById("sidebar-scrim");
     var body = document.body;
-    function toggleSidebar(open_or_close) {
-      if (!sidebar) {
-        return;
-      }
-      sidebar.classList.toggle("sidebar--open", open_or_close);
-      body.classList.toggle("sidebar-open", open_or_close);
-      if (burgerIcon) {
-        if (open_or_close) {
-          burgerIcon.setAttribute("class", "ti ti-x");
-        } else {
-          burgerIcon.setAttribute("class", "ti ti-list");
+
+    if (sidebar) {
+      function toggleSidebar(openOrClose) {
+        sidebar.classList.toggle("sidebar--open", openOrClose);
+        body.classList.toggle("sidebar-open", openOrClose);
+        if (burgerIcon) {
+          if (openOrClose) {
+            burgerIcon.setAttribute("class", "ti ti-x");
+          } else {
+            burgerIcon.setAttribute("class", "ti ti-list");
+          }
         }
       }
-    }
-    if (sidebar) {
+
       if (burger) {
         // Clicking on hamburger button toggles the sidebar.
         burger.addEventListener("click", function () {
@@ -174,15 +200,10 @@ const backToTopThreshold = 400;
     if (gotoForm) {
       var gotoInput = gotoForm.querySelector("input");
       var pageUrls = {};
-      var maxPage = 1;
-      var pageData = document.getElementById("pagination-data");
-      if (pageData) {
-        try {
-          var data = JSON.parse(pageData.textContent) || {};
-          pageUrls = data.pages || {};
-          maxPage = data.total;
-        } catch (e) {}
-      }
+      var pageData = gotoForm.getAttribute("data-pages") || "{}";
+      try {
+        pageUrls = JSON.parse(pageData) || "{}";
+      } catch (e) {}
       // Only digits are allowed; anything else is stripped as you type.
       gotoInput.addEventListener("input", function () {
         var clean = gotoInput.value.replace(/[^0-9]/g, "");
@@ -193,15 +214,13 @@ const backToTopThreshold = 400;
       gotoForm.addEventListener("submit", function (e) {
         e.preventDefault();
         var page = parseInt(gotoInput.value, 10);
-        if (!page || page < 1 || page > maxPage) {
+        var url = pageUrls[page];
+        if (!url) {
           gotoInput.value = "";
           gotoInput.focus();
           return;
         }
-        var url = pageUrls[page];
-        if (url) {
-          window.location.href = url;
-        }
+        window.location.href = url;
       });
     }
   })();

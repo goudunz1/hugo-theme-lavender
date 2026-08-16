@@ -46,6 +46,10 @@
   --f-sans:
     "Fredoka Variable", "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
   --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --duration-slow: 300ms;
+  --duration-quick: 200ms;
+  /* rem: 900px - 500px / 16px - 14px */
+  font-size: clamp(0.875rem, 0.719rem + 0.5vw, 1rem);
 }
 
 .dark {
@@ -59,11 +63,6 @@
   --c-shadow: rgba(0, 0, 0, 0.24);
 }
 
-:root {
-  /* rem: 900px - 500px / 16px - 14px */
-  font-size: clamp(0.875rem, 0.719rem + 0.5vw, 1rem);
-}
-
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
@@ -71,7 +70,7 @@
   }
 
   body {
-    @apply text-fg bg-bg leading-[1.6] transition-colors duration-1000;
+    @apply text-fg bg-bg leading-[1.6];
   }
 
   a {
@@ -117,49 +116,58 @@
   @apply no-underline select-none;
 }
 
+@utility duration_slow {
+  transition-duration: var(--duration-slow);
+}
+
+@utility duration_quick {
+  transition-duration: var(--duration-quick);
+}
+
 @layer components {
   .hero-page {
     @apply center_by_flex gap-5 p-4 pt-10 flex-1 flex-col text-center;
   }
 
   .icon-button {
-    @apply center_by_flex quiet_link size-10 text-muted bg-bg border-accent text-17 rounded-full border-2;
-    @apply ease-out-back cursor-pointer transition-transform duration-300 will-change-transform hover:scale-108;
+    @apply center_by_flex quiet_link;
+    @apply size-10 text-muted bg-bg border-accent text-17 cursor-pointer rounded-full border-2;
+    @apply duration_slow ease-out-back transition-transform will-change-transform hover:scale-108;
   }
 
   .image-button {
     @apply quiet_link p-0.5 size-15 bg-bg block overflow-hidden rounded-full border-2;
-    @apply ease-out-back transition-transform duration-300 will-change-transform hover:scale-105;
+    @apply ease-out-back duration_slow transition-transform will-change-transform hover:scale-105;
   }
 
   .page-button {
     @apply center_by_flex default_box quiet_link h-9 min-w-9 text-14 rounded-lg text-fg px-2.5;
-    @apply hover:fg_accent transition-colors duration-200;
+    @apply hover:fg_accent duration_quick transition-colors;
   }
 
   .card {
     @apply default_box rounded-xl flex h-fit overflow-hidden no-underline;
-    @apply transition duration-200 will-change-transform;
+    @apply duration_quick transition will-change-transform;
     @apply group-hover:border-accent group-hover:shadow-card group-hover:-translate-y-0.5;
   }
 
   .chip {
     @apply align_by_flex default_box quiet_link text-fg px-2.5 py-0.75 h-7 text-13 rounded-full;
-    @apply hover:fg_accent transition-colors duration-200;
+    @apply hover:fg_accent duration_quick transition-colors;
   }
 
   .tag {
     @apply align_by_flex default_box quiet_link text-fg gap-1.25 h-9 px-3.5 py-1.5 text-14 rounded-full;
-    @apply group-hover:-translate-y-0.5 group-hover:fg_accent group-hover:bg_half_accent transition duration-200;
+    @apply group-hover:-translate-y-0.5 group-hover:fg_accent group-hover:bg_half_accent duration_quick transition;
   }
 
   .post-nav-link {
     @apply default_box rounded-xl text-fg gap-0.75 px-3.5 py-2.5 flex flex-col no-underline;
-    @apply group-hover:fg_accent transition-colors duration-200;
+    @apply group-hover:fg_accent duration_quick transition-colors;
   }
 
   .post-nav-prompt {
-    @apply text-muted group-hover:text-accent text-13 transition-colors duration-200;
+    @apply text-muted group-hover:text-accent text-13 duration_quick transition-colors;
   }
 
   .page-title {
@@ -184,12 +192,12 @@
 
   .sidebar-rail {
     @apply align_by_flex w-19 pointer-events-auto min-h-dvh flex-col justify-between;
-    @apply gap-4 border-border bg-bg px-2 py-4 -translate-x-full border-r transition duration-200;
+    @apply gap-4 border-border bg-bg px-2 py-4 duration_quick -translate-x-full border-r transition;
   }
 
   .sidebar-drawer {
     @apply default_box align_by_flex text-14 overflow-hidden rounded-full p-px no-underline;
-    @apply ease-out group-hover:translate-x-1.5 transition-transform duration-300 will-change-transform;
+    @apply ease-out group-hover:translate-x-1.5 duration_slow transition-transform will-change-transform;
   }
 
   .sidebar-drawer-icon {
@@ -201,12 +209,12 @@
   }
 
   .sidebar-drawer-label-wrapper {
-    @apply max-w-0 ease-out overflow-hidden opacity-0 transition-[max-width,opacity] duration-300;
+    @apply max-w-0 ease-out duration_slow overflow-hidden opacity-0 transition-[max-width,opacity];
     @apply group-hover:max-w-24 group-hover:opacity-100;
   }
 
   .accordion {
-    @apply default_box rounded-xl overflow-hidden transition-colors duration-200;
+    @apply default_box rounded-xl duration_slow overflow-hidden transition-colors;
   }
 
   .accordion-head {
@@ -215,15 +223,15 @@
   }
 
   .accordion-body {
-    @apply max-h-0 overflow-hidden transition-[max-height] duration-300;
+    @apply max-h-0 duration_slow overflow-hidden transition-[max-height];
   }
 
   .accordion-chevron {
-    @apply text-muted transition duration-200;
+    @apply text-muted duration_slow transition;
   }
 
   .input-box {
-    @apply align_by_flex default_box focus-within:border-accent transition-colors duration-200;
+    @apply align_by_flex default_box focus-within:border-accent duration_quick transition-colors;
   }
 
   .input-box input {
@@ -232,7 +240,7 @@
 
   .text-link {
     @apply align_by_flex text-fg gap-1.5 px-4.5 py-2.5 text-14 no-underline;
-    @apply hover:text-accent transition-colors duration-200;
+    @apply hover:text-accent duration_quick transition-colors;
   }
 
   .gradient-to-right {
@@ -371,7 +379,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content .highlight pre {
-  @apply my-0 overflow-x-auto rounded-none border-none bg-transparent;
+  @apply my-0 overflow-x-auto border-none bg-transparent;
 }
 
 .post-content .highlight code {
@@ -420,22 +428,17 @@ body.sidebar-open #sidebar-scrim {
 
 /* Table of Contents. */
 
-.post-toc {
+.post-toc nav#TableOfContents {
   @apply overflow-hidden wrap-break-word;
 }
 
-.post-toc nav#TableOfContents ul,
-.post-toc nav#TableOfContents ol {
-  @apply m-0 p-0 list-none;
-}
-
 .post-toc nav#TableOfContents li {
-  @apply mt-2.5;
+  @apply py-1.5;
 }
 
 .post-toc nav#TableOfContents a {
   @apply text-muted text-13/[1.4] pl-2 block border-l-2 border-l-transparent no-underline;
-  @apply hover:text-accent transition-colors duration-200;
+  @apply hover:text-accent duration_quick transition-colors;
 }
 
 .post-toc nav#TableOfContents a.toc-link--active {
@@ -477,11 +480,30 @@ article ::-webkit-scrollbar-button {
   @apply hidden;
 }
 
+/* Transition duration and theme toggling */
+
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
+  :root {
+    --duration-slow: 100ms !important;
+    --duration-quick: 100ms !important;
+  }
+}
+
+:root.theme-toggling {
+  --duration-slow: 0ms !important;
+  --duration-quick: 0ms !important;
+}
+
+body.theme-toggle-legacy {
+  @apply transition-colors duration-500;
+}
+
+::view-transition-group(root) {
+  animation-duration: 500ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root) {
+    animation-duration: 100ms !important;
   }
 }
