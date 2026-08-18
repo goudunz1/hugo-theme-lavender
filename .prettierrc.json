@@ -4,6 +4,7 @@
   "bracketSameLine": true,
   "htmlWhitespaceSensitivity": "css",
   "tailwindStylesheet": "assets/css/main.css",
+  "tailwindFunctions": ["clsx", "cn"],
   "overrides": [
     { "files": ["layouts/**/*.html"], "options": { "parser": "go-template" } },
     { "files": ["layouts/index.json"], "options": { "parser": "go-template" } }

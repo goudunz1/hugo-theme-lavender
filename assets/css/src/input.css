@@ -333,6 +333,13 @@ body.sidebar-open #sidebar-scrim {
   @apply list-decimal;
 }
 
+.post-content ul ul,
+.post-content ul ol,
+.post-content ol ul,
+.post-content ol ol {
+  @apply my-2.5;
+}
+
 .post-content li {
   @apply my-1.25;
 }
@@ -433,11 +440,11 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc nav#TableOfContents li {
-  @apply py-1.5;
+  @apply flow-root;
 }
 
 .post-toc nav#TableOfContents a {
-  @apply text-muted text-13/[1.4] pl-2 block border-l-2 border-l-transparent no-underline;
+  @apply text-muted text-13/[1.4] px-2 my-1.25 block border-l-2 border-l-transparent no-underline;
   @apply hover:text-accent duration_quick transition-colors;
 }
 

@@ -1,6 +1,6 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-{{ partial "head/seo.html" . }}
+{{- /* partial "head/seo.html" . */}}
 {{- $faviconPath := (site.Params.faviconPath | default "" | absURL) }}
 {{- if site.Params.faviconSvg }}
   <link rel="icon" type="image/svg+xml" href="{{ urls.JoinPath $faviconPath `favicon.svg` }}" />
