@@ -1,28 +1,24 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-{{- /* partial "head/seo.html" . */}}
 {{- $faviconPath := (site.Params.faviconPath | default "" | absURL) }}
+{{- $faviconIcoPath :=  urls.JoinPath $faviconPath "favicon.ico" }}
+{{- $faviconPng16Path := urls.JoinPath $faviconPath "favicon-16x16.png" }}
+{{- $faviconPng32Path :=  urls.JoinPath $faviconPath "favicon-32x32.png" }}
+{{- $faviconApplePath := urls.JoinPath $faviconPath "apple-touch-icon.png" }}
+{{- $faviconAndroid192Path := urls.JoinPath $faviconPath "android-chrome-192x192.png" }}
+{{- $faviconAndroid512Path := urls.JoinPath $faviconPath "android-chrome-512x512.png" }}
 {{- if site.Params.faviconSvg }}
-  <link rel="icon" type="image/svg+xml" href="{{ urls.JoinPath $faviconPath `favicon.svg` }}" />
+  {{- $faviconSvgPath :=  urls.JoinPath $faviconPath "favicon.svg" }}
+  <link rel="icon" type="image/svg+xml" href="{{ $faviconSvgPath }}" />
 {{- end }}
-<link rel="icon" type="image/ico" href="{{ urls.JoinPath $faviconPath `favicon.ico` }}" />
-<link rel="icon" type="image/png" sizes="16x16" href="{{ urls.JoinPath $faviconPath `favicon-16x16.png` }}" />
-<link rel="icon" type="image/png" sizes="32x32" href="{{ urls.JoinPath $faviconPath `favicon-32x32.png` }}" />
-<link rel="apple-touch-icon" sizes="180x180" href="{{ urls.JoinPath $faviconPath `apple-touch-icon.png` }}" />
-<link
-  rel="icon"
-  type="image/png"
-  sizes="192x192"
-  href="{{ urls.JoinPath $faviconPath `android-chrome-192x192.png` }}" />
-<link
-  rel="icon"
-  type="image/png"
-  sizes="512x512"
-  href="{{ urls.JoinPath $faviconPath `android-chrome-512x512.png` }}" />
-{{- /*
-  Because hugo sites aren't SPAs, palette has to be set manually each time the user follows a link. So we do it here
-  instead of main.js, before <body> is loaded, to prevent FOUC (flash of unstyled content).
-*/}}
+<link rel="icon" type="image/ico" href="{{ $faviconIcoPath }}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{{ $faviconPng16Path }}" />
+<link rel="icon" type="image/png" sizes="32x32" href="{{ $faviconPng32Path }}" />
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="{{ $faviconApplePath }}" />
+<link rel="icon" type="image/png" sizes="192x192" href="{{ $faviconAndroid192Path }}" />
+<link rel="icon" type="image/png" sizes="512x512" href="{{ $faviconAndroid512Path }}" />
+{{- /* Hugo sites aren't SPAs, so color theme has to be set manually each time the user visits a new page. */}}
+{{- /* we do it here, before HTML body is loaded, to prevent FOUC (flash of unstyled content). */}}
 <title>
   {{- if .IsHome }}
     {{ site.Title }}
@@ -42,9 +38,7 @@
     if (stored === "light" || stored === "dark") {
       dark = stored === "dark";
     } else if (pref === "auto") {
-      dark =
-        window.matchMedia &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches;
+      dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
     } else {
       dark = pref === "dark";
     }

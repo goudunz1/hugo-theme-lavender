@@ -1,9 +1,14 @@
 {
   "editor.formatOnSave": false,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.wordWrap": "on",
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 120,
   "editor.rulers": [80, 120],
   "files.associations": {
     "*.css": "tailwindcss"
   },
+  "tailwindCSS.experimental.configFile": "assets/css/src/input.css",
+  "tailwindCSS.experimental.classRegex": [
+    "\\$[a-zA-Z_]\\w*Cls\\s*:=\\s*[\"'`]([^\"'`]+)[\"'`]"
+  ]
 }

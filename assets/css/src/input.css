@@ -487,30 +487,11 @@ article ::-webkit-scrollbar-button {
   @apply hidden;
 }
 
-/* Transition duration and theme toggling */
+/* Transition duration */
 
 @media (prefers-reduced-motion: reduce) {
   :root {
     --duration-slow: 100ms !important;
     --duration-quick: 100ms !important;
-  }
-}
-
-:root.theme-toggling {
-  --duration-slow: 0ms !important;
-  --duration-quick: 0ms !important;
-}
-
-body.theme-toggle-legacy {
-  @apply transition-colors duration-500;
-}
-
-::view-transition-group(root) {
-  animation-duration: 500ms;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(root) {
-    animation-duration: 100ms !important;
   }
 }

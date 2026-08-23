@@ -21,28 +21,8 @@ const backToTopThreshold = 400;
         } catch (e) {}
       }
 
-      function beforeToggle() {
-        root.classList.add("theme-toggling");
-      }
-
-      function afterToggle() {
-        root.classList.remove("theme-toggling");
-      }
-
       toggle.addEventListener("click", function () {
-        // Cross-fade the whole page via the View Transitions API when available.
-        if (document.startViewTransition) {
-          // Freeze per-element transitions temporarily,
-          // so the snapshots capture final colors and no residual transitions play.
-          beforeToggle();
-          var vt = document.startViewTransition(function () {
-            toggleTheme();
-          });
-          vt.finished.then(afterToggle, afterToggle); // ES5 equivalence of finally()
-        } else {
-          body.classList.add("theme-toggle-legacy");
-          toggleTheme();
-        }
+        toggleTheme();
       });
     }
   })();
