@@ -11,7 +11,6 @@ other = "Your browser is outdated and may not render this site correctly. Please
 other = "Go to page"
 
 [minRead]
-one = "{{ .Count }} min read"
 other = "{{ .Count }} min read"
 
 [searchLoadMore]
@@ -23,9 +22,6 @@ other = "Load less"
 [searchPlaceholder]
 other = "Search posts..."
 
-[searchStatusCount]
-other = "%d posts found for “%s”"
-
 [searchStatusInitial]
 other = "Type to search..."
 
@@ -34,6 +30,9 @@ other = "No posts match “%s”"
 
 [searchStatusOne]
 other = "1 post found for “%s”"
+
+[searchStatusCount]
+other = "%d posts found for “%s”"
 
 [searchDisabledText]
 other = "Search is disabled. Set <code>searchEnabled = true</code> in <code>hugo.toml</code> to enable it."
@@ -46,20 +45,6 @@ other = "{{ .Count }} words"
 one = "{{ .Count }} entry"
 other = "{{ .Count }} entries"
 
-[categoryCount]
-one = "{{ .Count }} category"
-other = "{{ .Count }} categories"
-
-[tagCount]
-one = "{{ .Count }} tag"
-other = "{{ .Count }} tags"
-
-[tagAlias]
-other = "Tags"
-
-[categoryAlias]
-other = "Categories"
-
 [tocAlias]
 other = "Contents"
 
@@ -69,7 +54,7 @@ other = "Back home"
 [pageNotFound]
 other = "Page not found"
 
-[pageNotFoundText]
+[pageNotFoundDesc]
 other = "The page you're looking for doesn't exist or may have been moved."
 
 [previousPage]

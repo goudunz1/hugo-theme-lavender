@@ -1,0 +1,50 @@
+{{/* Grid layout: terms are alphabetical. */ -}}
+{{ $orderedTaxon := .Data.Terms.Alphabetical -}}
+
+{{/* Title-sorted posts are concatenated into one flat list to paginate. */ -}}
+{{ $flatten := slice -}}
+{{ range $orderedTaxon -}}
+  {{ $flatten = $flatten | append .Pages.ByTitle -}}
+{{ end -}}
+{{ $paginator := partial "helpers/funcs/paginate.html" (dict "page" . "pages" $flatten "config" "grid") -}}
+
+{{/* The current page range [pageStart, pageEnd) over the flat list. */ -}}
+{{ $size := $paginator.PagerSize -}}
+{{ $pageStart := mul (sub $paginator.PageNumber 1) $size -}}
+{{ $pageEnd := add $pageStart $size -}}
+{{ if gt $pageEnd (len $flatten) -}}
+  {{ $pageEnd = len $flatten -}}
+{{ end -}}
+
+{{/* Visible terms are those whose posts intersect the current page. */ -}}
+{{ $visible := dict -}}
+{{ $count := 0 -}}
+{{ range $orderedTaxon -}}
+  {{ $termStart := $count -}}
+  {{ $termEnd := add $count .Count -}}
+  {{ $count = $termEnd -}}
+  {{/* Get the intersection of the pagination slice and the term slice; skip when empty. */ -}}
+  {{ if and (lt $termStart $pageEnd) (gt $termEnd $pageStart) -}}
+    {{/* Leading posts to skip when the term starts before the page start. */ -}}
+    {{ $skip := 0 -}}
+    {{ if lt $termStart $pageStart -}}
+      {{ $skip = sub $pageStart $termStart -}}
+    {{ end -}}
+    {{/* How many posts to take, clamped to what is left in the term. */ -}}
+    {{ $take := sub $pageEnd (add $termStart $skip) -}}
+    {{ if gt $take (sub .Count $skip) -}}
+      {{ $take = sub .Count $skip -}}
+    {{ end -}}
+    {{ $sub := first $take (after $skip .Pages.ByTitle) -}}
+    {{ $visible = merge $visible (dict .Page.Title $sub) -}}
+  {{ end -}}
+{{ end -}}
+
+
+<div class="mt-10">
+  {{ range $title, $pages := $visible -}}
+    {{ $icon := "layout-grid" -}}
+    {{ partial "layouts/items/card-grid.html" (dict "title" $title "icon" $icon "pages" $pages) -}}
+  {{ end -}}
+</div>
+{{ partial "layouts/pagination.html" . -}}

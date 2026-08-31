@@ -1,125 +1,31 @@
-{{- define "main" }}
-  <div class="mb-2">
-    <h1 class="page-title">{{ .Title }}</h1>
-    <p class="meta-text">
-      {{- if eq .Data.Singular "category" }}
-        {{ i18n "categoryCount" (dict "Count" .Pages.Len) }}
-      {{- else }}
-        {{ i18n "tagCount" (dict "Count" .Pages.Len) }}
-      {{- end }}
-    </p>
-  </div>
-  {{- with .Content }}
-    <div class="post-content">{{ . }}</div>
-  {{- end }}
-  {{- if eq .Data.Singular "category" }}
-    {{- /*
-      category: For each category, expand its posts. Uncategorized posts (if any) are appended as a pseudo-category at
-      the end.
-    */}}
-    {{- $all := where .Site.RegularPages "Section" "ne" "" }}
-    {{- /* 1. Collect unique category names, sorted alphabetically. */}}
-    {{- $catOrder := slice }}
-    {{- range $all }}
-      {{- range .GetTerms "categories" }}
-        {{- $catOrder = $catOrder | append .LinkTitle }}
-      {{- end }}
-    {{- end }}
-    {{- $catOrder = uniq $catOrder | sort }}
-    {{- /* 2. Build expanded list grouped by category, Uncategorized appended. */}}
-    {{- $expanded := slice }}
-    {{- range $catName := $catOrder }}
-      {{- range $all }}
-        {{- $inCat := false }}
-        {{- range .GetTerms "categories" }}
-          {{- if eq .LinkTitle $catName }}
-            {{- $inCat = true }}
-          {{- end }}
-        {{- end }}
-        {{- if $inCat }}
-          {{- $expanded = $expanded | append (dict "cat" $catName "page" .) }}
-        {{- end }}
-      {{- end }}
-    {{- end }}
-    {{- range $all }}
-      {{- if not (.GetTerms "categories") }}
-        {{- $expanded = $expanded | append (dict "cat" "Uncategorized" "page" .) }}
-      {{- end }}
-    {{- end }}
-    {{- /* 3. Extract flat pages slice (there might be some duplicates) for .Paginate. */}}
-    {{- $flatPages := slice }}
-    {{- range $expanded }}
-      {{- $flatPages = $flatPages | append .page }}
-    {{- end }}
-    {{- $configuredSize := index site.Params.pagination "posts" }}
-    {{- $paginator := "" }}
-    {{- if $configuredSize }}
-      {{- $s := int $configuredSize }}
-      {{- if lt $s 1 }}
-        {{- $paginator = .Paginate $flatPages }}
-      {{- else }}
-        {{- $paginator = .Paginate $flatPages $s }}
-      {{- end }}
-    {{- else }}
-      {{- $paginator = .Paginate $flatPages }}
-    {{- end }}
-    {{- $size := $paginator.PagerSize }}
-    {{- /* 4. Rebuild buckets within the current page's slice range. */}}
-    {{- $start := mul (sub $paginator.PageNumber 1) $size }}
-    {{- $bucketOrder := slice }}
-    {{- $buckets := dict }}
-    {{- range $i := seq $size }}
-      {{- $idx := add $start (sub $i 1) }}
-      {{- if lt $idx (len $expanded) }}
-        {{- $entry := index $expanded $idx }}
-        {{- $cat := $entry.cat }}
-        {{- if not (in $bucketOrder $cat) }}
-          {{- $bucketOrder = $bucketOrder | append $cat }}
-          {{- $buckets = merge $buckets (dict $cat (slice)) }}
-        {{- end }}
-        {{- $list := index $buckets $cat }}
-        {{- $list = $list | append $entry.page }}
-        {{- $buckets = merge $buckets (dict $cat $list) }}
-      {{- end }}
-    {{- end }}
-    {{- /* 5. Render buckets; Uncategorized uses folder2-open icon. */}}
-    {{- range $bucketOrder }}
-      {{- $icon := "layout-grid" }}
-      {{- if eq . "Uncategorized" }}
-        {{- $icon = "folder-open" }}
-      {{- end }}
-      {{ partial "separator.html" (dict "groupTitle" . "groupIcon" $icon) }}
-      {{- $pages := index $buckets . }}
-      {{ partial "post-cards.html" $pages }}
-    {{- end }}
-    {{ partial "pagination.html" . }}
-  {{- else }}
-    {{- /* tag: cloud, sorted alphabetically. */}}
-    {{- $sortedTags := sort .Pages ".LinkTitle" "asc" }}
-    {{- $configuredSize := index site.Params.pagination "tags" }}
-    {{- $paginator := "" }}
-    {{- if $configuredSize }}
-      {{- $s := int $configuredSize }}
-      {{- if lt $s 1 }}
-        {{- $paginator = .Paginate $sortedTags }}
-      {{- else }}
-        {{- $paginator = .Paginate $sortedTags $s }}
-      {{- end }}
-    {{- else }}
-      {{- $paginator = .Paginate $sortedTags }}
-    {{- end }}
-    <div class="my-8 gap-2.5 flex flex-wrap">
-      {{- range $paginator.Pages }}
-        <div class="group max-w-full">
-          <a href="{{ .RelPermalink }}" class="tag">
-            <i class="ti ti-tag"></i><span class="truncate">{{ .LinkTitle }}</span
-            ><span class="text-muted text-13 group-hover:text-accent transition-colors duration_quick"
-              >{{ .Pages.Len }}</span
-            >
-          </a>
-        </div>
-      {{- end }}
-    </div>
-    {{ partial "pagination.html" . }}
-  {{- end }}
-{{- end }}
+{{ define "main" -}}
+  {{ $singular := .Data.Singular -}}
+  {{ $plural := .Data.Plural -}}
+  {{/* Users can change layouts of custom taxonomies by setting param taxonomyLayout.<taxon>. */ -}}
+  {{ $layout := index site.Params.taxonomyLayout $singular -}}
+  {{ if and (ne $layout "grid") (ne $layout "cloud") -}}
+    {{/* Layout fallbacks: category -> grid; tag (and others) -> cloud. */ -}}
+    {{ $layout = cond (eq $singular "category") "grid" "cloud" -}}
+  {{ end -}}
+
+  {{/* Grid: N categories &middot; M entries */ -}}
+  {{/* Cloud: N tags */ -}}
+  {{ $taxonObj := .Data.Terms -}}
+  {{ $termCount := len $taxonObj -}}
+  {{ $taxonName := cond (eq $termCount 1) $singular $plural -}}
+  {{ $desc := printf "%d %s" $termCount $taxonName -}}
+  {{ $pageCount := 0 -}}
+  {{ range $taxonObj -}}
+    {{ $pageCount = add $pageCount (len .Pages) -}}
+  {{ end -}}
+  {{ if eq $layout "grid" -}}
+    {{ $desc = (printf "%s &middot; %s" $desc (i18n "entryCount" (dict "Count" $pageCount))) | safeHTML -}}
+  {{ end -}}
+  {{ partial "layouts/front.html" (dict "title" .Title "desc" $desc) -}}
+
+  {{ if eq $layout "grid" -}}
+    {{ partial "layouts/taxonomy/grid.html" . -}}
+  {{ else -}}
+    {{ partial "layouts/taxonomy/cloud.html" . -}}
+  {{ end -}}
+{{ end -}}

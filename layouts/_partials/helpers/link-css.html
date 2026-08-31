@@ -1,0 +1,11 @@
+{{/* Context: CSS path (lib/css/abc.css) */ -}}
+{{ with resources.Get . -}}
+  {{ if hugo.IsDevelopment -}}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" />
+  {{ else -}}
+    {{/* Production: minify, fingerprint and add the SRI integrity hash. */ -}}
+    {{ with . | minify | fingerprint -}}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
+    {{ end -}}
+  {{ end -}}
+{{ end -}}

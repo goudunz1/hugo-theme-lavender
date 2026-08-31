@@ -1,0 +1,43 @@
+{{ define "main" -}}
+  {{ partial "layouts/front.html" (dict "title" .Title "desc" .Description) -}}
+  {{ with site.Params.friends -}}
+    <div class="mt-6 mb-8 gap-4 desktop:grid-cols-2 grid grid-cols-1">
+      {{ range . -}}
+        {{/* Link card params: */ -}}
+        {{/* "name": name your link */ -}}
+        {{/* "url": link destination */ -}}
+        {{/* "avatar": URL of the image to display, better to use favicon of the link */ -}}
+        {{/* "desc": short description of your link */ -}}
+
+
+        <div class="group">
+          <a
+            href="{{ .url }}"
+            class="card group-hover:-translate-y-0.5 gap-4 items-center"
+            target="_blank"
+            rel="noopener">
+            {{/* Optional avatar */ -}}
+            {{ $name := .name -}}
+            {{ with .avatar -}}
+              <img
+                class="border-border size-12 flex-none rounded-full border-2 object-cover select-none"
+                src="{{ . }}"
+                alt="{{ $name }}"
+                loading="lazy" />
+            {{ end -}}
+            {{/* Enable stretching or shrinking to activate `truncate`. */ -}}
+            <div class="min-w-0 flex-1">
+              <h3 class="mb-0.5 text-fg font-semibold truncate">{{ $name }}</h3>
+              {{/* Optional short description */ -}}
+              {{ with .desc -}}
+                <p class="text-14 text-muted truncate">{{ . }}</p>
+              {{ end -}}
+            </div>
+            {{/* External-link icon */ -}}
+            <i class="ti ti-external-link text-muted group-hover:text-accent"></i>
+          </a>
+        </div>
+      {{ end -}}
+    </div>
+  {{ end -}}
+{{ end -}}

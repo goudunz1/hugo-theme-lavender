@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "build": "npm run build:tailwind",
-    "build:tailwind": "tailwindcss -i ./assets/css/src/input.css -o ./assets/css/main.css",
+    "build:tailwind": "tailwindcss -i ./assets/css/src/main.css -o ./assets/css/main.css",
     "build:selfhost": "node scripts/copy-deps.js",
-    "watch": "tailwindcss -i ./assets/css/src/input.css -o ./assets/css/main.css --watch",
+    "watch": "tailwindcss -i ./assets/css/src/main.css -o ./assets/css/main.css --watch",
     "clean": "rimraf assets/css/main.css assets/lib static/lib"
   },
   "dependencies": {

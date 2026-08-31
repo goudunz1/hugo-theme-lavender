@@ -1,0 +1,36 @@
+<aside class="gap-6 sidebar:order-0 order-first flex flex-col">
+  {{ $class := "bg-bg border-border rounded-xl p-4 border" -}}
+  {{ $titleClass := "text-muted tracking-wider mb-2.5 text-13 uppercase wrap-break-word" -}}
+  {{/* Iterate every taxonomy defined on the site (e.g. categories, tags). */ -}}
+  {{ range $plural, $taxonObj := site.Taxonomies -}}
+    {{/* Only render a bulletin card when the current post belongs to this taxonomy. */ -}}
+    {{ with $.GetTerms $plural -}}
+      <div class="{{ $class }}">
+        <p class="{{ $titleClass }}">{{ $plural }}</p>
+        <div class="gap-1.5 flex flex-wrap">
+          {{ range . -}}
+            <a class="cloud px-2.5 py-0.75 h-7 text-13 min-w-0" href="{{ .RelPermalink }}">
+              <span class="truncate">{{ .LinkTitle }}</span>
+            </a>
+          {{ end -}}
+        </div>
+      </div>
+    {{ end -}}
+  {{ end -}}
+  {{/* TOC */ -}}
+  {{ $tocEnabled := .Params.tableOfContents | default site.Params.tableOfContents | default true -}}
+  {{ if $tocEnabled -}}
+    {{ $toc := .TableOfContents -}}
+    {{/* Skip the bulletin card when the TOC is 'empty' (has no headings). */ -}}
+    {{ if strings.Contains $toc "href" -}}
+      <div class="{{ $class }} sidebar:sticky sidebar:top-6 sidebar:max-h-[calc(100dvh-3rem)]">
+        <p class="{{ $titleClass }}">{{ i18n "tocAlias" }}</p>
+        {{/* -mr-2: Fold the scrollbar to right padding of the container. */ -}}
+        {{/* overscroll-contain: Prevent scroll chaining to the main content. */ -}}
+        <div id="post-toc" class="post-toc -mr-2 overflow-x-hidden overflow-y-scroll overscroll-contain">
+          {{ $toc }}
+        </div>
+      </div>
+    {{ end -}}
+  {{ end -}}
+</aside>

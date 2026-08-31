@@ -1,0 +1,22 @@
+{{ with .pages -}}
+  {{/* Optional separator bar, otherwise a pure grid. */ -}}
+  {{ with $.title -}}
+    <h2 class="not-first:mt-8 mb-4 font-bold text-accent flex items-center text-[1.75rem]">
+      {{/* Optional heading icon (e.g. layout-grid on category grids). */ -}}
+      {{ with $.icon -}}
+        <i class="ti ti-{{ . }}"></i>
+      {{ end -}}
+      {{/* Different from other cases, we can't let very long titles auto shrink (by setting min-w-0) here to */ -}}
+      {{/* fold them because the separator (flex-1) eats up as much space as possible. */ -}}
+      {{/* Therefore we limit title width manually with max-w-1/2. */ -}}
+      <span class="not-first:ml-2.5 mr-4 max-w-1/2 truncate">{{ . }}</span>
+      <span class="h-0.75 from-accent flex-1 border-0 bg-linear-to-r to-transparent"></span>
+    </h2>
+  {{ end -}}
+  {{/* Responsive column count (3 to 1). */ -}}
+  <div class="gap-4 sidebar:grid-cols-3 desktop:grid-cols-2 grid grid-cols-1">
+    {{ range . -}}
+      {{ partial "layouts/items/post-card.html" . -}}
+    {{ end -}}
+  </div>
+{{ end -}}

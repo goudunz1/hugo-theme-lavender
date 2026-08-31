@@ -1,0 +1,32 @@
+{{ define "main" -}}
+  <section class="pt-10 flex flex-1 flex-col items-center justify-center">
+    {{ partial "layouts/profile.html" . -}}
+    <div class="mt-5 max-w-160 text-center wrap-break-word">
+      <h1 class="font-bold text-[2.5rem]">{{ .Title }}</h1>
+      {{ with .Description -}}
+        <p class="mt-1.25 text-14 text-muted">{{ . }}</p>
+      {{ end -}}
+    </div>
+    {{/* Collapsible "about" items (title + Markdown body), driven by JS. */ -}}
+    {{ with site.Params.aboutItems -}}
+      <div class="mt-9 w-120 gap-2.5 flex flex-col">
+        {{ range . -}}
+          {{/* Params: */ -}}
+          {{/* "title": title of the item displayed on the left */ -}}
+          {{/* "content": markdown content */ -}}
+
+
+          <div class="accordion">
+            <button type="button" class="accordion-head">
+              <span>{{ .title }}</span>
+              <i class="accordion-chevron ti ti-chevron-down"></i>
+            </button>
+            <div class="accordion-body">
+              <div class="post-content text-muted! pb-4 px-4.5">{{ .content | markdownify }}</div>
+            </div>
+          </div>
+        {{ end -}}
+      </div>
+    {{ end -}}
+  </section>
+{{ end -}}

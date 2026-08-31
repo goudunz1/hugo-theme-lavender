@@ -1,0 +1,23 @@
+{{/* Params: */ -}}
+{{/* "page": the list page object (section, taxonomy, term, .etc) */ -}}
+{{/* "pages": slice of single pages to paginate */ -}}
+{{/* "config": page size choice in site.Params.pageSize */ -}}
+{{/* Return: the paginator object */ -}}
+
+{{ $section := .page -}}
+{{ $pages := .pages | default $section.Pages -}}
+{{ $size := 0 -}}
+{{ with index site.Params.pageSize .config -}}
+  {{ if findRE "^[1-9][0-9]*$" . -}}
+    {{ $size = int . -}}
+  {{ end -}}
+{{ end -}}
+
+{{/* Paginate, fall back to Hugo's [pagination] config. */ -}}
+{{ $paginator := "" -}}
+{{ if gt $size 0 -}}
+  {{ $paginator = $section.Paginate $pages $size -}}
+{{ else -}}
+  {{ $paginator = $section.Paginate $pages -}}
+{{ end -}}
+{{ return $paginator -}}

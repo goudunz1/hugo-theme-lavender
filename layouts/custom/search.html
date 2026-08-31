@@ -1,0 +1,62 @@
+{{/* Search page based on MiniSearch. */ -}}
+{{ define "main" -}}
+  {{ partial "layouts/front.html" (dict "title" .Title "desc" .Description) -}}
+  {{/* Search is gated behind param `searchEnabled`. */ -}}
+  {{ $enabled := site.Params.searchEnabled | default false -}}
+  {{ if not $enabled -}}
+    <p class="text-14 text-muted mt-6">{{ i18n "searchDisabledText" | safeHTML }}</p>
+  {{ else -}}
+    {{/* data-index-url points search.js at the generated JSON index. */ -}}
+    <div class="input-box gap-2 mt-6 mb-4 rounded-xl px-4 py-2.5">
+      <i class="ti ti-search text-muted"></i>
+      <input
+        type="search"
+        id="search-input"
+        placeholder="{{ i18n `searchPlaceholder` }}"
+        autocomplete="off"
+        autofocus
+        class="text-base flex-1"
+        data-index-url="{{ `index.json` | relURL }}" />
+    </div>
+
+    {{- /* i18n keys for each state are exposed to search.js through data-* attributes. */ -}}
+    <p
+      id="search-status"
+      class="text-14 text-muted mb-4 pl-1"
+      data-i18n-none="{{ i18n `searchStatusNone` }}"
+      data-i18n-count="{{ i18n `searchStatusCount` }}"
+      data-i18n-one="{{ i18n `searchStatusOne` }}">
+      {{ i18n "searchStatusInitial" }}
+    </p>
+
+    {{- /* Results container is an inert placeholder grid; filled by search.js via the data-* hooks, */ -}}
+    {{/* see layouts/_partials/layouts/items/post-card.html. */ -}}
+    <div id="search-results" hidden>
+      {{ partial "layouts/items/card-grid.html" (dict "pages" (slice site.Home)) -}}
+    </div>
+
+    {{- /* Page card is cloned from this <template> for every hit. */ -}}
+    <template id="search-card-template">
+      {{- partial "layouts/items/post-card.html" site.Home -}}
+    </template>
+
+    {{- /* Load-more/less button for paged results. */ -}}
+    <div class="mt-6 gap-1.5 flex items-center justify-center">
+      {{ $class := "border-border text-fg hover:text-accent hover:border-accent" -}}
+      <button id="search-more" type="button" class="small-box {{ $class }}" hidden>
+        {{ i18n "searchLoadMore" }}
+      </button>
+      <button id="search-less" type="button" class="small-box {{ $class }}" hidden>
+        {{ i18n "searchLoadLess" }}
+      </button>
+    </div>
+
+    {{- /* Search scripts */ -}}
+    {{ if site.Params.useCdn | default true -}}
+      <script defer src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js"></script>
+    {{ else -}}
+      {{ partial "helpers/link-js.html" "lib/js/minisearch.js" -}}
+    {{ end -}}
+    {{ partial "helpers/link-js.html" "js/search.js" -}}
+  {{ end -}}
+{{ end -}}

@@ -1,0 +1,31 @@
+{{/* MathJax and standard Markdown disagree on inline math delimited by dollar symbols, so supporting */ -}}
+{{/* `$...$` is optional (param markdownInlineMath). For example, MathJax interprets: */ -}}
+{{/* I'll give you \\$2 if you can resolve $x+1=2$, */ -}}
+{{/* while standard Markdown (and common editors like Obsidian) needs the dollar signs escaped directly: */ -}}
+{{/* I'll give you \$2 if you can resolve $x+1=2$. */ -}}
+
+{{ $math := .Param "math" | default false -}}
+{{ if $math -}}
+  {{ $markdownInlineMath := .Param "markdownInlineMath" | default false -}}
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+  <script>
+    MathJax = {
+      startup: {
+        elements: [".post-content"], // Activate MathJax on the main article only.
+      },
+      tex: {
+        displayMath: [
+          ["\\[", "\\]"],
+          ["$$", "$$"],
+        ],
+        inlineMath: [
+          ["\\(", "\\)"], // This is not a comment: {{ if $markdownInlineMath }}
+          ["$", "$"], // {{ end }}
+        ],
+      },
+      loader: {
+        load: ["ui/safe"],
+      },
+    };
+  </script>
+{{ end -}}

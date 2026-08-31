@@ -1,15 +1,19 @@
-{{- /* JSON search index, generated at build time. Emits an empty array when search is disabled. */}}
-{{- $enabled := site.Params.searchEnabled | default false }}
-{{- $entries := slice }}
-{{- if $enabled }}
-  {{- range where site.RegularPages "Section" "ne" "" }}
-    {{- $entries = $entries | append (dict
+{{/* JSON search index generated at build time (consumed by the search page). */ -}}
+{{ $entries := slice -}}
+{{ $enabled := site.Params.searchEnabled | default false -}}
+{{ if $enabled -}}
+  {{/* Sections/top pages are skipped */ -}}
+  {{ range where site.RegularPages "Section" "ne" "" -}}
+    {{ $author := .Param "author" | default "Anonymous" -}}
+    {{/* Mirrors the card slots, yet keeps full content to power search scripts. */ -}}
+    {{ $entries = $entries | append (dict
       "title" .Title
       "url" .RelPermalink
       "date" (.Date.Format "2006-01-02")
+      "author" $author
       "content" (.Plain | plainify)
       )
-    }}
-  {{- end }}
-{{- end }}
-{{- $entries | jsonify }}
+    -}}
+  {{ end -}}
+{{ end -}}
+{{ $entries | jsonify -}}

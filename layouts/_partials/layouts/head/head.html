@@ -1,0 +1,61 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+{{- /* favicon URLs from Params.faviconPath (relative against the site). */ -}}
+{{ $faviconPath := (site.Params.faviconPath | default "" | absURL) -}}
+{{ $faviconIcoPath := urls.JoinPath $faviconPath "favicon.ico" -}}
+{{ $faviconPng16Path := urls.JoinPath $faviconPath "favicon-16x16.png" -}}
+{{ $faviconPng32Path := urls.JoinPath $faviconPath "favicon-32x32.png" -}}
+{{ $faviconApplePath := urls.JoinPath $faviconPath "apple-touch-icon.png" -}}
+{{ $faviconAndroid192Path := urls.JoinPath $faviconPath "android-chrome-192x192.png" -}}
+{{ $faviconAndroid512Path := urls.JoinPath $faviconPath "android-chrome-512x512.png" -}}
+{{/* SVG favicon emitted only when Params.faviconSvg is enabled. */ -}}
+{{ if site.Params.faviconSvg -}}
+  {{ $faviconSvgPath := urls.JoinPath $faviconPath "favicon.svg" -}}
+  <link rel="icon" type="image/svg+xml" href="{{ $faviconSvgPath }}" />
+{{ end -}}
+<link rel="icon" type="image/ico" href="{{ $faviconIcoPath }}" />
+<link rel="icon" type="image/png" sizes="16x16" href="{{ $faviconPng16Path }}" />
+<link rel="icon" type="image/png" sizes="32x32" href="{{ $faviconPng32Path }}" />
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="{{ $faviconApplePath }}" />
+<link rel="icon" type="image/png" sizes="192x192" href="{{ $faviconAndroid192Path }}" />
+<link rel="icon" type="image/png" sizes="512x512" href="{{ $faviconAndroid512Path }}" />
+
+{{- /* Stylesheets */ -}}
+{{ partial "helpers/link-css.html" "css/main.css" -}}
+{{ partial "helpers/link-css.html" "css/syntax.css" -}}
+{{/* Served from jsDelivr when `useCdn = true`, or self-hosted from assets/lib/ when false. */ -}}
+{{ if site.Params.useCdn | default true -}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fredoka@5.2.10/wght.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/maple-mono@5.2.6/latin.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.46.0/dist/tabler-icons.min.css" />
+{{ else -}}
+  {{ partial "helpers/link-css.html" "lib/css/fredoka-variable.css" -}}
+  {{ partial "helpers/link-css.html" "lib/css/maple-mono.css" -}}
+  {{ partial "helpers/link-css.html" "lib/css/tabler-icons.css" -}}
+{{ end -}}
+
+{{/* Scripts */ -}}
+{{ partial "helpers/link-js.html" "js/main.js" -}}
+{{/* Hugo sites aren't SPAs, so color theme has to be set manually each time the user visits a new page. */ -}}
+{{/* we do it here, before HTML body is loaded, to prevent FOUC (flash of unstyled content). */ -}}
+<script>
+  (function () {
+    var pref ="{{ site.Params.themeDefault | default `auto` }}";
+    var stored = null;
+    try {
+      stored = localStorage.getItem("palette");
+    } catch (e) {}
+    var dark;
+    if (stored === "light" || stored === "dark") {
+      dark = stored === "dark";
+    } else if (pref === "auto") {
+      dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    } else {
+      dark = pref === "dark";
+    }
+    if (dark) {
+      document.documentElement.classList.add("dark");
+    }
+  })();
+</script>

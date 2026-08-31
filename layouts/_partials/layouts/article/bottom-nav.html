@@ -1,0 +1,26 @@
+{{ $prev := .PrevInSection -}}
+{{ $next := .NextInSection -}}
+{{/* Nothing renders when both prev/next are empty. */ -}}
+{{ if or $next $prev -}}
+  <nav class="mt-10 gap-4 border-border pt-6 desktop:grid-cols-2 grid grid-cols-1 border-t">
+    {{ $class := "bg-bg border-border border rounded-xl text-fg px-3.5 py-2.5 no-underline" -}}
+    {{ $class = "hover:text-accent hover:border-accent" | printf "%s %s" $class -}}
+    {{/* text-end takes effect only on inline blocks. */ -}}
+    {{ $hintClass := "text-muted text-13 group-hover:text-accent inline-flex items-center mb-0.75" -}}
+
+    {{ with $next -}}
+      {{/* The newer (next). */ -}}
+      <a class="group {{ $class }}" href="{{ .RelPermalink }}">
+        <p class="{{ $hintClass }}"><i class="ti ti-arrow-left"></i>{{ i18n "nextPage" }}</p>
+        <p class="truncate">{{ .Title }}</p>
+      </a>
+    {{ end -}}
+    {{ with $prev -}}
+      {{/* The older (previous), right aligned. Stick to the right even if there's no next link on the left. */ -}}
+      <a class="group {{ $class }} desktop:text-end desktop:col-start-2" href="{{ .RelPermalink }}">
+        <p class="{{ $hintClass }}">{{ i18n "previousPage" }}<i class="ti ti-arrow-right"></i></p>
+        <p class="truncate">{{ .Title }}</p>
+      </a>
+    {{ end -}}
+  </nav>
+{{ end -}}

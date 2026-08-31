@@ -1,69 +1,12 @@
-{{- define "main" }}
-  {{- if eq .Section "" }}
-    {{- /* standalone pages, of which there's no corresponding template */}}
-    {{ partial "title-and-desc.html" . }}
-    {{- with .Content }}
-      <div class="post-content">{{ . }}</div>
-    {{- end }}
-  {{- else }}
-    {{- /* a post */}}
-    {{- $author := .Params.author | default site.Params.author | default "Anonymous" }}
-    {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-    {{- $dateHuman := .Date | time.Format "2006-01-02" }}
-    {{- $tocEnabled := .Params.tableOfContents | default site.Params.tableOfContents | default true }}
-    {{- $math := .Params.math | default site.Params.math | default false }}
-    <article class="flex flex-1 flex-col">
-      <h1 class="page-title">{{ .Title }}</h1>
-      <div class="meta-info text-14 mb-6 gap-3 flex-wrap">
-        <span class="align_by_flex gap-1.25 min-w-0"
-          ><i class="ti ti-user"></i><span class="truncate">{{ $author }}</span></span
-        >
-        <span class="align_by_flex gap-1.25 flex-none"
-          ><i class="ti ti-calendar"></i><time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time></span
-        >
-        {{- $showReadingTime := .Params.readingTime | default site.Params.readingTime | default true }}
-        {{- if $showReadingTime }}
-          <span class="align_by_flex gap-1.25 flex-none"
-            ><i class="ti ti-clock"></i>{{ i18n "minRead" (dict "Count" .ReadingTime) }}</span
-          >
-        {{- end }}
-        {{- $showWordCount := .Params.wordCount | default site.Params.wordCount | default true }}
-        {{- if $showWordCount }}
-          <span class="align_by_flex gap-1.25 flex-none"
-            ><i class="ti ti-file-text"></i>{{ i18n "wordCount" (dict "Count" .WordCount) }}</span
-          >
-        {{- end }}
-      </div>
-      {{- /* Two columns if possible, a single stack on desktop devices. */}}
-      <div class="gap-10 sidebar:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1 content-start">
-        <div class="post-content">{{ .Content }}</div>
-        <aside class="gap-6 sidebar:order-0 order-first flex flex-col">
-          {{- with .GetTerms "categories" }}
-            {{ partial "chips.html" (dict "links" . "caption" (i18n "categoryAlias")) }}
-          {{- end }}
-          {{- with .GetTerms "tags" }}
-            {{ partial "chips.html" (dict "links" . "caption" (i18n "tagAlias")) }}
-          {{- end }}
-          {{- if $tocEnabled }}
-            {{- /* debug.Dump .Fragments */}}
-            {{- $toc := .TableOfContents }}
-            {{- if strings.Contains $toc "href" }}
-              <div class="panel sidebar:sticky sidebar:top-6 sidebar:max-h-[calc(100dvh-3rem)] static max-h-none">
-                <div id="post-toc" class="post-toc h-full overflow-x-hidden overflow-y-scroll">
-                  <p class="caption">{{ i18n "tocAlias" }}</p>
-                  {{ $toc }}
-                </div>
-              </div>
-            {{- end }}
-          {{- end }}
-        </aside>
-      </div>
-      {{- if or .PrevInSection .NextInSection }}
-        {{ partial "post-nav.html" (dict "prev" .PrevInSection "next" .NextInSection) }}
-      {{- end }}
-    </article>
-    {{- if $math }}
-      {{ partial "math.html" . }}
-    {{- end }}
-  {{- end }}
-{{- end }}
+{{ define "main" -}}
+  {{ partial "layouts/front.html" (dict "title" .Title) -}}
+  {{ partial "layouts/article/meta.html" . -}}
+  {{/* Two columns when possible: content next to the bulletins; a single stack on narrow screens. */ -}}
+  <article class="mt-10 gap-10 sidebar:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1 content-start">
+    <div class="post-content">{{ .Content }}</div>
+    {{ partial "layouts/article/bulletins.html" . -}}
+  </article>
+  {{/* Navigate previous/next. */ -}}
+  {{ partial "layouts/article/bottom-nav.html" . -}}
+  {{ partial "helpers/math.html" . -}}
+{{ end -}}

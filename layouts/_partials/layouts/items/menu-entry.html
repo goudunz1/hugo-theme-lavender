@@ -1,0 +1,33 @@
+{{/* Params: */ -}}
+{{/* "page": the current page */ -}}
+{{/* "menu": menu entry object */ -}}
+
+{{ $page := .page -}}
+{{ with .menu -}}
+  {{/* Zero-width "pin" wrapper: to expand entries rightwards like a drawer on hover while */ -}}
+  {{/* staying centered otherwise */ -}}
+  {{/* Alignment uses a negative left margin: half of icon size (5/4rem) + padding (1px) + border (1px). */ -}}
+  <div class="w-0">
+    {{/* Hover event listener to prevent bouncing back. */ -}}
+    <div class="group text-14 -ml-[(var(--spacing)*5+2px)] size-fit">
+      {{/* Whether the menu entry matches the current page or its ancestor. */ -}}
+      {{ $active := or ($page.IsMenuCurrent .Menu .) ($page.HasMenuCurrent .Menu .) -}}
+      {{/* Users can configure icon for the menu in menu params. */ -}}
+      {{ $icon := .Params.icon | default "link" -}}
+      {{/* <a> is highlighted by default, so we just mute it when its inactive. */ -}}
+      {{ $class := "bg-bg group-hover:translate-x-1.5 flex items-baseline rounded-full border p-px no-underline" -}}
+      {{ $class = printf "%s %s" $class (cond $active "layer-fog" "border-border") -}}
+      <a href="{{ .URL }}" class="{{ $class }}">
+        {{ $class = cond $active "" "text-muted " -}}
+        <div class="{{ $class -}} size-10 flex items-center justify-center">
+          <i class="ti ti-{{ $icon }}"></i>
+        </div>
+        {{/* Simulate a drawer by setting max-width; Change opacity for transition effect. */ -}}
+        <div class="max-w-0 opacity-0 group-hover:max-w-fit group-hover:opacity-100">
+          {{ $class = cond $active "" "text-fg " -}}
+          <p class="{{ $class -}} max-w-48 pr-3 font-medium truncate">{{ .Name }}</p>
+        </div>
+      </a>
+    </div>
+  </div>
+{{ end -}}

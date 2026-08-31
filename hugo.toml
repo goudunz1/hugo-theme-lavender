@@ -20,9 +20,13 @@ math = false
 readingTime = true
 wordCount = true
 
-[params.pagination]
-posts = 12
-tags = 24
+[params.pageSize]
+grid = 9
+cloud = 12
+
+[params.taxonomyLayout]
+category = "grid"
+tag = "cloud"
 
 [[params.social]]
 name = "GitHub"

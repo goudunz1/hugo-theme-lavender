@@ -1,0 +1,73 @@
+{{ $paginator := .Paginator -}}
+{{/* Do nothing if there's only one page. */ -}}
+{{ if gt $paginator.TotalPages 1 -}}
+  <nav class="mt-10 gap-1.5 flex flex-wrap items-center justify-center">
+    {{ $class := "border-border text-fg hover:text-accent hover:border-accent" -}}
+    {{ $mutedClass := "border-border text-muted opacity-40" -}}
+
+    {{/* Left arrow disabled on the first page. */ -}}
+    {{ if $paginator.HasPrev -}}
+      <a class="small-box {{ $class }} no-underline" href="{{ $paginator.Prev.URL }}" rel="prev">
+        <i class="ti ti-chevron-left"></i>
+      </a>
+    {{ else -}}
+      <div class="small-box {{ $mutedClass }}">
+        <i class="ti ti-chevron-left"></i>
+      </div>
+    {{ end -}}
+
+    {{/* Show visible pages only. */ -}}
+    {{ $total := $paginator.TotalPages -}}
+    {{ $curr := $paginator.PageNumber -}}
+    {{ $nums := partial "helpers/funcs/visible-pages.html" (dict "total" $total "curr" $curr) -}}
+    {{ $prev := 0 -}}
+    {{ range $nums -}}
+      {{/* Insert an ellipsis when the next number is not consecutive. */ -}}
+      {{ if and (gt $prev 0) (gt (sub . $prev) 1) -}}
+        <span class="small-box text-muted border-none">&hellip;</span>
+      {{ end -}}
+
+      {{/* Highlight current page. */ -}}
+      {{ if eq . $curr -}}
+        <div class="small-box layer-fog border-accent text-accent font-semibold">{{ . }}</div>
+      {{ else -}}
+        {{ $pager := index $paginator.Pagers (sub . 1) -}}
+        <a class="small-box {{ $class }} no-underline" href="{{ $pager.URL }}">{{ . }}</a>
+      {{ end -}}
+      {{ $prev = . -}}
+    {{ end -}}
+
+    {{/* Right arrow disabled on the last page. */ -}}
+    {{ if $paginator.HasNext -}}
+      <a class="small-box {{ $class }} no-underline" href="{{ $paginator.Next.URL }}" rel="next">
+        <i class="ti ti-chevron-right"></i>
+      </a>
+    {{ else -}}
+      <div class="small-box {{ $mutedClass }}">
+        <i class="ti ti-chevron-right"></i>
+      </div>
+    {{ end -}}
+
+    {{ $pageUrls := dict -}}
+    {{ range $paginator.Pagers -}}
+      {{ $pageUrls = merge $pageUrls (dict (string .PageNumber) .URL) -}}
+    {{ end -}}
+    {{/* data-pages: collect the page no. -> URL pairs and embed them as JSON for main.js. */ -}}
+    <form id="pagination-goto" class="gap-1.5 flex items-center" data-pages="{{ $pageUrls | jsonify | safeJS }}">
+      <div class="input-box rounded-lg h-9 w-18 px-2.5">
+        {{/* Wrapper is width-limited, so we set min-w-0 to prevent overflow. */ -}}
+        <input
+          id="pagination-goto-input"
+          type="text"
+          inputmode="numeric"
+          autocomplete="off"
+          maxlength="5"
+          class="text-14 min-w-0 text-center"
+          placeholder="{{ $curr }}" />
+      </div>
+      <button type="submit" class="small-box {{ $class }}" title="{{ i18n `gotoPage` }}">
+        <i class="ti ti-corner-down-left"></i>
+      </button>
+    </form>
+  </nav>
+{{ end -}}

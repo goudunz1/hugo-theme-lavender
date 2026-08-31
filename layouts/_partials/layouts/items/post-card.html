@@ -1,0 +1,38 @@
+{{/* Input: the page; Output: card representation of that page. */ -}}
+<div class="group">
+  {{/* In mobile mode there's only one column, so we give it a flexible height. */ -}}
+  <a href="{{ .RelPermalink }}" class="card group-hover:-translate-y-0.5 min-h-48 desktop:h-56 flex-col" data-url>
+    {{/* Snippet: page Description when present, otherwise the first 160 chars of the plain text. */ -}}
+    {{/* This is the main part of the card so it should take as much space as possible. */ -}}
+    <div class="flex-1">
+      {{/* Line-clamped elements shouldn't be stretched to hide the clamped data. */ -}}
+      {{/* So we give `flex-1` to a wrapper. */ -}}
+      <p class="text-muted text-14 desktop:line-clamp-5 line-clamp-4 wrap-break-word" data-snippet>
+        {{- with .Description -}}
+          {{ . -}}
+        {{ else -}}
+          {{ $.Plain | truncate 160 -}}
+        {{ end -}}
+      </p>
+    </div>
+    <hr class="bg-border my-2.5 h-px border-0" />
+    {{/* Card title */ -}}
+    <h3 class="mb-1 text-base text-fg font-semibold truncate" data-title>{{ .Title }}</h3>
+    {{/* Author and date (same fallbacks as the article meta line) */ -}}
+    {{ $author := .Param "author" | default "Anonymous" -}}
+    {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
+    {{ $dateHuman := .Date | time.Format "2006-01-02" -}}
+    <div class="text-13 gap-2 text-muted flex justify-start">
+      {{ $class := "first:min-w-0 not-first:flex-none gap-0.75 flex items-baseline" -}}
+      <span class="{{ $class }}"
+        ><i class="ti ti-user"></i><span class="truncate" data-author>{{ $author }}</span></span
+      >
+      {{/* Card is itself width-limited, so when the author span gets long enough, */ -}}
+      {{/* to prevent other items from wrapping, we should give them `flex-none`. */ -}}
+      <span class="{{ $class }}"
+        ><i class="ti ti-calendar"></i
+        ><span><time datetime="{{ $dateMachine }}" data-date>{{ $dateHuman }}</time></span></span
+      >
+    </div>
+  </a>
+</div>

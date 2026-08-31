@@ -1,0 +1,63 @@
+{{/* Full-screen fixed layer that owns the sidebar's scrolling (on mobile the drawer slides over content), */ -}}
+{{/* which gets `pointer-events-none` so clicks pass through to the page underneath and */ -}}
+{{/* `overscroll-contain` that prevents scroll chaining-up. */ -}}
+<div class="inset-0 pointer-events-none fixed z-13 h-dvh w-screen scrollbar-none overflow-y-scroll overscroll-contain">
+  {{/* Mobile drawer */ -}}
+  {{ $class := "bg-bg w-19 border-border -translate-x-full border-r" -}}
+  {{/* The inner layout */ -}}
+  {{ $class = "gap-4 px-2 py-4 flex flex-col items-center justify-between" | printf "%s %s" $class -}}
+  {{/* Desktop variant */ -}}
+  {{ $class = "sidebar:border-0 sidebar:bg-transparent sidebar:translate-x-0" | printf "%s %s" $class -}}
+  {{/* Short viewports force the sidebar itself to scroll: give it a min-height of 100vh so the */ -}}
+  {{/* overflow happens on the sidebar instead of its children, preserving the background while scrolling. */ -}}
+  <aside id="sidebar" class="{{ $class }} pointer-events-auto min-h-dvh">
+    {{/* Avatar linking to the home page */ -}}
+    {{ with site.Params.avatar -}}
+      {{ $blogName := site.Params.blogName | default site.Title -}}
+      <a
+        class="bg-bg p-0.5 size-15 rounded-full border-2 no-underline select-none hover:scale-105"
+        href="{{ `` | relLangURL }}"
+        title="{{ $blogName }}">
+        <img class="rounded-full object-cover" src="{{ . | relURL }}" alt="{{ $blogName }}" />
+      </a>
+    {{ end -}}
+
+    {{/* Primary navigation: one drawer entry per item in site.Menus.main. */ -}}
+    <nav class="gap-3 px-2 flex w-full flex-col items-center">
+      {{ range site.Menus.main -}}
+        {{ partial "layouts/items/menu-entry.html" (dict "page" $.Page "menu" .) -}}
+      {{ end -}}
+    </nav>
+
+    {{- /* Theme toggle: the sun/moon icons are swapped by the CSS `dark` class. */ -}}
+    <button type="button" id="theme-toggle" class="icon size-11 text-muted" title="{{ i18n `toggleColorTheme` }}">
+      <i class="ti ti-sun hidden dark:block"></i>
+      <i class="ti ti-moon-stars block dark:hidden"></i>
+    </button>
+  </aside>
+</div>
+
+{{- /* Mobile-only drawer controls: burger button to open the sidebar and the scrim behind it. */ -}}
+<button
+  type="button"
+  id="sidebar-burger"
+  class="icon size-10 text-fg right-3 top-3 sidebar:hidden fixed z-14"
+  title="{{ i18n `openMenu` }}">
+  <i id="sidebar-burger-icon" class="ti ti-list"></i>
+</button>
+
+{{- /* Full screen scrim layer shading the contents when the sidebar is opened. */ -}}
+<div id="sidebar-scrim" class="inset-0 bg-black/45 fixed z-12 hidden"></div>
+
+{{- /* Back-to-top button: rendered in the sidebar template so it appears on every page. */ -}}
+{{ if site.Params.backToTop | default true -}}
+  {{/* pointer-events + opacity: simulate hidden/shown states so the transition is visible. */ -}}
+  {{/* Raise the z-index so it covers normal content but not the sidebar scrim. */ -}}
+  <button
+    type="button"
+    id="back-to-top"
+    class="icon translate-y-4 size-10 text-fg right-6 bottom-6 pointer-events-none fixed z-11 opacity-0"
+    title="{{ i18n `backToTop` }}">
+    <i class="ti ti-arrow-up"></i>
+  </button>
+{{ end -}}

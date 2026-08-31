@@ -1,0 +1,31 @@
+{{ $author := .Param "author" | default "Anonymous" -}}
+{{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
+{{ $dateHuman := .Date | time.Format "2006-01-02" -}}
+<div class="text-14 gap-3 text-muted flex flex-wrap">
+  {{/* min-w-0 makes the author span shrinkable to trigger 'truncate'. */ -}}
+  {{ $class := "first:min-w-0 gap-1.25 flex items-baseline" -}}
+  {{/* Author */ -}}
+  <p class="{{ $class }}">
+    <i class="ti ti-user"></i>
+    <span class="truncate" data-author>{{ $author }}</span>
+  </p>
+  {{/* Publication date */ -}}
+  <p class="{{ $class }}">
+    <i class="ti ti-calendar-week"></i>
+    <span><time datetime="{{ $dateMachine }}" data-date>{{ $dateHuman }}</time></span>
+  </p>
+  {{/* Estimated reading time */ -}}
+  {{ if .Param "readingTime" | default true -}}
+    <p class="{{ $class }}">
+      <i class="ti ti-clock"></i>
+      <span>{{ i18n "minRead" (dict "Count" .ReadingTime ) }}</span>
+    </p>
+  {{ end -}}
+  {{/* Word count */ -}}
+  {{ if .Param "wordCount" | default true -}}
+    <p class="{{ $class }}">
+      <i class="ti ti-file-text"></i>
+      <span>{{ i18n "wordCount" (dict "Count" .WordCount ) }}</span>
+    </p>
+  {{ end -}}
+</div>

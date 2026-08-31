@@ -1,15 +1,23 @@
-{{- define "main" }}
-  {{- $blogName := site.Params.blogName | default site.Title }}
-  {{- $intro := site.Params.intro | default "" }}
-  <section class="hero-page">
-    {{ partial "avatar.html" . }}
-    <h1 class="font-bold text-40">{{ $blogName }}</h1>
-    {{- with $intro }}
-      <p class="text-muted max-w-160 mx-auto">{{ . }}</p>
-    {{- end }}
-    {{ partial "social.html" . }}
-    {{- with .Content }}
-      <div class="post-content">{{ . }}</div>
-    {{- end }}
+{{ define "main" -}}
+  <section class="pt-10 flex flex-1 flex-col items-center justify-center">
+    {{ partial "layouts/profile.html" . -}}
+    {{/* Centralized items don't stretch to the flex container, so wrap-break-word takes no effect on them. */ -}}
+    {{/* Wraps texts in a limited-width container prevents overflowing. Banner max width: 160/4 rem = 640 px. */ -}}
+    <div class="mt-5 max-w-160 text-center wrap-break-word">
+      <h1 class="font-bold text-[2.5rem]">
+        {{- site.Params.blogName | default site.Title | default "Unnamed" -}}
+      </h1>
+      {{ with site.Params.intro -}}
+        <p class="mt-3 text-muted">{{ . }}</p>
+      {{ end -}}
+    </div>
+    {{/* Social icon links, if exists. Max width: 80/4 rem = 320 px ~= 5 icons. */ -}}
+    {{ with site.Params.social -}}
+      <div class="max-w-80 mt-7 gap-3 flex flex-wrap justify-center">
+        {{ range . -}}
+          {{ partial "layouts/items/social-link.html" . -}}
+        {{ end -}}
+      </div>
+    {{ end -}}
   </section>
-{{- end }}
+{{ end -}}

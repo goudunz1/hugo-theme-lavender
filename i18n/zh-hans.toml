@@ -22,9 +22,6 @@ other = "加载更少"
 [searchPlaceholder]
 other = "搜索文章..."
 
-[searchStatusCount]
-other = "找到 %d 篇关于“%s”的文章"
-
 [searchStatusInitial]
 other = "输入关键词开始搜索..."
 
@@ -33,6 +30,9 @@ other = "没有找到“%s”相关的文章"
 
 [searchStatusOne]
 other = "找到 1 篇关于“%s”的文章"
+
+[searchStatusCount]
+other = "找到 %d 篇关于“%s”的文章"
 
 [searchDisabledText]
 other = "搜索未开启。在 <code>hugo.toml</code> 中设置 <code>searchEnabled = true</code> 来开启。"
@@ -43,18 +43,6 @@ other = "{{ .Count }} 字"
 [entryCount]
 other = "{{ .Count }} 个条目"
 
-[categoryCount]
-other = "{{ .Count }} 个分类"
-
-[tagCount]
-other = "{{ .Count }} 个标签"
-
-[tagAlias]
-other = "标签"
-
-[categoryAlias]
-other = "分类"
-
 [tocAlias]
 other = "目录"
 
@@ -64,7 +52,7 @@ other = "回到主页"
 [pageNotFound]
 other = "找不到页面"
 
-[pageNotFoundText]
+[pageNotFoundDesc]
 other = "你寻找的页面不存在或已经被移动。"
 
 [previousPage]

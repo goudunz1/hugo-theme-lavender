@@ -1,0 +1,11 @@
+{{/* Params: */ -}}
+{{/* "icon": icon font key */ -}}
+{{/* "url": link URL */ -}}
+
+{{ $icon := .icon | default "link" -}}
+{{/* External links are opened in a new tab. */ -}}
+{{ $external := not (hasPrefix .url (or site.BaseURL "/")) -}}
+{{ $attr := (cond $external ` target="_blank" rel="noopener"` "") | safeHTMLAttr -}}
+<a class="icon size-11 text-muted no-underline" href="{{ .url }}" title="{{ .name }}" {{- $attr }}>
+  <i class="ti ti-{{ $icon }}"></i>
+</a>

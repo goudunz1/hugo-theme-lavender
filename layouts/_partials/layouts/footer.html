@@ -1,0 +1,6 @@
+{{ $year := now.Format "2006" -}}
+{{/* Copyright name: param blogName, falling back to the site title. */ -}}
+{{ $blogName := site.Params.blogName | default site.Title | default "Unnamed" -}}
+<hr class="mb-5 h-0.5 max-w-120 via-accent mx-auto w-3/4 border-0 bg-linear-to-r from-transparent to-transparent" />
+<p>Powered by <a href="https://github.com/goudunz1/hugo-theme-lavender">hugo-theme-lavender</a>.</p>
+<p>&copy; {{ $year }} {{ $blogName }}. All rights reserved.</p>

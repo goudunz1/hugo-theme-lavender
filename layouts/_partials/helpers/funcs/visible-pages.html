@@ -1,0 +1,25 @@
+{{/* Params: */ -}}
+{{/* "total": total of pages */ -}}
+{{/* "curr": current page number */ -}}
+{{/* Return: slice of numbers of visible pages */ -}}
+
+{{ $total := .total -}}
+{{ $curr := .curr -}}
+{{ $nums := slice -}}
+
+{{/* Always shows 1 and the last page, plus curr - 1, curr, curr + 1 when present. */}}
+{{ $nums = $nums | append 1 -}}
+{{ if gt (sub $curr 1) 1 -}}
+  {{ $nums = $nums | append (sub $curr 1) -}}
+{{ end -}}
+{{ if and (ne $curr 1) (ne $curr $total) -}}
+  {{ $nums = $nums | append $curr -}}
+{{ end -}}
+{{ if lt (add $curr 1) $total -}}
+  {{ $nums = $nums | append (add $curr 1) -}}
+{{ end -}}
+{{ if gt $total 1 -}}
+  {{ $nums = $nums | append $total -}}
+{{ end -}}
+{{ $nums = uniq $nums -}}
+{{ return $nums -}}
