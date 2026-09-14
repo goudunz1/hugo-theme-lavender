@@ -1,0 +1,4 @@
+# variant: codeFences = false — fenced blocks degrade to plain <pre><code>
+# with no Chroma highlight wrapper at all.
+[markup.highlight]
+codeFences = false

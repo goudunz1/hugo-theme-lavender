@@ -1,0 +1,4 @@
+# variant: extreme pagination — one item per page forces pagination everywhere.
+[params.pageSize]
+grid = 1
+cloud = 1

@@ -1,0 +1,7 @@
+# variant: noClasses = true — Chroma writes inline styles instead of class names,
+# so assets/css/syntax.css has nothing to style. Tests graceful degradation.
+[markup.highlight]
+noClasses = true
+lineNos = true
+codeFences = true
+style = "github-dark"

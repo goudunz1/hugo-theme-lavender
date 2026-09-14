@@ -1,11 +1,32 @@
-baseURL = "https://example.org/"
-title = "My Hugo Site"
+# Base configuration for the Lavender test site.
+#
+# From the repository root:
+#
+#   hugo --config test/config/base.toml --buildDrafts
+#   hugo --config test/config/base.toml,test/config/<variant>.toml --buildDrafts
+#   hugo server --config test/config/base.toml,test/config/<variant>.toml -D --disableFastRender
+#
+# Variant files merge on top of this one; later files override earlier ones.
+
+baseURL = "http://127.0.0.1:1313/"
+title = "Testing the Lavender Hugo theme"
+contentDir = "test/content"
+dataDir = "test/data"
+publishDir = "test/public"
+staticDir = ["test/static", "static"]
+
+# Three taxonomies: the two Hugo defaults plus a custom `series`, to exercise
+# `params.taxonomyLayout.<singular>` and the taxonomy bulletins on posts.
+[taxonomies]
+category = "categories"
+tag = "tags"
+series = "series"
 
 [params]
 # --- Site parameters ---
-blogName = "My Blog"
-avatar = "/favicon.svg"
-intro = "Welcome to my blog."
+blogName = "Test Blog"
+avatar = "/avatar.svg"
+intro = "Test site for the Lavender Hugo theme."
 themeDefault = "auto"
 faviconPath = "/"
 faviconSvg = true
@@ -14,7 +35,7 @@ backToTop = true
 markdownInlineMath = true
 useCdn = true
 # --- (Default values for) Page parameters ---
-author = "Anonymous"
+author = "Tester"
 tableOfContents = true
 math = false
 readingTime = true
@@ -24,9 +45,11 @@ wordCount = true
 grid = 9
 cloud = 12
 
+# Which template a taxonomy page uses: "grid" or "cloud".
 [params.taxonomyLayout]
 category = "grid"
 tag = "cloud"
+series = "grid"
 
 [[params.social]]
 name = "GitHub"
@@ -45,15 +68,15 @@ url = "mailto:you@example.com"
 
 [[params.aboutItems]]
 title = "About"
-content = "A short introduction. Rendered as Markdown."
+content = "This is a test site for the Lavender theme."
 
 [[params.aboutItems]]
-title = "Projects"
-content = "A second accordion entry."
+title = "Generated cases"
+content = "Most posts under /fuzz/ are generated at build time from a block pool."
 
 [[params.aboutItems]]
-title = "Contact"
-content = "How to reach you."
+title = "Config variants"
+content = "Merge a file from `test/config/` to test highlighting, pagination and boundary params."
 
 [[params.friends]]
 name = "Hugo"
@@ -86,33 +109,39 @@ weight = 20
 params = { icon = "files" }
 
 [[menus.main]]
+name = "Fuzz"
+pageRef = "/fuzz"
+weight = 30
+params = { icon = "bug" }
+
+[[menus.main]]
 name = "Tags"
 pageRef = "/tags"
-weight = 30
+weight = 40
 params = { icon = "tags" }
 
 [[menus.main]]
 name = "Categories"
 pageRef = "/categories"
-weight = 40
+weight = 50
 params = { icon = "layout-grid" }
 
 [[menus.main]]
 name = "About"
 pageRef = "/about"
-weight = 50
+weight = 60
 params = { icon = "user" }
 
 [[menus.main]]
 name = "Links"
 pageRef = "/links"
-weight = 60
+weight = 70
 params = { icon = "link" }
 
 [[menus.main]]
 name = "Search"
 pageRef = "/search"
-weight = 70
+weight = 80
 params = { icon = "search" }
 
 [markup.goldmark.renderer]

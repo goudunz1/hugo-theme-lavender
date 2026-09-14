@@ -9,7 +9,9 @@
     "build:tailwind": "tailwindcss -i ./assets/css/src/main.css -o ./assets/css/main.css",
     "build:selfhost": "node scripts/copy-deps.js",
     "watch": "tailwindcss -i ./assets/css/src/main.css -o ./assets/css/main.css --watch",
-    "clean": "rimraf assets/css/main.css assets/lib static/lib"
+    "clean": "rimraf assets/css/main.css assets/lib static/lib",
+    "format": "prettier -w 'layouts/**/*.{html,json}' 'assets/**/*.{css,js}' 'scripts/**/*.js' 'test/**/*.gotmpl'",
+    "format:check": "prettier -c 'layouts/**/*.{html,json}' 'assets/**/*.{css,js}' 'scripts/**/*.js' 'test/**/*.gotmpl'"
   },
   "dependencies": {
     "@fontsource-variable/fredoka": "^5.2.10",

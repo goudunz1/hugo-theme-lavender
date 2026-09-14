@@ -1,0 +1,4 @@
+# variant: self-host the vendor dependencies instead of jsDelivr.
+# Requires `npm run build:selfhost` first (see the root README).
+[params]
+useCdn = false

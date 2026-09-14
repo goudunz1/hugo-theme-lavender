@@ -1,0 +1,18 @@
+# variant: boundary / edge-case params.
+# Tests the light palette, disabled back-to-top/TOC/inline-math/favicons, empty
+# avatar/blogName/author (`| default` fallbacks must keep the build alive) and a
+# one-item page size that forces pagination on every list, taxonomy and term.
+[params]
+themeDefault = "light"
+backToTop = false
+tableOfContents = false
+markdownInlineMath = false
+faviconSvg = false
+faviconPath = ""
+avatar = ""
+blogName = ""
+author = ""
+
+[params.pageSize]
+grid = 1
+cloud = 1

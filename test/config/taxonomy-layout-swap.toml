@@ -1,0 +1,6 @@
+# variant: swap the taxonomy templates
+# (categories -> cloud, tags -> grid, the custom `series` -> cloud).
+[params.taxonomyLayout]
+category = "cloud"
+tag = "grid"
+series = "cloud"

@@ -1,0 +1,77 @@
+{{/* Auto-generated fuzz cases. */ -}}
+
+{{/* `hugo.Data` replaced `site.Data` in Hugo 0.156; fall back for older releases. */ -}}
+{{ $data := or hugo.Data site.Data -}}
+{{ $blocks := (index $data "fuzz-blocks").blocks -}}
+{{ $tags := slice "markdown" "math" "code" "taxonomy" "i18n" "search" "highlight" "frontmatter" "layout" "performance"
+  "accessibility" "edge"
+-}}
+{{ $categories := slice "Guides" "Reference" "Internals" "Recipes" "Design" "Changelog" -}}
+{{ $series := slice "Getting Started" "Deep Dive" "Internals" -}}
+{{ $longName := "A Very Very Very Very Very Very Very Long Name That Must Be Truncated" -}}
+{{ $count := 72 -}}
+
+{{ range $i := seq 0 (sub $count 1) -}}
+  {{/* Body: rotate through the block pool and take 3-5 consecutive blocks. */ -}}
+  {{ $start := mod (mul $i 7) (len $blocks) -}}
+  {{ $take := add 3 (mod $i 3) -}}
+  {{ $parts := slice -}}
+  {{ range $j := seq 0 (sub $take 1) -}}
+    {{ $parts = $parts | append (index $blocks (mod (add $start $j) (len $blocks))) -}}
+  {{ end -}}
+  {{ $body := delimit $parts "\n\n" -}}
+
+  {{/* Taxonomy terms: round-robin assignment keeps counts even. */ -}}
+  {{ $category := index $categories (mod $i (len $categories)) -}}
+  {{ $tagA := index $tags (mod $i (len $tags)) -}}
+  {{ $tagB := index $tags (mod (add $i 5) (len $tags)) -}}
+  {{ $serie := index $series (mod $i (len $series)) -}}
+  {{ $pageTags := slice $tagA $tagB -}}
+  {{ $title := printf "Generated %03d · %s" $i $tagA -}}
+  {{ if eq (mod $i 23) 0 -}}
+    {{ $pageTags = $pageTags | append $longName -}}
+    {{ $title = printf "%s · %s" $title $longName -}}
+  {{ end -}}
+
+  {{/* Front matter: rotate values, leaving some empty to hit the fallbacks. */ -}}
+  {{ $author := cond (eq (mod $i 5) 0) "" (printf "Author %d" (add (mod $i 4) 1)) -}}
+  {{ if eq (mod $i 23) 0 -}}
+    {{ $author = $longName -}}
+  {{ end -}}
+  {{ $desc := cond (eq (mod $i 4) 0) "" (printf "Auto-generated description for fuzz case %d." $i) -}}
+  {{ $date := printf "2023-%02d-%02d" (add (mod $i 12) 1) (add (mod (mul $i 3) 28) 1) -}}
+  {{ $math := eq (mod $i 3) 0 -}}
+  {{ $toc := ne (mod $i 6) 0 -}}
+  {{ $reading := ne (mod $i 7) 0 -}}
+  {{ $words := ne (mod $i 11) 0 -}}
+  {{ $draft := eq (mod $i 19) 0 -}}
+
+  {{ $params := dict
+    "math" $math
+    "tableOfContents" $toc
+    "readingTime" $reading
+    "wordCount" $words
+    "tags" $pageTags
+    "categories" (slice $category)
+    "series" (slice $serie)
+  -}}
+
+  {{ $page := dict
+    "content" (dict "mediaType" "text/markdown" "value" $body)
+    "kind" "page"
+    "path" (printf "generated-%03d" $i)
+    "title" $title
+    "date" $date
+    "params" $params
+  -}}
+  {{ with $desc -}}
+    {{ $page = merge $page (dict "description" .) -}}
+  {{ end -}}
+  {{ with $author -}}
+    {{ $page = merge $page (dict "author" .) -}}
+  {{ end -}}
+  {{ if $draft -}}
+    {{ $page = merge $page (dict "draft" true) -}}
+  {{ end -}}
+  {{ $.AddPage $page -}}
+{{ end -}}

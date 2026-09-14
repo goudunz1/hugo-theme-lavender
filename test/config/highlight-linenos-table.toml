@@ -1,0 +1,6 @@
+# variant: lineNos rendered as a <table> gutter (Hugo's default when lineNos = true)
+[markup.highlight]
+noClasses = false
+lineNos = true
+lineNumbersInTable = true
+codeFences = true

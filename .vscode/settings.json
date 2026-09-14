@@ -6,7 +6,8 @@
   "editor.rulers": [80, 120],
   "files.associations": {
     "*.css": "tailwindcss",
-    "**/layouts/**/*.json": "html"
+    "**/layouts/**/*.json": "html",
+    "**/test/**/*.gotmpl": "html"
   },
   "tailwindCSS.experimental.configFile": "assets/css/src/main.css",
   "tailwindCSS.experimental.classRegex": [

@@ -1,0 +1,16 @@
+# variant: enable a second language so the translated page pair
+# (bilingual.md / bilingual.zh-hans.md) is built and the theme's i18n strings
+# switch language.
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+[languages]
+[languages.en]
+locale = "en"
+title = "Testing the Lavender Hugo theme"
+weight = 1
+
+[languages.zh-hans]
+locale = "zh-hans"
+title = "Lavender 主题测试站"
+weight = 2

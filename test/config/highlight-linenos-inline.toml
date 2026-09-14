@@ -1,0 +1,6 @@
+# variant: lineNos inline (gutter as <span>, no <table>)
+[markup.highlight]
+noClasses = false
+lineNos = true
+lineNumbersInTable = false
+codeFences = true
