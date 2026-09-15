@@ -16,13 +16,14 @@
   --color-fg: var(--c-fg);
   --color-muted: var(--c-muted);
   --color-accent: var(--c-accent);
-  --color-accent-fog: var(--c-accent-fog);
+  --color-accent-veil: var(--c-accent-veil);
+  --color-accent-subtle: var(--c-accent-subtle);
   --color-border: var(--c-border);
   --color-shadow: var(--c-shadow);
   --font-sans: var(--f-sans);
   --font-mono: var(--f-mono);
   --shadow-card: 0px 4px 8px var(--c-shadow);
-  --shadow-pic: 0 4px 12px var(--c-shadow);
+  --shadow-profile: 0 4px 12px var(--c-shadow);
   --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
   --text-13: 0.8125rem;
   --text-14: 0.875rem;
@@ -36,7 +37,9 @@
   --c-fg: #1d1d1d;
   --c-muted: #6a7280;
   --c-accent: #5cbf6f;
-  --c-accent-fog: rgba(92, 191, 111, 0.25);
+  --c-accent-veil: rgba(92, 191, 112, 0.25);
+  /* 25% accent on bg = accent * 25% + bg * 75% */
+  --c-accent-subtle: #d6efdb;
   --c-border: #e2e4e8;
   --c-shadow: rgba(0, 0, 0, 0.08);
   --f-sans:
@@ -52,7 +55,8 @@
   --c-fg: #e8e8ed;
   --c-muted: #9da3ae;
   --c-accent: #a15ed1;
-  --c-accent-fog: rgba(161, 93, 209, 0.25);
+  --c-accent-veil: rgba(160, 92, 209, 0.25);
+  --c-accent-subtle: #382744;
   --c-border: #2e2e2e;
   --c-shadow: rgba(0, 0, 0, 0.24);
 }
@@ -76,7 +80,7 @@
   }
 
   ::selection {
-    @apply bg-accent-fog;
+    @apply bg-accent-veil;
   }
 
   /* Circling elements through Tab/Shift-Tab. */
@@ -86,15 +90,6 @@
 }
 
 @layer components {
-  .layer-bg-to-fog {
-    @apply from-bg to-bg bg-linear-0;
-    @apply hover:from-accent-fog hover:to-accent-fog;
-  }
-
-  .layer-fog {
-    @apply from-accent-fog to-accent-fog bg-linear-0;
-  }
-
   .icon {
     @apply border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2;
     @apply hover:scale-108;
@@ -233,7 +228,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content blockquote {
-  @apply my-5 bg-accent-fog px-4 py-1.5 text-muted;
+  @apply my-5 bg-accent-veil px-4 py-1.5 text-muted;
   @apply rounded-r-lg border-l-accent rounded-l-none border-l-[3px];
 }
 
@@ -364,7 +359,7 @@ article ::-webkit-scrollbar-thumb {
 }
 
 article ::-webkit-scrollbar-thumb:hover {
-  @apply bg-accent-fog cursor-pointer;
+  @apply bg-accent-veil cursor-pointer;
 }
 
 article ::-webkit-scrollbar-button {

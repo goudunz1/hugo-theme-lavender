@@ -29,7 +29,7 @@
 
       {{/* Highlight current page. */ -}}
       {{ if eq . $curr -}}
-        <div class="small-box layer-fog border-accent text-accent font-semibold">{{ . }}</div>
+        <div class="small-box bg-accent-subtle border-accent text-accent font-semibold">{{ . }}</div>
       {{ else -}}
         {{ $pager := index $paginator.Pagers (sub . 1) -}}
         <a class="small-box {{ $class }} no-underline" href="{{ $pager.URL }}">{{ . }}</a>

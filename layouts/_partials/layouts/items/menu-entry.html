@@ -15,8 +15,8 @@
       {{/* Users can configure icon for the menu in menu params. */ -}}
       {{ $icon := .Params.icon | default "link" -}}
       {{/* <a> is highlighted by default, so we just mute it when its inactive. */ -}}
-      {{ $class := "bg-bg group-hover:translate-x-1.5 flex items-baseline rounded-full border p-px no-underline" -}}
-      {{ $class = printf "%s %s" $class (cond $active "layer-fog" "border-border") -}}
+      {{ $class := "group-hover:translate-x-1.5 flex items-baseline rounded-full border p-px no-underline" -}}
+      {{ $class = printf "%s %s" $class (cond $active "bg-accent-subtle" "bg-bg border-border") -}}
       <a href="{{ .URL }}" class="{{ $class }}">
         {{ $class = cond $active "" "text-muted " -}}
         <div class="{{ $class -}} size-10 flex items-center justify-center">

@@ -1,7 +1,7 @@
 {{/* Round avatar on hero page, linking to home. */ -}}
 {{ $blogName := site.Params.blogName | default site.Title | default "Unnamed" -}}
 <a
-  class="bg-bg p-1 size-35 hover:shadow-pic rounded-full border-4 no-underline select-none hover:scale-105"
+  class="bg-bg p-1 size-35 hover:shadow-profile rounded-full border-4 no-underline select-none hover:scale-105"
   href="{{ `` | relLangURL }}"
   title="{{ $blogName }}">
   {{ with site.Params.avatar -}}
