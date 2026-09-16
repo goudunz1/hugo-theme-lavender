@@ -54,7 +54,7 @@
     {{ end -}}
     {{/* data-pages: collect the page no. -> URL pairs and embed them as JSON for main.js. */ -}}
     <form id="pagination-goto" class="gap-1.5 flex items-center" data-pages="{{ $pageUrls | jsonify | safeJS }}">
-      <div class="input-box rounded-lg h-9 w-18 px-2.5">
+      <div class="small-box w-18 border-border focus-within:border-accent">
         {{/* Wrapper is width-limited, so we set min-w-0 to prevent overflow. */ -}}
         <input
           id="pagination-goto-input"
@@ -62,7 +62,7 @@
           inputmode="numeric"
           autocomplete="off"
           maxlength="5"
-          class="text-14 min-w-0 text-center"
+          class="min-w-0 text-center"
           placeholder="{{ $curr }}" />
       </div>
       <button type="submit" class="small-box {{ $class }}" title="{{ i18n `gotoPage` }}">

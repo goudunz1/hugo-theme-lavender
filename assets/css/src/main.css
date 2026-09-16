@@ -79,6 +79,10 @@
     @apply cursor-pointer;
   }
 
+  input {
+    @apply text-fg caret-fg placeholder:text-muted focus-visible:outline-none;
+  }
+
   ::selection {
     @apply bg-accent-veil;
   }
@@ -107,14 +111,6 @@
   .cloud {
     @apply border-border bg-bg text-fg flex items-center rounded-full border no-underline;
     @apply hover:border-accent hover:text-accent;
-  }
-
-  .input-box {
-    @apply border-border bg-bg focus-within:border-accent flex items-center border;
-  }
-
-  .input-box input {
-    @apply text-fg caret-fg placeholder:text-muted focus-visible:outline-none;
   }
 }
 
