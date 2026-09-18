@@ -1,116 +1,136 @@
 @import "tailwindcss" source(none);
 
-@source "../../../layouts/";
-@source "../";
+@source "../../../layouts";
+@source "..";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* sidebar/rail switch breakpoint */
 @theme {
   --breakpoint-sidebar: 900px;
   --breakpoint-desktop: 500px;
 }
 
 @theme inline {
-  --color-bg: var(--c-bg);
-  --color-fg: var(--c-fg);
-  --color-muted: var(--c-muted);
-  --color-accent: var(--c-accent);
-  --color-accent-veil: var(--c-accent-veil);
-  --color-accent-subtle: var(--c-accent-subtle);
-  --color-border: var(--c-border);
-  --color-shadow: var(--c-shadow);
-  --font-sans: var(--f-sans);
-  --font-mono: var(--f-mono);
-  --shadow-card: 0px 4px 8px var(--c-shadow);
-  --shadow-profile: 0 4px 12px var(--c-shadow);
-  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --color-bg: var(--theme-bg);
+  --color-fg: var(--theme-fg);
+  --color-muted: var(--theme-muted);
+  --color-accent: var(--theme-accent);
+  --color-accent-veil: var(--theme-accent-veil);
+  --color-accent-subtle: var(--theme-accent-subtle);
+  --color-border: var(--theme-border);
+  --color-shadow: var(--theme-shadow);
+  --shadow-card: 0px 4px 8px var(--theme-shadow);
+  --shadow-profile: 0 4px 12px var(--theme-shadow);
+  --font-sans:
+    "Fredoka Variable", "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --text-13: 0.8125rem;
   --text-14: 0.875rem;
   --text-17: 1.0625rem;
   --text-19: 1.1875rem;
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 :root {
   /* light palette: #5cbf6f green */
-  --c-bg: #ffffff;
-  --c-fg: #1d1d1d;
-  --c-muted: #6a7280;
-  --c-accent: #5cbf6f;
-  --c-accent-veil: rgba(92, 191, 112, 0.25);
+  --theme-bg: #ffffff;
+  --theme-fg: #1d1d1d;
+  --theme-muted: #6a7280;
+  --theme-accent: #5cbf6f;
+  --theme-accent-veil: rgba(92, 191, 112, 0.25);
   /* 25% accent on bg = accent * 25% + bg * 75% */
-  --c-accent-subtle: #d6efdb;
-  --c-border: #e2e4e8;
-  --c-shadow: rgba(0, 0, 0, 0.08);
-  --f-sans:
-    "Fredoka Variable", "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
-  --f-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  /* rem: 900px - 500px / 16px - 14px */
-  font-size: clamp(0.875rem, 0.719rem + 0.5vw, 1rem);
+  --theme-accent-subtle: #d6efdb;
+  --theme-border: #e2e4e8;
+  --theme-shadow: rgba(0, 0, 0, 0.08);
 }
 
 .dark {
   /* dark palette: #a15ed1 purple */
-  --c-bg: #151515;
-  --c-fg: #e8e8ed;
-  --c-muted: #9da3ae;
-  --c-accent: #a15ed1;
-  --c-accent-veil: rgba(160, 92, 209, 0.25);
-  --c-accent-subtle: #382744;
-  --c-border: #2e2e2e;
-  --c-shadow: rgba(0, 0, 0, 0.24);
+  --theme-bg: #151515;
+  --theme-fg: #e8e8ed;
+  --theme-muted: #9da3ae;
+  --theme-accent: #a15ed1;
+  --theme-accent-veil: rgba(160, 92, 209, 0.25);
+  --theme-accent-subtle: #382744;
+  --theme-border: #2e2e2e;
+  --theme-shadow: rgba(0, 0, 0, 0.24);
+}
+
+:root {
+  /* rem: 900px - 500px / 16px - 14px */
+  font-size: clamp(0.875rem, 0.719rem + 0.5vw, 1rem);
 }
 
 @layer base {
   html {
+    scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
-    @apply scroll-smooth antialiased;
+    -webkit-font-smoothing: antialiased;
   }
 
   body {
-    @apply bg-bg text-fg leading-[1.6];
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    line-height: 1.6;
+  }
+
+  body ::selection {
+    background-color: var(--color-accent-veil);
+  }
+
+  body :focus-visible {
+    outline: 2px dashed var(--color-fg);
+    outline-offset: -2px;
   }
 
   a {
-    @apply text-accent no-underline hover:underline;
+    text-decoration-line: none;
   }
 
   button {
-    @apply cursor-pointer;
+    cursor: pointer;
   }
 
   input {
-    @apply text-fg caret-fg placeholder:text-muted focus-visible:outline-none;
+    color: var(--color-fg);
+    caret-color: var(--color-fg);
   }
 
-  ::selection {
-    @apply bg-accent-veil;
+  input::placeholder {
+    color: var(--color-muted);
   }
 
-  /* Circling elements through Tab/Shift-Tab. */
-  :focus-visible {
-    @apply outline-fg outline-2 -outline-offset-2 outline-dashed;
-  }
-}
-
-@layer components {
-  .icon {
-    @apply border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2;
-    @apply hover:scale-108;
+  input:focus-visible {
+    outline-style: none;
   }
 
-  .small-box {
-    @apply h-9 min-w-9 rounded-lg bg-bg px-2.5 text-14 flex items-center justify-center border;
+  @supports (-moz-tab-size: 4) {
+    article {
+      scrollbar-color: var(--color-border) transparent;
+    }
   }
 
-  .card {
-    @apply rounded-xl border-border bg-bg px-4 py-3.5 flex overflow-hidden border no-underline;
-    @apply hover:border-accent hover:shadow-card;
+  article ::-webkit-scrollbar {
+    height: 0.5rem;
+    width: 0.5rem;
   }
 
-  .cloud {
-    @apply border-border bg-bg text-fg flex items-center rounded-full border no-underline;
-    @apply hover:border-accent hover:text-accent;
+  article ::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 0.25rem;
+  }
+
+  article ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-accent-veil);
+    cursor: pointer;
+  }
+
+  article ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  article ::-webkit-scrollbar-button {
+    display: none;
   }
 }
 
@@ -224,8 +244,7 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-content blockquote {
-  @apply my-5 bg-accent-veil px-4 py-1.5 text-muted;
-  @apply rounded-r-lg border-l-accent rounded-l-none border-l-[3px];
+  @apply my-5 bg-accent-veil px-4 py-1.5 text-muted rounded-r-lg border-l-accent rounded-l-none border-l-[3px];
 }
 
 .post-content blockquote p {
@@ -310,54 +329,24 @@ body.sidebar-open #sidebar-scrim {
 
 /* Table of Contents. */
 
-.post-toc nav#TableOfContents {
+.post-toc {
   @apply overflow-hidden wrap-break-word;
 }
 
-.post-toc nav#TableOfContents li {
+.post-toc li {
   @apply flow-root;
 }
 
-.post-toc nav#TableOfContents a {
-  @apply my-1.25 px-2 text-13/[1.4] text-muted block border-l-2 border-l-transparent no-underline;
-  @apply hover:text-accent;
+.post-toc a {
+  @apply my-1.25 px-2 text-13/[1.4] text-muted hover:text-accent block border-l-2 border-l-transparent;
 }
 
-.post-toc nav#TableOfContents a.toc-link--active {
+.post-toc a.toc-link--active {
   /* Set by JS scroll-spy: heavy left border on the current section. */
   @apply border-l-accent text-accent;
 }
 
-.post-toc nav#TableOfContents ul ul,
-.post-toc nav#TableOfContents ol ol {
+.post-toc ul ul,
+.post-toc ol ol {
   @apply pl-3.25;
-}
-
-/* Scrollbars inside <article>. */
-
-@supports (-moz-tab-size: 4) {
-  /* Firefox-only standard props; gated so Chrome keeps the webkit rules below. */
-  article {
-    @apply scrollbar-thumb-border scrollbar-auto scrollbar-track-transparent;
-  }
-}
-
-article ::-webkit-scrollbar {
-  @apply h-2 w-2;
-}
-
-article ::-webkit-scrollbar-track {
-  @apply bg-transparent;
-}
-
-article ::-webkit-scrollbar-thumb {
-  @apply rounded-sm bg-border;
-}
-
-article ::-webkit-scrollbar-thumb:hover {
-  @apply bg-accent-veil cursor-pointer;
-}
-
-article ::-webkit-scrollbar-button {
-  @apply hidden;
 }

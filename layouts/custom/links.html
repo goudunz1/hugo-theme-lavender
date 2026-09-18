@@ -2,6 +2,10 @@
   {{ partial "layouts/front.html" (dict "title" .Title "desc" .Description) -}}
   {{ with site.Params.friends -}}
     <div class="mt-6 mb-8 gap-4 desktop:grid-cols-2 grid grid-cols-1">
+      {{ $class := "rounded-xl border-border bg-bg flex items-center overflow-hidden border" -}}
+      {{ $class = printf "%s %s" $class
+        "group-hover:border-accent group-hover:shadow-card group-hover:-translate-y-0.5 "
+      -}}
       {{ range . -}}
         {{/* Link card params: */ -}}
         {{/* "name": name your link */ -}}
@@ -11,11 +15,7 @@
 
 
         <div class="group">
-          <a
-            href="{{ .url }}"
-            class="card group-hover:-translate-y-0.5 gap-4 items-center"
-            target="_blank"
-            rel="noopener">
+          <a href="{{ .url }}" class="{{ $class }} px-4 py-3.5 gap-4" target="_blank" rel="noopener">
             {{/* Optional avatar */ -}}
             {{ $name := .name -}}
             {{ with .avatar -}}

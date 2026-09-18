@@ -27,13 +27,13 @@
 
 /* Background */
 .bg {
-  color: var(--c-fg);
-  background-color: var(--c-bg);
+  color: var(--color-fg);
+  background-color: var(--color-bg);
 }
 /* PreWrapper */
 .chroma {
-  color: var(--c-fg);
-  background-color: var(--c-bg);
+  color: var(--color-fg);
+  background-color: var(--color-bg);
 }
 /* Line */
 .chroma .line {
@@ -46,7 +46,7 @@
   user-select: none;
   margin-right: 1rem;
   padding: 0 0.4rem 0 0.4rem;
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* LineNumbersTable */
 .chroma .lnt {
@@ -55,11 +55,11 @@
   user-select: none;
   margin-right: 1rem;
   padding: 0 0.4rem 0 0.4rem;
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* LineHighlight */
 .chroma .hl {
-  background-color: var(--c-accent-fog);
+  background-color: var(--color-accent-veil);
 }
 /* LineTable */
 .chroma .lntable {
@@ -83,7 +83,7 @@
 }
 /* TextWhitespace */
 .chroma .w {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* Error */
 .chroma .err {
@@ -92,12 +92,12 @@
 }
 /* Other */
 .chroma .x {
-  color: var(--c-fg);
+  color: var(--color-fg);
 }
 
 /* Keyword */
 .chroma .k {
-  color: var(--c-accent);
+  color: var(--color-accent);
 }
 /* KeywordConstant */
 .chroma .kc {
@@ -105,19 +105,19 @@
 }
 /* KeywordDeclaration */
 .chroma .kd {
-  color: var(--c-accent);
+  color: var(--color-accent);
 }
 /* KeywordNamespace */
 .chroma .kn {
-  color: var(--c-accent);
+  color: var(--color-accent);
 }
 /* KeywordPseudo */
 .chroma .kp {
-  color: var(--c-accent);
+  color: var(--color-accent);
 }
 /* KeywordReserved */
 .chroma .kr {
-  color: var(--c-accent);
+  color: var(--color-accent);
 }
 /* KeywordType */
 .chroma .kt {
@@ -308,31 +308,31 @@
 
 /* Comment */
 .chroma .c {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* CommentHashbang */
 .chroma .ch {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* CommentMultiline */
 .chroma .cm {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* CommentPreproc */
 .chroma .cp {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* CommentPreprocFile */
 .chroma .cpf {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* CommentSingle */
 .chroma .c1 {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* CommentSpecial */
 .chroma .cs {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 
 /* GenericDeleted */
@@ -358,7 +358,7 @@
 }
 /* GenericOutput */
 .chroma .go {
-  color: var(--c-muted);
+  color: var(--color-muted);
 }
 /* GenericPrompt */
 .chroma .gp {

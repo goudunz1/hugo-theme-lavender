@@ -1,7 +1,11 @@
 {{/* Input: the page; Output: card representation of that page. */ -}}
 <div class="group">
   {{/* In mobile mode there's only one column, so we give it a flexible height. */ -}}
-  <a href="{{ .RelPermalink }}" class="card group-hover:-translate-y-0.5 min-h-48 desktop:h-56 flex-col" data-url>
+  {{ $lnkClass := "rounded-xl border-border bg-bg flex overflow-hidden border" -}}
+  {{ $lnkClass = printf "%s %s" $lnkClass
+    "group-hover:border-accent group-hover:shadow-card group-hover:-translate-y-0.5"
+  -}}
+  <a href="{{ .RelPermalink }}" class="{{ $lnkClass }} px-4 py-3.5 min-h-48 desktop:h-56 flex-col" data-url>
     {{/* Snippet: page Description when present, otherwise the first 160 chars of the plain text. */ -}}
     {{/* This is the main part of the card so it should take as much space as possible. */ -}}
     <div class="flex-1">

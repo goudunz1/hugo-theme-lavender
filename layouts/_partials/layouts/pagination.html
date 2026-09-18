@@ -2,16 +2,17 @@
 {{/* Do nothing if there's only one page. */ -}}
 {{ if gt $paginator.TotalPages 1 -}}
   <nav class="mt-10 gap-1.5 flex flex-wrap items-center justify-center">
-    {{ $class := "border-border text-fg hover:text-accent hover:border-accent" -}}
-    {{ $mutedClass := "border-border text-muted opacity-40" -}}
+    {{ $class := "h-9 min-w-9 rounded-lg px-2.5 text-14 flex items-center justify-center" -}}
+    {{ $lnkClass := "bg-bg border border-border text-fg hover:text-accent hover:border-accent" -}}
+    {{ $mutedClass := "bg-bg border border-border text-muted opacity-40" -}}
 
     {{/* Left arrow disabled on the first page. */ -}}
     {{ if $paginator.HasPrev -}}
-      <a class="small-box {{ $class }} no-underline" href="{{ $paginator.Prev.URL }}" rel="prev">
+      <a class="{{ $class }} {{ $lnkClass }}" href="{{ $paginator.Prev.URL }}" rel="prev">
         <i class="ti ti-chevron-left"></i>
       </a>
     {{ else -}}
-      <div class="small-box {{ $mutedClass }}">
+      <div class="{{ $class }} {{ $mutedClass }}">
         <i class="ti ti-chevron-left"></i>
       </div>
     {{ end -}}
@@ -24,26 +25,26 @@
     {{ range $nums -}}
       {{/* Insert an ellipsis when the next number is not consecutive. */ -}}
       {{ if and (gt $prev 0) (gt (sub . $prev) 1) -}}
-        <span class="small-box text-muted border-none">&hellip;</span>
+        <span class="{{ $class }} text-muted">&hellip;</span>
       {{ end -}}
 
       {{/* Highlight current page. */ -}}
       {{ if eq . $curr -}}
-        <div class="small-box bg-accent-subtle border-accent text-accent font-semibold">{{ . }}</div>
+        <div class="{{ $class }} bg-accent-subtle border-accent text-accent font-semibold border">{{ . }}</div>
       {{ else -}}
         {{ $pager := index $paginator.Pagers (sub . 1) -}}
-        <a class="small-box {{ $class }} no-underline" href="{{ $pager.URL }}">{{ . }}</a>
+        <a class="{{ $class }} {{ $lnkClass }}" href="{{ $pager.URL }}">{{ . }}</a>
       {{ end -}}
       {{ $prev = . -}}
     {{ end -}}
 
     {{/* Right arrow disabled on the last page. */ -}}
     {{ if $paginator.HasNext -}}
-      <a class="small-box {{ $class }} no-underline" href="{{ $paginator.Next.URL }}" rel="next">
+      <a class="{{ $class }} {{ $lnkClass }}" href="{{ $paginator.Next.URL }}" rel="next">
         <i class="ti ti-chevron-right"></i>
       </a>
     {{ else -}}
-      <div class="small-box {{ $mutedClass }}">
+      <div class="{{ $class }} {{ $mutedClass }}">
         <i class="ti ti-chevron-right"></i>
       </div>
     {{ end -}}
@@ -54,7 +55,7 @@
     {{ end -}}
     {{/* data-pages: collect the page no. -> URL pairs and embed them as JSON for main.js. */ -}}
     <form id="pagination-goto" class="gap-1.5 flex items-center" data-pages="{{ $pageUrls | jsonify | safeJS }}">
-      <div class="small-box w-18 border-border focus-within:border-accent">
+      <div class="{{ $class }} bg-bg border-border focus-within:border-accent border">
         {{/* Wrapper is width-limited, so we set min-w-0 to prevent overflow. */ -}}
         <input
           id="pagination-goto-input"
@@ -62,10 +63,13 @@
           inputmode="numeric"
           autocomplete="off"
           maxlength="5"
-          class="min-w-0 text-center"
+          class="w-14 text-center"
           placeholder="{{ $curr }}" />
       </div>
-      <button type="submit" class="small-box {{ $class }}" title="{{ i18n `gotoPage` }}">
+      <button
+        type="submit"
+        class="{{ $class }} bg-bg border-border hover:text-accent hover:border-accent border"
+        title="{{ i18n `gotoPage` }}">
         <i class="ti ti-corner-down-left"></i>
       </button>
     </form>

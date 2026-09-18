@@ -3,7 +3,7 @@
 {{/* Nothing renders when both prev/next are empty. */ -}}
 {{ if or $next $prev -}}
   <nav class="mt-10 gap-4 border-border pt-6 desktop:grid-cols-2 grid grid-cols-1 border-t">
-    {{ $class := "bg-bg border-border border rounded-xl text-fg px-3.5 py-2.5 no-underline" -}}
+    {{ $class := "bg-bg border-border border rounded-xl text-fg px-3.5 py-2.5" -}}
     {{ $class = "hover:text-accent hover:border-accent" | printf "%s %s" $class -}}
     {{/* text-end takes effect only on inline blocks. */ -}}
     {{ $hintClass := "text-muted text-13 group-hover:text-accent inline-flex items-center mb-0.75" -}}

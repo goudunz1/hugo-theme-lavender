@@ -8,6 +8,8 @@
   {{ $class = "gap-4 px-2 py-4 flex flex-col items-center justify-between" | printf "%s %s" $class -}}
   {{/* Desktop variant */ -}}
   {{ $class = "sidebar:border-0 sidebar:bg-transparent sidebar:translate-x-0" | printf "%s %s" $class -}}
+  {{ $iconClass := "border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2" -}}
+  {{ $iconClass = printf "%s %s" $iconClass "hover:scale-108" -}}
   {{/* Short viewports force the sidebar itself to scroll: give it a min-height of 100vh so the */ -}}
   {{/* overflow happens on the sidebar instead of its children, preserving the background while scrolling. */ -}}
   <aside id="sidebar" class="{{ $class }} pointer-events-auto min-h-dvh">
@@ -15,7 +17,7 @@
     {{ with site.Params.avatar -}}
       {{ $blogName := site.Params.blogName | default site.Title -}}
       <a
-        class="bg-bg p-0.5 size-15 rounded-full border-2 no-underline select-none hover:scale-105"
+        class="bg-bg p-0.5 size-15 border-accent rounded-full border-2 select-none hover:scale-105"
         href="{{ `` | relLangURL }}"
         title="{{ $blogName }}">
         <img class="rounded-full object-cover" src="{{ . | relURL }}" alt="{{ $blogName }}" />
@@ -30,7 +32,11 @@
     </nav>
 
     {{- /* Theme toggle: the sun/moon icons are swapped by the CSS `dark` class. */ -}}
-    <button type="button" id="theme-toggle" class="icon size-11 text-muted" title="{{ i18n `toggleColorTheme` }}">
+    <button
+      type="button"
+      id="theme-toggle"
+      class="{{ $iconClass }} size-11 text-muted"
+      title="{{ i18n `toggleColorTheme` }}">
       <i class="ti ti-sun hidden dark:block"></i>
       <i class="ti ti-moon-stars block dark:hidden"></i>
     </button>
@@ -41,7 +47,7 @@
 <button
   type="button"
   id="sidebar-burger"
-  class="icon size-10 text-fg right-3 top-3 sidebar:hidden fixed z-14"
+  class="{{ $iconClass }} size-10 text-fg right-3 top-3 sidebar:hidden fixed z-14"
   title="{{ i18n `openMenu` }}">
   <i id="sidebar-burger-icon" class="ti ti-list"></i>
 </button>
@@ -56,7 +62,7 @@
   <button
     type="button"
     id="back-to-top"
-    class="icon translate-y-4 size-10 text-fg right-6 bottom-6 pointer-events-none fixed z-11 opacity-0"
+    class="{{ $iconClass }} translate-y-4 size-10 text-fg right-6 bottom-6 pointer-events-none fixed z-11 opacity-0"
     title="{{ i18n `backToTop` }}">
     <i class="ti ti-arrow-up"></i>
   </button>

@@ -23,7 +23,7 @@
 
 {{- /* Stylesheets */ -}}
 {{ partial "helpers/link-css.html" "css/main.css" -}}
-{{ partial "helpers/link-css.html" "css/syntax.css" -}}
+{{ partial "helpers/link-css.html" "css/highlight.css" -}}
 {{/* Served from jsDelivr when `useCdn = true`, or self-hosted from assets/lib/ when false. */ -}}
 {{ if site.Params.useCdn | default true -}}
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/fredoka@5.2.10/wght.css" />

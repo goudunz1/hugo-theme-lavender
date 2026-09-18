@@ -42,12 +42,13 @@
     </template>
 
     {{- /* Load-more/less button for paged results. */ -}}
+    {{ $class := "h-9 min-w-9 border border-border bg-bg rounded-lg px-2.5 text-14 flex items-center justify-center" -}}
+    {{ $class = printf "%s %s" $class "hover:text-accent hover:border-accent" -}}
     <div class="mt-6 gap-1.5 flex items-center justify-center">
-      {{ $class := "border-border text-fg hover:text-accent hover:border-accent" -}}
-      <button id="search-more" type="button" class="small-box {{ $class }}" hidden>
+      <button id="search-more" type="button" class="{{ $class }}" hidden>
         {{ i18n "searchLoadMore" }}
       </button>
-      <button id="search-less" type="button" class="small-box {{ $class }}" hidden>
+      <button id="search-less" type="button" class="{{ $class }}" hidden>
         {{ i18n "searchLoadLess" }}
       </button>
     </div>
