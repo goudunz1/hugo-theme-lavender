@@ -83,10 +83,6 @@
     outline-offset: -2px;
   }
 
-  a {
-    text-decoration-line: none;
-  }
-
   button {
     cursor: pointer;
   }
@@ -140,7 +136,7 @@
 
 .accordion-head {
   @apply gap-3 bg-bg flex w-full items-center justify-between border-0;
-  @apply px-4.5 py-3.5 text-17 font-semibold text-fg text-left;
+  @apply px-4.5 py-3.5 text-17 font-semibold text-left;
 }
 
 .accordion-body {

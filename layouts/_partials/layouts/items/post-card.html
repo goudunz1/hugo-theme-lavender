@@ -21,7 +21,7 @@
     </div>
     <hr class="bg-border my-2.5 h-px border-0" />
     {{/* Card title */ -}}
-    <h3 class="mb-1 text-base text-fg font-semibold truncate" data-title>{{ .Title }}</h3>
+    <h3 class="mb-1 text-base font-semibold truncate" data-title>{{ .Title }}</h3>
     {{/* Author and date (same fallbacks as the article meta line) */ -}}
     {{ $author := .Param "author" | default "Anonymous" -}}
     {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}

@@ -17,14 +17,14 @@
       {{ $class := "group-hover:translate-x-1.5 flex items-baseline rounded-full border p-px" -}}
       {{ $class = printf "%s %s" $class (cond $active "bg-accent-subtle border-accent" "bg-bg border-border") -}}
       <a href="{{ .URL }}" class="{{ $class }}">
-        {{ $class = cond $active "text-accent " "text-muted " -}}
-        <div class="{{ $class -}} size-10 flex items-center justify-center">
+        {{ $class = cond $active "text-accent" "text-muted" -}}
+        <div class="{{ $class }} size-10 flex items-center justify-center">
           <i class="ti ti-{{ $icon }}"></i>
         </div>
         {{/* Simulate a drawer by setting max-width; Change opacity for transition effect. */ -}}
         <div class="max-w-0 opacity-0 group-hover:max-w-fit group-hover:opacity-100">
-          {{ $class = cond $active "text-accent " "text-fg " -}}
-          <p class="{{ $class -}} max-w-48 pr-3 font-medium truncate">{{ .Name }}</p>
+          {{ $class = cond $active "text-accent" "" -}}
+          <p class="{{ $class }} max-w-48 pr-3 font-medium truncate">{{ .Name }}</p>
         </div>
       </a>
     </div>

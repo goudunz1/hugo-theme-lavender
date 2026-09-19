@@ -3,7 +3,7 @@
 {{ if gt $paginator.TotalPages 1 -}}
   <nav class="mt-10 gap-1.5 flex flex-wrap items-center justify-center">
     {{ $class := "h-9 min-w-9 rounded-lg px-2.5 text-14 flex items-center justify-center" -}}
-    {{ $lnkClass := "bg-bg border border-border text-fg hover:text-accent hover:border-accent" -}}
+    {{ $lnkClass := "bg-bg border border-border hover:text-accent hover:border-accent" -}}
     {{ $mutedClass := "bg-bg border border-border text-muted opacity-40" -}}
 
     {{/* Left arrow disabled on the first page. */ -}}

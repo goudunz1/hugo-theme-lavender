@@ -1,7 +1,7 @@
 <aside class="gap-6 sidebar:order-0 order-first flex flex-col">
   {{ $class := "bg-bg border-border rounded-xl p-4 border" -}}
   {{ $titleClass := "text-muted tracking-wider mb-2.5 text-13 uppercase wrap-break-word" -}}
-  {{ $lnkClass := "border-border bg-bg text-fg flex items-center rounded-full border" -}}
+  {{ $lnkClass := "border-border bg-bg flex items-center rounded-full border" -}}
   {{/* Iterate every taxonomy defined on the site (e.g. categories, tags). */ -}}
   {{ range $plural, $taxonObj := site.Taxonomies -}}
     {{/* Only render a bulletin card when the current post belongs to this taxonomy. */ -}}

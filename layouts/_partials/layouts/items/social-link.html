@@ -4,9 +4,12 @@
 
 {{ $icon := .icon | default "link" -}}
 {{/* External links are opened in a new tab. */ -}}
-{{ $external := not (hasPrefix .url (or site.BaseURL "/")) -}}
-{{ $attr := (cond $external ` target="_blank" rel="noopener"` "") | safeHTMLAttr -}}
-{{ $class := "border-accent bg-bg text-muted flex items-center justify-center rounded-full border-2" -}}
-<a class="{{ $class }} text-17 size-11 hover:scale-108" href="{{ .url }}" title="{{ .name }}" {{- $attr }}>
+{{ $class := "border-accent bg-bg flex items-center justify-center rounded-full border-2" -}}
+<a
+  class="{{ $class }} text-muted text-17 size-11 hover:scale-108"
+  href="{{ .url }}"
+  title="{{ .name }}"
+  target="_blank"
+  rel="noopener">
   <i class="ti ti-{{ $icon }}"></i>
 </a>
