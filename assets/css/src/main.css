@@ -100,34 +100,43 @@
   input:focus-visible {
     outline-style: none;
   }
+}
 
-  @supports (-moz-tab-size: 4) {
-    article {
-      scrollbar-color: var(--color-border) transparent;
-    }
-  }
+#sidebar-viewport {
+  scrollbar-width: none;
+}
 
-  article ::-webkit-scrollbar {
-    height: 0.5rem;
-    width: 0.5rem;
-  }
+#sidebar-viewport::-webkit-scrollbar {
+  display: none;
+}
 
-  article ::-webkit-scrollbar-thumb {
-    background-color: var(--color-border);
-    border-radius: 0.25rem;
-  }
+#post ::-webkit-scrollbar {
+  height: 0.5rem;
+  width: 0.5rem;
+}
 
-  article ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--color-accent-veil);
-    cursor: pointer;
-  }
+#post ::-webkit-scrollbar-thumb {
+  background-color: var(--color-border);
+  border-radius: 0.25rem;
+}
 
-  article ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
+#post ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-accent-veil);
+  cursor: pointer;
+}
 
-  article ::-webkit-scrollbar-button {
-    display: none;
+#post ::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+#post ::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Weird scrollbar support of Firefox. */
+@supports (-moz-tab-size: 4) {
+  #post {
+    scrollbar-color: var(--color-border) transparent;
   }
 }
 
@@ -282,22 +291,9 @@
 
 /* Table of Contents. */
 
-.post-toc {
-  @apply overflow-hidden wrap-break-word;
-}
-
-.post-toc li {
-  @apply flow-root;
-}
-
 .post-toc a {
-  @apply my-1.25 px-2 text-13/[1.4] block border-l-2;
+  @apply py-1.25 px-2 text-13/[1.4] block border-l-2;
   @apply toggled:border-l-accent text-muted hover:text-accent toggled:text-accent border-l-transparent;
-}
-
-.post-toc a.toc-link--active {
-  /* Set by JS scroll-spy: heavy left border on the current section. */
-  @apply border-l-accent text-accent;
 }
 
 .post-toc ul ul,

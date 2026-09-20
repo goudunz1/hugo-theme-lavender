@@ -1,18 +1,14 @@
-{{/* Full-screen fixed layer that owns the sidebar's scrolling (on mobile the drawer slides over content), */ -}}
-{{/* which gets `pointer-events-none` so clicks pass through to the page underneath and */ -}}
-{{/* `overscroll-contain` that prevents scroll chaining-up. */ -}}
-<div class="inset-0 pointer-events-none fixed z-13 scrollbar-none overflow-y-scroll overscroll-contain">
-  {{/* Mobile drawer */ -}}
+{{/* Sidebar viewport. The rail itself cannot own the scroll - hover-expanded menu labels would get clipped. */ -}}
+{{/* We hide the scrollbar in css for compatibility, and `overscroll-contain` stops scroll chaining. */ -}}
+<div
+  id="sidebar-viewport"
+  class="inset-y-0 inset-s-0 w-72 pointer-events-none fixed z-13 overflow-y-auto overscroll-contain">
   {{ $class := "bg-bg w-19 border-border -translate-x-full border-r" -}}
-  {{/* The inner layout */ -}}
   {{ $class = "gap-4 px-2 py-4 flex flex-col items-center justify-between" | printf "%s %s" $class -}}
-  {{/* Desktop variant */ -}}
   {{ $class = "sidebar:border-r-0 sidebar:translate-x-0" | printf "%s %s" $class -}}
-  {{ $iconClass :=
-    "border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2 hover:scale-108"
-  -}}
-  {{/* Short viewports force the sidebar itself to scroll: give it a min-height of 100vh so the */ -}}
-  {{/* overflow happens on the sidebar instead of its children, preserving the background while scrolling. */ -}}
+  {{/* The visible rail. Deliberately `min-h-dvh`, never `h-dvh`: */ -}}
+  {{/* The rail grows to keep its background over the whole scrolled area, giving it a fixed height would make */ -}}
+  {{/* the flex children shrink. */ -}}
   <aside id="sidebar" class="{{ $class }} toggled:translate-x-0 pointer-events-auto min-h-dvh">
     {{/* Avatar linking to the home page */ -}}
     {{ with site.Params.avatar -}}
@@ -33,6 +29,9 @@
     </nav>
 
     {{- /* Theme toggle: the sun/moon icons are swapped by the CSS `dark` class. */ -}}
+    {{ $iconClass :=
+      "border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2 hover:scale-108"
+    -}}
     <button
       type="button"
       id="theme-toggle"
