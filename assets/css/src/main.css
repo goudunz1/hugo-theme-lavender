@@ -4,6 +4,7 @@
 @source "..";
 
 @custom-variant dark (&:where(.dark, .dark *));
+@custom-variant toggled (&[data-toggled]);
 
 @theme {
   --breakpoint-sidebar: 900px;
@@ -128,50 +129,6 @@
   article ::-webkit-scrollbar-button {
     display: none;
   }
-}
-
-.accordion {
-  @apply rounded-xl border-border bg-bg overflow-hidden border;
-}
-
-.accordion-head {
-  @apply gap-3 bg-bg flex w-full items-center justify-between border-0;
-  @apply px-4.5 py-3.5 text-17 font-semibold text-left;
-}
-
-.accordion-body {
-  @apply max-h-0 overflow-hidden;
-}
-
-.accordion-chevron {
-  @apply text-muted;
-}
-
-/* JS-toggled state classes — kept out of @layer so they override utilities. */
-
-/* Bold + accent highlight for the matched terms inside search result cards. */
-.search-mark {
-  @apply font-bold text-accent bg-transparent box-decoration-clone wrap-break-word;
-}
-
-.back-to-top--show {
-  @apply translate-y-0 pointer-events-auto opacity-100;
-}
-
-.sidebar--open {
-  @apply translate-x-0;
-}
-
-body.sidebar-open #sidebar-scrim {
-  @apply block;
-}
-
-.accordion--open {
-  @apply border-accent;
-}
-
-.accordion--open .accordion-chevron {
-  @apply text-accent rotate-180;
 }
 
 /* Markdown-rendered content. */
@@ -334,7 +291,8 @@ body.sidebar-open #sidebar-scrim {
 }
 
 .post-toc a {
-  @apply my-1.25 px-2 text-13/[1.4] text-muted hover:text-accent block border-l-2 border-l-transparent;
+  @apply my-1.25 px-2 text-13/[1.4] block border-l-2;
+  @apply toggled:border-l-accent text-muted hover:text-accent toggled:text-accent border-l-transparent;
 }
 
 .post-toc a.toc-link--active {
@@ -345,4 +303,10 @@ body.sidebar-open #sidebar-scrim {
 .post-toc ul ul,
 .post-toc ol ol {
   @apply pl-3.25;
+}
+
+/* Bold + accent highlight for the matched terms inside search result cards. */
+
+.search-mark {
+  @apply font-bold text-accent bg-transparent box-decoration-clone wrap-break-word;
 }

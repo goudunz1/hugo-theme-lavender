@@ -1,18 +1,19 @@
 {{/* Full-screen fixed layer that owns the sidebar's scrolling (on mobile the drawer slides over content), */ -}}
 {{/* which gets `pointer-events-none` so clicks pass through to the page underneath and */ -}}
 {{/* `overscroll-contain` that prevents scroll chaining-up. */ -}}
-<div class="inset-0 pointer-events-none fixed z-13 h-dvh w-screen scrollbar-none overflow-y-scroll overscroll-contain">
+<div class="inset-0 pointer-events-none fixed z-13 scrollbar-none overflow-y-scroll overscroll-contain">
   {{/* Mobile drawer */ -}}
   {{ $class := "bg-bg w-19 border-border -translate-x-full border-r" -}}
   {{/* The inner layout */ -}}
   {{ $class = "gap-4 px-2 py-4 flex flex-col items-center justify-between" | printf "%s %s" $class -}}
   {{/* Desktop variant */ -}}
-  {{ $class = "sidebar:border-0 sidebar:bg-transparent sidebar:translate-x-0" | printf "%s %s" $class -}}
-  {{ $iconClass := "border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2" -}}
-  {{ $iconClass = printf "%s %s" $iconClass "hover:scale-108" -}}
+  {{ $class = "sidebar:border-r-0 sidebar:translate-x-0" | printf "%s %s" $class -}}
+  {{ $iconClass :=
+    "border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2 hover:scale-108"
+  -}}
   {{/* Short viewports force the sidebar itself to scroll: give it a min-height of 100vh so the */ -}}
   {{/* overflow happens on the sidebar instead of its children, preserving the background while scrolling. */ -}}
-  <aside id="sidebar" class="{{ $class }} pointer-events-auto min-h-dvh">
+  <aside id="sidebar" class="{{ $class }} toggled:translate-x-0 pointer-events-auto min-h-dvh">
     {{/* Avatar linking to the home page */ -}}
     {{ with site.Params.avatar -}}
       {{ $blogName := site.Params.blogName | default site.Title -}}
@@ -47,22 +48,24 @@
 <button
   type="button"
   id="sidebar-burger"
-  class="{{ $iconClass }} size-10 right-3 top-3 sidebar:hidden fixed z-14"
+  class="group {{ $iconClass }} size-10 right-3 top-3 sidebar:hidden fixed z-14"
   title="{{ i18n `openMenu` }}">
-  <i id="sidebar-burger-icon" class="ti ti-list"></i>
+  <i class="ti ti-list group-toggled:hidden block"></i>
+  <i class="ti ti-x group-toggled:block hidden"></i>
 </button>
 
 {{- /* Full screen scrim layer shading the contents when the sidebar is opened. */ -}}
-<div id="sidebar-scrim" class="inset-0 bg-black/45 fixed z-12 hidden"></div>
+<div id="sidebar-scrim" class="inset-0 toggled:block bg-black/45 fixed z-12 hidden"></div>
 
 {{- /* Back-to-top button: rendered in the sidebar template so it appears on every page. */ -}}
 {{ if site.Params.backToTop | default true -}}
+  {{ $class = "not-toggled:translate-y-4 not-toggled:opacity-0 not-toggled:pointer-events-none" -}}
   {{/* pointer-events + opacity: simulate hidden/shown states so the transition is visible. */ -}}
   {{/* Raise the z-index so it covers normal content but not the sidebar scrim. */ -}}
   <button
     type="button"
     id="back-to-top"
-    class="{{ $iconClass }} translate-y-4 size-10 right-6 bottom-6 pointer-events-none fixed z-11 opacity-0"
+    class="{{ $iconClass }} {{ $class }} size-10 right-6 bottom-6 fixed z-11"
     title="{{ i18n `backToTop` }}">
     <i class="ti ti-arrow-up"></i>
   </button>

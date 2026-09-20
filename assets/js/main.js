@@ -9,7 +9,6 @@ const backToTopThreshold = 400;
   // Theme toggle
   (function () {
     var root = document.documentElement;
-    var body = document.body;
     var toggle = document.getElementById("theme-toggle");
 
     if (toggle) {
@@ -30,28 +29,22 @@ const backToTopThreshold = 400;
   // Sidebar
   (function () {
     var burger = document.getElementById("sidebar-burger");
-    var burgerIcon = document.getElementById("sidebar-burger-icon");
     var sidebar = document.getElementById("sidebar");
     var scrim = document.getElementById("sidebar-scrim");
-    var body = document.body;
 
     if (sidebar) {
       function toggleSidebar(openOrClose) {
-        sidebar.classList.toggle("sidebar--open", openOrClose);
-        body.classList.toggle("sidebar-open", openOrClose);
-        if (burgerIcon) {
-          if (openOrClose) {
-            burgerIcon.setAttribute("class", "ti ti-x");
-          } else {
-            burgerIcon.setAttribute("class", "ti ti-list");
-          }
+        sidebar.toggleAttribute("data-toggled", openOrClose);
+        scrim.toggleAttribute("data-toggled", openOrClose);
+        if (burger) {
+          burger.toggleAttribute("data-toggled", openOrClose);
         }
       }
 
       if (burger) {
         // Clicking on hamburger button toggles the sidebar.
         burger.addEventListener("click", function () {
-          var isOpened = sidebar.classList.contains("sidebar--open");
+          var isOpened = sidebar.hasAttribute("data-toggled");
           toggleSidebar(!isOpened);
         });
       }
@@ -80,7 +73,7 @@ const backToTopThreshold = 400;
   (function () {
     var toTop = document.getElementById("back-to-top");
     // ES5 compatible, to enable array functions like .forEach() for the NodeList
-    var tocLinks = Array.prototype.slice.call(document.querySelectorAll("nav#TableOfContents a"));
+    var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".post-toc a"));
     var headingEls = [];
     var activeLink = null;
     var rafTicking = false;
@@ -115,10 +108,10 @@ const backToTopThreshold = 400;
       }
       if (activeLink === null || activeLink !== current) {
         if (activeLink) {
-          activeLink.classList.remove("toc-link--active");
+          activeLink.toggleAttribute("data-toggled", false);
         }
         activeLink = current;
-        activeLink.classList.add("toc-link--active");
+        activeLink.toggleAttribute("data-toggled", true);
       }
     }
 
@@ -131,7 +124,7 @@ const backToTopThreshold = 400;
       rafTicking = true;
       requestAnimationFrame(function () {
         if (toTop) {
-          toTop.classList.toggle("back-to-top--show", window.scrollY > backToTopThreshold);
+          toTop.toggleAttribute("data-toggled", window.scrollY > backToTopThreshold);
         }
         updateScrollSpy();
         rafTicking = false;
@@ -157,19 +150,16 @@ const backToTopThreshold = 400;
 
   // Accordion (collapsible sections)
   (function () {
-    var accordion = document.querySelectorAll(".accordion");
-    if (accordion.length > 0) {
-      Array.prototype.forEach.call(accordion, function (item) {
-        var head = item.querySelector(".accordion-head");
-        var body = item.querySelector(".accordion-body");
-        if (!head || !body) {
-          return;
+    var accordion = document.getElementById("accordion");
+    var items = accordion.children;
+    if (items.length > 0) {
+      Array.prototype.forEach.call(items, function (item) {
+        var head = item.firstElementChild;
+        if (head) {
+          head.addEventListener("click", function () {
+            item.toggleAttribute("data-toggled");
+          });
         }
-        head.addEventListener("click", function () {
-          var open = item.classList.toggle("accordion--open");
-          // scrollHeight is the FULL scrollable height of the content in pixels, regardless of how much is visible.
-          body.style.maxHeight = open ? body.scrollHeight + "px" : "0px";
-        });
       });
     }
   })();

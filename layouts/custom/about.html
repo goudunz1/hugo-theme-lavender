@@ -9,19 +9,19 @@
     </div>
     {{/* Collapsible "about" items (title + Markdown body), driven by JS. */ -}}
     {{ with site.Params.aboutItems -}}
-      <div class="mt-9 w-120 gap-2.5 flex flex-col">
+      <div id="accordion" class="mt-9 w-120 gap-2.5 flex flex-col">
         {{ range . -}}
           {{/* Params: */ -}}
           {{/* "title": title of the item displayed on the left */ -}}
           {{/* "content": markdown content */ -}}
-
-
-          <div class="accordion">
-            <button type="button" class="accordion-head">
+          <div class="group toggled:border-accent rounded-xl border-border bg-bg overflow-hidden border">
+            <button
+              type="button"
+              class="gap-3 px-4.5 py-3.5 text-17 font-semibold flex w-full items-center justify-between text-left">
               <span>{{ .title }}</span>
-              <i class="accordion-chevron ti ti-chevron-down"></i>
+              <i class="group-toggled:text-accent group-toggled:rotate-180 text-muted ti ti-chevron-down"></i>
             </button>
-            <div class="accordion-body">
+            <div class="max-h-0 group-toggled:max-h-fit">
               <div class="post-content text-muted! pb-4 px-4.5">{{ .content | markdownify }}</div>
             </div>
           </div>
