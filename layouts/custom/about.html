@@ -1,12 +1,5 @@
 {{ define "main" -}}
-  <section class="pt-10 flex flex-1 flex-col items-center justify-center">
-    {{ partial "layouts/profile.html" . -}}
-    <div class="mt-5 max-w-160 text-center wrap-break-word">
-      <h1 class="font-bold text-[2.5rem]">{{ .Title }}</h1>
-      {{ with .Description -}}
-        <p class="mt-1.25 text-14 text-muted">{{ . }}</p>
-      {{ end -}}
-    </div>
+  {{ with partial "layouts/hero.html" (dict "context" . "title" .Title "desc" .Description) -}}
     {{/* Collapsible "about" items (title + Markdown body), driven by JS. */ -}}
     {{ with site.Params.aboutItems -}}
       <div id="accordion" class="mt-9 w-120 gap-2.5 flex flex-col">
@@ -28,5 +21,5 @@
         {{ end -}}
       </div>
     {{ end -}}
-  </section>
+  {{ end -}}
 {{ end -}}
