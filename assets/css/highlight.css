@@ -1,9 +1,5 @@
-/*
-  Hugo v0.151.1 uses chroma v2.20.0
-  Based on
-  - hugo gen chromastyles --style=onedark
-  - https://github.com/alecthomas/chroma/blob/v2.20.0/types.go
-*/
+/* Custom codeblock highlight style sheet. */
+/* Based on https://github.com/alecthomas/chroma/blob/v2.20.0/types.go */
 
 :root {
   --chroma-type: #b45309;
@@ -27,13 +23,13 @@
 
 /* Background */
 .bg {
-  color: var(--color-fg);
-  background-color: var(--color-bg);
+  color: var(--theme-fg);
+  background-color: var(--theme-bg);
 }
 /* PreWrapper */
 .chroma {
-  color: var(--color-fg);
-  background-color: var(--color-bg);
+  color: var(--theme-fg);
+  background-color: var(--theme-bg);
 }
 /* Line */
 .chroma .line {
@@ -46,7 +42,7 @@
   user-select: none;
   margin-right: 1rem;
   padding: 0 0.4rem 0 0.4rem;
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* LineNumbersTable */
 .chroma .lnt {
@@ -55,11 +51,11 @@
   user-select: none;
   margin-right: 1rem;
   padding: 0 0.4rem 0 0.4rem;
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* LineHighlight */
 .chroma .hl {
-  background-color: var(--color-accent-veil);
+  background-color: var(--theme-accent-veil);
 }
 /* LineTable */
 .chroma .lntable {
@@ -83,7 +79,7 @@
 }
 /* TextWhitespace */
 .chroma .w {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* Error */
 .chroma .err {
@@ -92,12 +88,12 @@
 }
 /* Other */
 .chroma .x {
-  color: var(--color-fg);
+  color: var(--theme-fg);
 }
 
 /* Keyword */
 .chroma .k {
-  color: var(--color-accent);
+  color: var(--theme-accent);
 }
 /* KeywordConstant */
 .chroma .kc {
@@ -105,19 +101,19 @@
 }
 /* KeywordDeclaration */
 .chroma .kd {
-  color: var(--color-accent);
+  color: var(--theme-accent);
 }
 /* KeywordNamespace */
 .chroma .kn {
-  color: var(--color-accent);
+  color: var(--theme-accent);
 }
 /* KeywordPseudo */
 .chroma .kp {
-  color: var(--color-accent);
+  color: var(--theme-accent);
 }
 /* KeywordReserved */
 .chroma .kr {
-  color: var(--color-accent);
+  color: var(--theme-accent);
 }
 /* KeywordType */
 .chroma .kt {
@@ -308,31 +304,31 @@
 
 /* Comment */
 .chroma .c {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* CommentHashbang */
 .chroma .ch {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* CommentMultiline */
 .chroma .cm {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* CommentPreproc */
 .chroma .cp {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* CommentPreprocFile */
 .chroma .cpf {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* CommentSingle */
 .chroma .c1 {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* CommentSpecial */
 .chroma .cs {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 
 /* GenericDeleted */
@@ -358,7 +354,7 @@
 }
 /* GenericOutput */
 .chroma .go {
-  color: var(--color-muted);
+  color: var(--theme-muted);
 }
 /* GenericPrompt */
 .chroma .gp {
