@@ -4,13 +4,13 @@
 {{ if $enabled -}}
   {{/* Sections/top pages are skipped */ -}}
   {{ range where site.RegularPages "Section" "ne" "" -}}
-    {{ $author := .Param "author" | default "Anonymous" -}}
+    {{ $meta := partial "helpers/meta.html" . -}}
     {{/* Mirrors the card slots, yet keeps full content to power search scripts. */ -}}
     {{ $entries = $entries | append (dict
       "title" .Title
       "url" .RelPermalink
-      "date" (.Date.Format "2006-01-02")
-      "author" $author
+      "date" $meta.date.label
+      "author" $meta.author.label
       "content" (.Plain | plainify)
       )
     -}}

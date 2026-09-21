@@ -1,0 +1,22 @@
+{{ $meta := dict -}}
+
+{{ $author := .Param "author" | default "Anonymous" -}}
+{{ $meta = $meta | merge (dict "author" (dict "icon" "user" "label" $author "weight" 10)) -}}
+
+{{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
+{{ $dateHuman := .Date | time.Format "2006-01-02" -}}
+{{ $dateTmpl := `<time datetime="%s">%s</time>` -}}
+{{ $dateEl := (printf $dateTmpl $dateMachine $dateHuman) | safeHTML -}}
+{{ $meta = $meta | merge (dict "date" (dict "icon" "calendar" "label" $dateEl "weight" 20)) -}}
+
+{{ if .Param "readingTime" | default true -}}
+  {{ $readingTime := i18n "minRead" (dict "Count" .ReadingTime) -}}
+  {{ $meta = $meta | merge (dict "readingTime" (dict "icon" "clock" "label" $readingTime "weight" 30)) -}}
+{{ end -}}
+
+{{ if .Param "wordCount" | default true -}}
+  {{ $wordCount := i18n "wordCount" (dict "Count" .WordCount) -}}
+  {{ $meta = $meta | merge (dict "wordCount" (dict "icon" "file-text" "label" $wordCount "weight" 40)) -}}
+{{ end -}}
+
+{{ return $meta -}}

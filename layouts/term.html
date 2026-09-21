@@ -5,7 +5,7 @@
     {{ $tmpl := `<a href="%s">%s</a>` -}}
     {{ $desc = (printf "%s &middot; %s" (printf $tmpl .RelPermalink .LinkTitle) $desc) | safeHTML -}}
   {{ end -}}
-  {{ partial "layouts/front.html" (dict "title" .Title "desc" $desc) -}}
+  {{ partial "layouts/default/front.html" (dict "title" .Title "desc" $desc) -}}
 
   {{ $paginator := partial "helpers/funcs/paginate.html" (dict "page" . "config" "grid") -}}
   <div class="mt-10">
@@ -13,5 +13,5 @@
       {{ partial "layouts/items/card-grid.html" (dict "title" .Key "pages" .Pages.ByDate.Reverse) -}}
     {{ end -}}
   </div>
-  {{ partial "layouts/pagination.html" . -}}
+  {{ partial "layouts/default/pagination.html" . -}}
 {{ end -}}

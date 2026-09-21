@@ -1,5 +1,5 @@
 {{ define "main" -}}
-  {{ with partial "layouts/hero.html" (dict "context" . "title" .Title "desc" .Description) -}}
+  {{ with partial "layouts/hero/hero.html" (dict "context" . "title" .Title "desc" .Description) -}}
     {{/* Collapsible "about" items (title + Markdown body), driven by JS. */ -}}
     {{ with site.Params.aboutItems -}}
       <div id="accordion" class="mt-9 w-120 gap-2.5 flex flex-col">

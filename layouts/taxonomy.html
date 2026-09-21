@@ -21,7 +21,7 @@
   {{ if eq $layout "grid" -}}
     {{ $desc = (printf "%s &middot; %s" $desc (i18n "entryCount" (dict "Count" $pageCount))) | safeHTML -}}
   {{ end -}}
-  {{ partial "layouts/front.html" (dict "title" .Title "desc" $desc) -}}
+  {{ partial "layouts/default/front.html" (dict "title" .Title "desc" $desc) -}}
 
   {{ if eq $layout "grid" -}}
     {{ partial "layouts/taxonomy/grid.html" . -}}

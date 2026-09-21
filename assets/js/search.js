@@ -177,7 +177,7 @@
     authorEl.innerHTML = highlightText(doc.author || "", termsIn(doc, "author"));
 
     var dateEl = node.querySelector("[data-date]");
-    dateEl.textContent = doc.date || "";
+    dateEl.innerHTML = doc.date || "";
 
     return node;
   }

@@ -1,10 +1,14 @@
 <!doctype html>
-<html lang="{{ site.Language.Locale | default `en` }}" dir="{{ site.Language.Direction | default `ltr` }}">
+{{ $lang := site.Language.Locale | default `en` -}}
+{{ $dir := site.Language.Direction | default `ltr` -}}
+{{ $title := site.Title -}}
+{{ if .IsHome -}}
+  {{ $title = printf "%s | %s" .Title $title -}}
+{{ end -}}
+<html lang="{{ $lang }}" dir="{{ $dir }}">
   <head>
-    {{ partialCached "layouts/head/head.html" . -}}
-    <title>
-      {{- partial "layouts/head/title.html" . -}}
-    </title>
+    {{ partialCached "layouts/head.html" . -}}
+    <title>{{ $title }}</title>
   </head>
   <body>
     {{ partial "layouts/sidebar.html" . -}}

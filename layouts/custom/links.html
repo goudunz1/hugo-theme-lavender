@@ -1,5 +1,5 @@
 {{ define "main" -}}
-  {{ partial "layouts/front.html" (dict "title" .Title "desc" .Description) -}}
+  {{ partial "layouts/default/front.html" (dict "title" .Title "desc" .Description) -}}
   {{ with site.Params.friends -}}
     <div class="mt-6 mb-8 gap-4 desktop:grid-cols-2 grid grid-cols-1">
       {{ $class := "rounded-xl border-border bg-bg flex items-center overflow-hidden border" -}}

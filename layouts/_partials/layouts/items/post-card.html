@@ -22,21 +22,17 @@
     <hr class="bg-border my-2.5 h-px border-0" />
     {{/* Card title */ -}}
     <h3 class="mb-1 text-base font-semibold truncate" data-title>{{ .Title }}</h3>
-    {{/* Author and date (same fallbacks as the article meta line) */ -}}
-    {{ $author := .Param "author" | default "Anonymous" -}}
-    {{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" -}}
-    {{ $dateHuman := .Date | time.Format "2006-01-02" -}}
+    {{ $meta := partial "helpers/meta.html" . -}}
     <div class="text-13 gap-2 text-muted flex justify-start">
-      {{ $class := "first:min-w-0 not-first:flex-none gap-0.75 flex items-baseline" -}}
-      <span class="{{ $class }}"
-        ><i class="ti ti-user"></i><span class="truncate" data-author>{{ $author }}</span></span
-      >
+      {{ $class := "gap-0.75 flex items-baseline" -}}
+      <p class="{{ $class }} min-w-0">
+        <i class="ti ti-{{ $meta.author.icon }}"></i><span class="truncate" data-author>{{ $meta.author.label }}</span>
+      </p>
       {{/* Card is itself width-limited, so when the author span gets long enough, */ -}}
       {{/* to prevent other items from wrapping, we should give them `flex-none`. */ -}}
-      <span class="{{ $class }}"
-        ><i class="ti ti-calendar"></i
-        ><span><time datetime="{{ $dateMachine }}" data-date>{{ $dateHuman }}</time></span></span
-      >
+      <p class="{{ $class }} flex-none">
+        <i class="ti ti-{{ $meta.date.icon }}"></i><span data-date>{{ $meta.date.label }}</span>
+      </p>
     </div>
   </a>
 </div>

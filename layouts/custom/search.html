@@ -1,6 +1,6 @@
 {{/* Search page based on MiniSearch. */ -}}
 {{ define "main" -}}
-  {{ partial "layouts/front.html" (dict "title" .Title "desc" .Description) -}}
+  {{ partial "layouts/default/front.html" (dict "title" .Title "desc" .Description) -}}
   {{/* Search is gated behind param `searchEnabled`. */ -}}
   {{ $enabled := site.Params.searchEnabled | default false -}}
   {{ if not $enabled -}}
