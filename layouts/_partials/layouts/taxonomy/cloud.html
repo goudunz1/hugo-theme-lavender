@@ -14,16 +14,18 @@
 {{ end -}}
 
 {{ $paginator := partial "helpers/funcs/paginate.html" (dict "page" . "pages" $sorted "config" "cloud") -}}
-<div class="mt-10 gap-2.5 flex flex-wrap">
-  {{ range $paginator.Pages -}}
-    {{/* `min-w-0` should be added to the flex item. */ -}}
-    <div class="group min-w-0">
-      <a href="{{ .RelPermalink }}" class="{{ $pillCls }}">
-        <i class="ti ti-tag"></i>
-        <span class="truncate">{{ .LinkTitle }}</span>
-        <span class="text-muted text-13 group-hover:text-accent transition-[color]">{{ .Pages.Len }}</span>
-      </a>
-    </div>
-  {{ end -}}
+<div class="mbs-10 flex-1">
+  <div class="gap-2.5 flex flex-wrap">
+    {{ range $paginator.Pages -}}
+      {{/* `min-w-0` should be added to the flex item. */ -}}
+      <div class="group min-w-0">
+        <a href="{{ .RelPermalink }}" class="{{ $pillCls }}">
+          <i class="ti ti-tag"></i>
+          <span class="truncate">{{ .LinkTitle }}</span>
+          <span class="text-muted text-13 group-hover:text-accent transition-[color]">{{ .Pages.Len }}</span>
+        </a>
+      </div>
+    {{ end -}}
+  </div>
 </div>
 {{ partial "layouts/default/pagination.html" . -}}

@@ -8,7 +8,7 @@
   {{ partial "layouts/default/front.html" (dict "title" .Title "desc" $desc) -}}
 
   {{ $paginator := partial "helpers/funcs/paginate.html" (dict "page" . "config" "grid") -}}
-  <div class="mt-10">
+  <div class="mbs-10 flex-1">
     {{ range $paginator.Pages.GroupByDate "2006" -}}
       {{ partial "layouts/items/card-grid.html" (dict "title" .Key "pages" .Pages.ByDate.Reverse) -}}
     {{ end -}}

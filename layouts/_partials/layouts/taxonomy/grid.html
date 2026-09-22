@@ -41,7 +41,7 @@
 {{ end -}}
 
 
-<div class="mt-10">
+<div class="mbs-10 flex-1">
   {{ range $title, $pages := $visible -}}
     {{ $icon := "layout-grid" -}}
     {{ partial "layouts/items/card-grid.html" (dict "title" $title "icon" $icon "pages" $pages) -}}
