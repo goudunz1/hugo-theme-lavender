@@ -151,16 +151,18 @@ const backToTopThreshold = 400;
   // Accordion (collapsible sections)
   (function () {
     var accordion = document.getElementById("accordion");
-    var items = accordion.children;
-    if (items.length > 0) {
-      Array.prototype.forEach.call(items, function (item) {
-        var head = item.firstElementChild;
-        if (head) {
-          head.addEventListener("click", function () {
-            item.toggleAttribute("data-toggled");
-          });
-        }
-      });
+    if (accordion) {
+      var items = accordion.children;
+      if (items.length > 0) {
+        Array.prototype.forEach.call(items, function (item) {
+          var head = item.firstElementChild;
+          if (head) {
+            head.addEventListener("click", function () {
+              item.toggleAttribute("data-toggled");
+            });
+          }
+        });
+      }
     }
   })();
 
@@ -171,8 +173,10 @@ const backToTopThreshold = 400;
       var gotoInput = gotoForm.querySelector("input");
       var pageUrls = {};
       var pageData = gotoForm.getAttribute("data-pages") || "{}";
+      var currPage = gotoForm.getAttribute("data-curr-page") || "1";
+      currPage = parseInt(currPage, 10) || 1;
       try {
-        pageUrls = JSON.parse(pageData) || "{}";
+        pageUrls = JSON.parse(pageData) || {};
       } catch (e) {}
       // Only digits are allowed; anything else is stripped as you type.
       gotoInput.addEventListener("input", function () {
@@ -184,6 +188,9 @@ const backToTopThreshold = 400;
       gotoForm.addEventListener("submit", function (e) {
         e.preventDefault();
         var page = parseInt(gotoInput.value, 10);
+        if (page == currPage) {
+          return;
+        }
         var url = pageUrls[page];
         if (!url) {
           gotoInput.value = "";
