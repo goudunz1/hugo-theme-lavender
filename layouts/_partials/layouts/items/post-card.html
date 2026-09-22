@@ -1,16 +1,22 @@
 {{/* Input: the page; Output: card representation of that page. */ -}}
+
+{{/* Only one column in mobile mode, so we give it a flexible height. */ -}}
+{{ $surfaceCls := delimit (slice
+  "rounded-xl border-border bg-bg px-4 py-3.5 min-h-48 desktop:h-56 flex flex-col overflow-hidden border"
+  "group-hover:border-accent group-hover:shadow-card group-hover:-translate-y-0.5"
+  "transition-[border-color,box-shadow,translate,transform]"
+  ) " "
+-}}
+{{ $metaCls := "gap-0.75 flex items-baseline" -}}
+
+{{/* Hover group to prevent bouncing back. */ -}}
 <div class="group">
-  {{/* In mobile mode there's only one column, so we give it a flexible height. */ -}}
-  {{ $lnkClass := "rounded-xl border-border bg-bg flex overflow-hidden border" -}}
-  {{ $lnkClass = printf "%s %s" $lnkClass
-    "group-hover:border-accent group-hover:shadow-card group-hover:-translate-y-0.5"
-  -}}
-  <a href="{{ .RelPermalink }}" class="{{ $lnkClass }} px-4 py-3.5 min-h-48 desktop:h-56 flex-col" data-url>
-    {{/* Snippet: page Description when present, otherwise the first 160 chars of the plain text. */ -}}
-    {{/* This is the main part of the card so it should take as much space as possible. */ -}}
+  <a href="{{ .RelPermalink }}" class="{{ $surfaceCls }}" data-url>
+    {{/* Snippet is the main part of the card so it should take as much space as possible. */ -}}
+    {{/* However, line-clamped elements shouldn't be stretched to hide the clamped data, so */ -}}
+    {{/* we give `flex-1` to a wrapper. */ -}}
     <div class="flex-1">
-      {{/* Line-clamped elements shouldn't be stretched to hide the clamped data. */ -}}
-      {{/* So we give `flex-1` to a wrapper. */ -}}
+      {{/* Page description when present, otherwise the first 160 chars of the plain text. */ -}}
       <p class="text-muted text-14 desktop:line-clamp-5 line-clamp-4 wrap-break-word" data-snippet>
         {{- with .Description -}}
           {{ . -}}
@@ -20,18 +26,18 @@
       </p>
     </div>
     <hr class="bg-border my-2.5 h-px border-0" />
-    {{/* Card title */ -}}
     <h3 class="mb-1 text-base font-semibold truncate" data-title>{{ .Title }}</h3>
     {{ $meta := partial "helpers/meta.html" . -}}
     <div class="text-13 gap-2 text-muted flex justify-start">
-      {{ $class := "gap-0.75 flex items-baseline" -}}
-      <p class="{{ $class }} min-w-0">
-        <i class="ti ti-{{ $meta.author.icon }}"></i><span class="truncate" data-author>{{ $meta.author.label }}</span>
+      <p class="{{ $metaCls }} min-w-0">
+        <i class="ti ti-{{ $meta.author.icon }}"></i>
+        <span class="truncate" data-author>{{ $meta.author.label }}</span>
       </p>
-      {{/* Card is itself width-limited, so when the author span gets long enough, */ -}}
-      {{/* to prevent other items from wrapping, we should give them `flex-none`. */ -}}
-      <p class="{{ $class }} flex-none">
-        <i class="ti ti-{{ $meta.date.icon }}"></i><span data-date>{{ $meta.date.label }}</span>
+      {{/* Card is width-limited, to prevent other items from wrapping when the author span gets too long, */ -}}
+      {{/* we should give them `flex-none`. */ -}}
+      <p class="{{ $metaCls }} flex-none">
+        <i class="ti ti-{{ $meta.date.icon }}"></i>
+        <span data-date>{{ $meta.date.label }}</span>
       </p>
     </div>
   </a>

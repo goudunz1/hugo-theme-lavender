@@ -1,4 +1,12 @@
 {{/* Cloud layout: terms sorted by post count */ -}}
+
+{{ $pillCls := delimit (slice
+  "border-border bg-bg gap-1.25 h-9 px-3.5 py-1.5 text-14 flex items-center rounded-full border"
+  "group-hover:bg-accent-subtle group-hover:border-accent group-hover:text-accent group-hover:-translate-y-px"
+  "transition-[background-color,border-color,color,translate,transform]"
+  ) " "
+-}}
+
 {{ $orderedTaxon := .Data.Terms.ByCount -}}
 {{ $sorted := slice -}}
 {{ range $orderedTaxon -}}
@@ -7,16 +15,13 @@
 
 {{ $paginator := partial "helpers/funcs/paginate.html" (dict "page" . "pages" $sorted "config" "cloud") -}}
 <div class="mt-10 gap-2.5 flex flex-wrap">
-  {{ $class := "border-border bg-bg flex items-center rounded-full border" -}}
-  {{ $class = printf "%s %s" $class
-    "group-hover:bg-accent-subtle group-hover:border-accent group-hover:text-accent group-hover:-translate-y-px"
-  -}}
   {{ range $paginator.Pages -}}
-    {{/* min-w-0 makes the container shrinkable to trigger 'truncate'. */ -}}
+    {{/* `min-w-0` should be added to the flex item. */ -}}
     <div class="group min-w-0">
-      <a href="{{ .RelPermalink }}" class="{{ $class }} gap-1.25 h-9 px-3.5 py-1.5 text-14">
-        <i class="ti ti-tag"></i><span class="truncate">{{ .LinkTitle }}</span
-        ><span class="text-muted text-13 group-hover:text-accent">{{ .Pages.Len }}</span>
+      <a href="{{ .RelPermalink }}" class="{{ $pillCls }}">
+        <i class="ti ti-tag"></i>
+        <span class="truncate">{{ .LinkTitle }}</span>
+        <span class="text-muted text-13 group-hover:text-accent transition-[color]">{{ .Pages.Len }}</span>
       </a>
     </div>
   {{ end -}}

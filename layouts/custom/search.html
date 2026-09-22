@@ -1,5 +1,12 @@
 {{/* Search page based on MiniSearch. */ -}}
 {{ define "main" -}}
+  {{ $surfaceCls := "border-border bg-bg gap-2 mt-6 rounded-xl px-4 py-2.5 flex items-center border" -}}
+  {{ $btnCls := delimit (slice
+    "h-9 min-w-9 border border-border bg-bg rounded-lg px-2.5 text-14 flex items-center justify-center"
+    "hover:text-accent hover:border-accent transition-[color,border-color]"
+    ) " "
+  -}}
+
   {{ partial "layouts/default/front.html" (dict "title" .Title "desc" .Description) -}}
   {{/* Search is gated behind param `searchEnabled`. */ -}}
   {{ $enabled := site.Params.searchEnabled | default false -}}
@@ -7,8 +14,7 @@
     <p class="text-14 text-muted mt-6">{{ i18n "searchDisabledText" | safeHTML }}</p>
   {{ else -}}
     {{/* data-index-url points search.js at the generated JSON index. */ -}}
-    <div
-      class="border-border bg-bg focus-within:border-accent gap-2 mt-6 rounded-xl px-4 py-2.5 flex items-center border">
+    <div class="{{ $surfaceCls }} focus-within:border-accent transition-[border-color]">
       <i class="ti ti-search text-muted"></i>
       <input
         type="search"
@@ -42,13 +48,11 @@
     </template>
 
     {{- /* Load-more/less button for paged results. */ -}}
-    {{ $class := "h-9 min-w-9 border border-border bg-bg rounded-lg px-2.5 text-14 flex items-center justify-center" -}}
-    {{ $class = printf "%s %s" $class "hover:text-accent hover:border-accent" -}}
     <div class="mt-6 gap-1.5 flex items-center justify-center">
-      <button id="search-more" type="button" class="{{ $class }}" hidden>
+      <button id="search-more" type="button" class="{{ $btnCls }}" hidden>
         {{ i18n "searchLoadMore" }}
       </button>
-      <button id="search-less" type="button" class="{{ $class }}" hidden>
+      <button id="search-less" type="button" class="{{ $btnCls }}" hidden>
         {{ i18n "searchLoadLess" }}
       </button>
     </div>

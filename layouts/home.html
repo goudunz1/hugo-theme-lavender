@@ -1,7 +1,7 @@
 {{ define "main" -}}
   {{ $title := site.Params.blogName | default site.Title | default "Unnamed" -}}
   {{ $desc := site.Params.intro -}}
-  {{ with partial "layouts/hero/hero.html" (dict "context" . "title" $title "desc" $desc) -}}
+  {{ with partial "layouts/hero.html" (dict "context" . "title" $title "desc" $desc) -}}
     {{/* Social icon links, if exists. Max width: 80/4 rem = 320 px ~= 5 icons. */ -}}
     {{ with site.Params.social -}}
       <div class="max-w-80 mt-7 gap-3 flex flex-wrap justify-center">

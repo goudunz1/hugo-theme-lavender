@@ -73,7 +73,7 @@ const backToTopThreshold = 400;
   (function () {
     var toTop = document.getElementById("back-to-top");
     // ES5 compatible, to enable array functions like .forEach() for the NodeList
-    var tocLinks = Array.prototype.slice.call(document.querySelectorAll(".post-toc a"));
+    var tocLinks = Array.prototype.slice.call(document.querySelectorAll("#post-toc a"));
     var headingEls = [];
     var activeLink = null;
     var rafTicking = false;

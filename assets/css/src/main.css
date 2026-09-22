@@ -291,13 +291,13 @@
 
 /* Table of Contents. */
 
-.post-toc a {
+#post-toc a {
   @apply py-1.25 px-2 text-13/[1.4] block border-l-2;
   @apply toggled:border-l-accent text-muted hover:text-accent toggled:text-accent border-l-transparent;
 }
 
-.post-toc ul ul,
-.post-toc ol ol {
+#post-toc ul ul,
+#post-toc ol ol {
   @apply pl-3.25;
 }
 

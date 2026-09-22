@@ -2,29 +2,35 @@
 {{/* "page": the current page */ -}}
 {{/* "menu": menu entry object */ -}}
 
+{{ $pillCls := delimit (slice
+  "flex items-baseline rounded-full border p-px"
+  "group-hover:translate-x-1.5 transition-[transform,translate]"
+  ) " "
+-}}
+
 {{ $page := .page -}}
+
 {{ with .menu -}}
-  {{/* Zero-width "pin" wrapper: to expand entries rightwards like a drawer on hover while */ -}}
-  {{/* staying centered otherwise */ -}}
+  {{ $icon := .Params.icon | default "link" -}}
+  {{/* Whether the current page belongs to the menu entry. */ -}}
+  {{ $hl := or ($page.IsMenuCurrent .Menu .) ($page.HasMenuCurrent .Menu .) -}}
+  {{/* Don't disable the link here! So that we can go back to the top entry. */ -}}
+  {{ $hlCls := cond $hl "bg-accent-subtle border-accent text-accent" "bg-bg border-border" -}}
+
+  {{/* Zero-width pin forces entries to expand rightwards like a drawer. */ -}}
   {{/* Alignment uses a negative left margin: half of icon size (5/4rem) + padding (1px) + border (1px). */ -}}
   <div class="w-0">
-    {{/* Hover event listener to prevent bouncing back. */ -}}
-    <div class="group text-14 -ml-[(var(--spacing)*5+2px)] size-fit">
-      {{/* Whether the menu entry matches the current page or its ancestor. */ -}}
-      {{ $active := or ($page.IsMenuCurrent .Menu .) ($page.HasMenuCurrent .Menu .) -}}
-      {{/* Users can configure icon for the menu in menu params. */ -}}
-      {{ $icon := .Params.icon | default "link" -}}
-      {{ $class := "group-hover:translate-x-1.5 flex items-baseline rounded-full border p-px" -}}
-      {{ $class = printf "%s %s" $class (cond $active "bg-accent-subtle border-accent" "bg-bg border-border") -}}
-      <a href="{{ .URL }}" class="{{ $class }}">
-        {{ $class = cond $active "text-accent" "text-muted" -}}
-        <div class="{{ $class }} size-10 flex items-center justify-center">
+    {{/* Hover event group to prevent bouncing back. */ -}}
+    <div class="group text-14 -ml-[(1.25rem+2px)] size-fit">
+      <a href="{{ .URL }}" class="{{ $pillCls }} {{ $hlCls }}">
+        <div class="{{ if not $hl }}text-muted{{ end }} size-10 flex items-center justify-center">
           <i class="ti ti-{{ $icon }}"></i>
         </div>
         {{/* Simulate a drawer by setting max-width; Change opacity for transition effect. */ -}}
-        <div class="max-w-0 opacity-0 group-hover:max-w-fit group-hover:opacity-100">
-          {{ $class = cond $active "text-accent" "" -}}
-          <p class="{{ $class }} max-w-48 pr-3 font-medium truncate">{{ .Name }}</p>
+        <div class="max-w-0 group-hover:max-w-48 transition-[max-width]">
+          <p class="font-medium me-3 truncate">
+            {{- .Name -}}
+          </p>
         </div>
       </a>
     </div>

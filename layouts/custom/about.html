@@ -1,5 +1,12 @@
 {{ define "main" -}}
-  {{ with partial "layouts/hero/hero.html" (dict "context" . "title" .Title "desc" .Description) -}}
+  {{ with partial "layouts/hero.html" (dict "context" . "title" .Title "desc" .Description) -}}
+    {{ $surfaceCls :=
+      "group toggled:border-accent rounded-xl border-border bg-bg overflow-hidden border transition-[border-color]"
+    -}}
+    {{ $iconCls :=
+      "group-toggled:text-accent group-toggled:rotate-180 text-muted transition-[color,transform,rotate]"
+    -}}
+
     {{/* Collapsible "about" items (title + Markdown body), driven by JS. */ -}}
     {{ with site.Params.aboutItems -}}
       <div id="accordion" class="mt-9 w-120 gap-2.5 flex flex-col">
@@ -7,14 +14,14 @@
           {{/* Params: */ -}}
           {{/* "title": title of the item displayed on the left */ -}}
           {{/* "content": markdown content */ -}}
-          <div class="group toggled:border-accent rounded-xl border-border bg-bg overflow-hidden border">
+          <div class="{{ $surfaceCls }}">
             <button
               type="button"
               class="gap-3 px-4.5 py-3.5 text-17 font-semibold flex w-full items-center justify-between text-left">
               <span>{{ .title }}</span>
-              <i class="group-toggled:text-accent group-toggled:rotate-180 text-muted ti ti-chevron-down"></i>
+              <i class="{{ $iconCls }} ti ti-chevron-down"></i>
             </button>
-            <div class="max-h-0 group-toggled:max-h-fit">
+            <div class="max-h-0 group-toggled:max-h-fit transition-[max-height]">
               <div class="post-content text-muted! pb-4 px-4.5">{{ .content | markdownify }}</div>
             </div>
           </div>

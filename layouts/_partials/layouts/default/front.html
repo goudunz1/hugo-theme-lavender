@@ -5,7 +5,7 @@
   {{ end -}}
   {{ with .meta -}}
     <div class="mt-1.25 text-14 gap-3 text-muted flex flex-wrap">
-      {{/* `min-w-0` set the first label flex-shrink-able. */ -}}
+      {{/* min-w-0: set the first label flex-shrink-able. */ -}}
       {{ $sorted := sort . "weight" -}}
       {{ $first := true -}}
       {{ range $item := $sorted -}}

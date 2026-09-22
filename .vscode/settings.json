@@ -11,6 +11,6 @@
   },
   "tailwindCSS.experimental.configFile": "assets/css/src/main.css",
   "tailwindCSS.experimental.classRegex": [
-    ["{{-?\\s*\\$\\w*[cC]lass\\s*:?=([^}]+)-?}}", "[\"'`]([^\"'`]*)[\"'`]"]
+    ["{{-?\\s*\\$\\w*[cC]ls\\s*:?=([^}]+)-?}}", "[\"'`]([^\"'`]*)[\"'`]"]
   ]
 }

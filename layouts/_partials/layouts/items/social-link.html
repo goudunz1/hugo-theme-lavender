@@ -4,12 +4,9 @@
 
 {{ $icon := .icon | default "link" -}}
 {{/* External links are opened in a new tab. */ -}}
-{{ $class := "border-accent bg-bg flex items-center justify-center rounded-full border-2" -}}
-<a
-  class="{{ $class }} text-muted text-17 size-11 hover:scale-108"
-  href="{{ .url }}"
-  title="{{ .name }}"
-  target="_blank"
-  rel="noopener">
+{{ $iconCls :=
+  "border-accent bg-bg text-muted text-17 size-11 flex items-center justify-center rounded-full border-2"
+-}}
+<a class="{{ $iconCls }}" href="{{ .url }}" title="{{ .name }}" target="_blank" rel="noopener">
   <i class="ti ti-{{ $icon }}"></i>
 </a>
