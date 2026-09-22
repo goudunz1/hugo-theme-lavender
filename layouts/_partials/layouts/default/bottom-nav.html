@@ -11,7 +11,7 @@
 
 {{/* Nothing renders when both prev/next are empty. */ -}}
 {{ if or $next $prev -}}
-  <nav class="mt-10 gap-4 border-border pt-6 desktop:grid-cols-2 grid grid-cols-1 border-t">
+  <nav class="mbs-10 gap-4 border-border pbs-6 sm:grid-cols-2 grid grid-cols-1 border-bs">
     {{/* The newer (next). */ -}}
     {{ with $next -}}
       <a class="{{ $surfaceCls }} group" href="{{ .RelPermalink }}">
@@ -25,7 +25,7 @@
 
     {{/* The older (previous), right aligned. Stick to the right even if there's no next link on the left. */ -}}
     {{ with $prev -}}
-      <a class="{{ $surfaceCls }} group desktop:text-end desktop:col-start-2" href="{{ .RelPermalink }}">
+      <a class="{{ $surfaceCls }} group sm:text-end sm:col-start-2" href="{{ .RelPermalink }}">
         <p class="{{ $metaCls }}">
           {{ i18n "previousPage" }}
           <i class="ti ti-arrow-right"></i>

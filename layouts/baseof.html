@@ -1,6 +1,6 @@
 <!doctype html>
-{{ $lang := site.Language.Locale | default `en` -}}
-{{ $dir := site.Language.Direction | default `ltr` -}}
+{{ $lang := site.Language.Locale | default "en" -}}
+{{ $dir := site.Language.Direction | default "ltr" -}}
 {{ $title := site.Title -}}
 {{ if .IsHome -}}
   {{ $title = printf "%s | %s" .Title $title -}}
@@ -12,17 +12,14 @@
   </head>
   <body>
     {{ partial "layouts/sidebar.html" . -}}
-    {{/* Left margin = sidebar width = 19/4 rem (= 11/4 button + 2 = 15/4 avatar + 1). */ -}}
-    <div class="sidebar:ml-19">
-      {{/* Min width = 86/4 rem = 86/4 × 14px ~= 300px. */ -}}
-      {{/* Max width = 1100px = 275/4 rem. */ -}}
+    <div class="lg:ms-sidebar">
       {{/* max-w + mx-auto: center the layout and keep it from over-expanding. */ -}}
-      <div class="max-w-275 min-w-86 mx-auto flex min-h-dvh flex-col">
+      <div class="max-w-300 min-w-80 mx-auto flex min-h-dvh flex-col">
         <header>
           {{ partialCached "layouts/header.html" . -}}
         </header>
         {{/* Reduce vertical padding for the main content on mobile. */ -}}
-        <main class="px-6 py-4 desktop:py-8 flex flex-1 flex-col">
+        <main class="px-6 py-4 sm:py-8 flex flex-1 flex-col">
           {{ block "main" . -}}
           {{ end -}}
         </main>

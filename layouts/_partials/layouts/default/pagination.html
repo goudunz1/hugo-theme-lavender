@@ -8,7 +8,7 @@
 
 {{/* Do nothing if there's only one page. */ -}}
 {{ if gt $paginator.TotalPages 1 -}}
-  <nav class="mt-10 gap-1.5 flex flex-wrap items-center justify-center">
+  <nav class="mbs-10 text-14 gap-1.5 flex flex-wrap items-center justify-center">
     {{/* Left arrow disabled on the first page. */ -}}
     {{ if $paginator.HasPrev -}}
       <a class="{{ $baseCls }} {{ $btnCls }} {{ $hovCls }}" href="{{ $paginator.Prev.URL }}" rel="prev">

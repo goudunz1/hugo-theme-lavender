@@ -2,7 +2,7 @@
   {{ $meta := partial "helpers/meta.html" . -}}
   {{ partial "layouts/default/front.html" (dict "title" .Title "meta" $meta) -}}
   {{/* Two columns when possible: content next to the bulletins; a single stack on narrow screens. */ -}}
-  <article id="post" class="mt-10 gap-10 sidebar:grid-cols-[minmax(0,1fr)_260px] grid flex-1 grid-cols-1 content-start">
+  <article class="mbs-10 gap-10 md:grid-cols-[minmax(0,1fr)_18rem] grid flex-1 grid-cols-1 content-start">
     <div class="post-content">{{ .Content }}</div>
     {{ partial "layouts/default/bulletins.html" . -}}
   </article>

@@ -30,6 +30,8 @@
 .chroma {
   color: var(--theme-fg);
   background-color: var(--theme-bg);
+  --ln-margin-inline-end: 1rem;
+  --ln-padding-inline: 0.4rem;
 }
 /* Line */
 .chroma .line {
@@ -40,8 +42,8 @@
   white-space: pre;
   -webkit-user-select: none;
   user-select: none;
-  margin-right: 1rem;
-  padding: 0 0.4rem 0 0.4rem;
+  margin-inline-end: var(--ln-margin-inline-end);
+  padding-inline: var(--ln-padding-inline);
   color: var(--theme-muted);
 }
 /* LineNumbersTable */
@@ -49,8 +51,8 @@
   white-space: pre;
   -webkit-user-select: none;
   user-select: none;
-  margin-right: 1rem;
-  padding: 0 0.4rem 0 0.4rem;
+  margin-inline-end: var(--ln-margin-inline-end);
+  padding-inline: var(--ln-padding-inline);
   color: var(--theme-muted);
 }
 /* LineHighlight */

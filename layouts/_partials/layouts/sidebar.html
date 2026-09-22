@@ -1,38 +1,55 @@
-{{ $iconCls := "border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2" -}}
 {{/* The visible rail. Deliberately `min-h-dvh`, never `h-dvh`: */ -}}
 {{/* The rail grows to keep its background over the whole scrolled area, giving it a fixed height would make */ -}}
 {{/* the flex children shrink. */ -}}
 {{ $sidebarCls := delimit (slice
-  "bg-bg w-19 border-border gap-4 px-2 py-4 pointer-events-auto flex min-h-dvh flex-col items-center justify-between"
-  "not-sidebar:border-r not-sidebar:not-toggled:-translate-x-full transition-[translate,transform]"
+  "bg-bg w-20 border-border gap-4 py-6 flex min-h-dvh flex-col items-center justify-between"
+  "max-lg:border-r max-lg:not-toggled:-translate-x-full transition-[translate,transform]"
+  "pointer-events-auto"
   ) " "
-}}
+-}}
+{{ $viewportCls := delimit (slice
+  "inset-0 toggled:bg-black/45 fixed z-20"
+  "overflow-y-auto overscroll-contain transition-[background-color]"
+  "not-toggled:pointer-events-none"
+  ) " "
+-}}
+{{ $burgerCls := delimit (slice
+  "size-10 right-3 top-3 lg:opacity-0 lg:pointer-events-none fixed z-30"
+  "hover:scale-110 transition-[transform,scale,opacity] will-change-transform"
+  ) " "
+-}}
 {{/* pointer-events + opacity: simulate hidden/shown states so the transition is visible. */ -}}
 {{ $toTopCls := delimit (slice
+  "size-10 right-6 bottom-6 fixed z-10"
   "not-toggled:translate-y-4 not-toggled:opacity-0 not-toggled:pointer-events-none"
-  "transition-[translate,transform,opacity]"
+  "hover:scale-110 transition-[translate,scale,transform,opacity] will-change-transform"
+  ) " "
+-}}
+{{ $themeChgCls := delimit (slice
+  "size-11 text-muted hover:scale-110 transition-[scale,transform] will-change-transform"
+  )  " "
+-}}
+{{ $iconCls := "border-accent bg-bg text-17 flex items-center justify-center rounded-full border-2" -}}
+{{ $profileCls := delimit (slice
+  "bg-bg p-0.5 size-16 border-accent rounded-full border-2"
+  "hover:scale-110 transition-[transform,scale] will-change-transform"
   ) " "
 -}}
 
 {{/* Sidebar viewport. The rail itself cannot own the scroll - hover-expanded menu labels would get clipped. */ -}}
 {{/* We hide the scrollbar in css for compatibility, and `overscroll-contain` stops scroll chaining. */ -}}
-<div
-  id="sidebar-viewport"
-  class="inset-y-0 inset-s-0 w-72 pointer-events-none fixed z-13 overflow-y-auto overscroll-contain">
+<div id="sidebar-viewport" class="{{ $viewportCls }} invisible-scrollbar">
   <aside id="sidebar" class="{{ $sidebarCls }}">
     {{/* Avatar linking to the home page */ -}}
     {{ $blogName := site.Params.blogName | default site.Title -}}
-    <a
-      class="bg-bg p-0.5 size-15 border-accent rounded-full border-2"
-      href="{{ `` | relLangURL }}"
-      title="{{ $blogName }}">
+    <a class="{{ $profileCls }}" href="{{ `` | relLangURL }}" title="{{ $blogName }}">
       {{ with site.Params.avatar -}}
         <img class="rounded-full object-cover select-none" src="{{ . | relURL }}" alt="{{ $blogName }}" />
       {{ end -}}
     </a>
 
     {{- /* Primary navigation: one drawer entry per item in site.Menus.main. */ -}}
-    <nav class="gap-3 px-2 flex w-full flex-col items-center">
+    <nav class="gap-3 flex w-full flex-col items-center">
       {{ range site.Menus.main -}}
         {{ partial "layouts/items/menu-entry.html" (dict "page" $.Page "menu" .) -}}
       {{ end -}}
@@ -42,7 +59,7 @@
     <button
       type="button"
       id="theme-toggle"
-      class="{{ $iconCls }} size-11 text-muted"
+      class="{{ $iconCls }} {{ $themeChgCls }}"
       title="{{ i18n `toggleColorTheme` }}">
       <i class="ti ti-sun hidden dark:block"></i>
       <i class="ti ti-moon-stars block dark:hidden"></i>
@@ -51,26 +68,15 @@
 </div>
 
 {{- /* Mobile-only drawer controls: burger button to open the sidebar and the scrim behind it. */ -}}
-<button
-  type="button"
-  id="sidebar-burger"
-  class="{{ $iconCls }} group size-10 right-3 top-3 sidebar:hidden fixed z-14"
-  title="{{ i18n `openMenu` }}">
+<button type="button" id="sidebar-burger" class="{{ $iconCls }} {{ $burgerCls }} group" title="{{ i18n `openMenu` }}">
   <i class="ti ti-list group-toggled:hidden block"></i>
   <i class="ti ti-x group-toggled:block hidden"></i>
 </button>
 
-{{- /* Full screen scrim layer shading the contents when the sidebar is opened. */ -}}
-<div id="sidebar-scrim" class="inset-0 bg-black/45 not-toggled:hidden fixed z-12"></div>
-
 {{- /* Back-to-top button: rendered in the sidebar template so it appears on every page. */ -}}
 {{ if site.Params.backToTop | default true -}}
   {{/* Raise the z-index so it covers normal content but not the sidebar scrim. */ -}}
-  <button
-    type="button"
-    id="back-to-top"
-    class="{{ $iconCls }} {{ $toTopCls }} size-10 right-6 bottom-6 fixed z-11"
-    title="{{ i18n `backToTop` }}">
+  <button type="button" id="back-to-top" class="{{ $iconCls }} {{ $toTopCls }}" title="{{ i18n `backToTop` }}">
     <i class="ti ti-arrow-up"></i>
   </button>
 {{ end -}}

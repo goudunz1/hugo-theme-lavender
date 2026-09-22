@@ -1,6 +1,6 @@
 {{/* Search page based on MiniSearch. */ -}}
 {{ define "main" -}}
-  {{ $surfaceCls := "border-border bg-bg gap-2 mt-6 rounded-xl px-4 py-2.5 flex items-center border" -}}
+  {{ $surfaceCls := "border-border bg-bg gap-2 mbs-6 rounded-xl px-4 py-2.5 flex items-center border" -}}
   {{ $btnCls := delimit (slice
     "h-9 min-w-9 border border-border bg-bg rounded-lg px-2.5 text-14 flex items-center justify-center"
     "hover:text-accent hover:border-accent transition-[color,border-color]"
@@ -11,7 +11,7 @@
   {{/* Search is gated behind param `searchEnabled`. */ -}}
   {{ $enabled := site.Params.searchEnabled | default false -}}
   {{ if not $enabled -}}
-    <p class="text-14 text-muted mt-6">{{ i18n "searchDisabledText" | safeHTML }}</p>
+    <p class="text-14 text-muted mbs-6">{{ i18n "searchDisabledText" | safeHTML }}</p>
   {{ else -}}
     {{/* data-index-url points search.js at the generated JSON index. */ -}}
     <div class="{{ $surfaceCls }} focus-within:border-accent transition-[border-color]">
@@ -29,7 +29,7 @@
     {{- /* i18n keys for each state are exposed to search.js through data-* attributes. */ -}}
     <p
       id="search-status"
-      class="text-14 text-muted mb-4 mt-6"
+      class="text-14 text-muted mbe-4 mbs-6"
       data-i18n-none="{{ i18n `searchStatusNone` }}"
       data-i18n-count="{{ i18n `searchStatusCount` }}"
       data-i18n-one="{{ i18n `searchStatusOne` }}">
@@ -48,7 +48,7 @@
     </template>
 
     {{- /* Load-more/less button for paged results. */ -}}
-    <div class="mt-6 gap-1.5 flex items-center justify-center">
+    <div class="mbs-6 gap-1.5 flex items-center justify-center">
       <button id="search-more" type="button" class="{{ $btnCls }}" hidden>
         {{ i18n "searchLoadMore" }}
       </button>

@@ -4,9 +4,14 @@
 
 {{ $icon := .icon | default "link" -}}
 {{/* External links are opened in a new tab. */ -}}
-{{ $iconCls :=
+{{ $iconCls := delimit (slice
   "border-accent bg-bg text-muted text-17 size-11 flex items-center justify-center rounded-full border-2"
+  "hover:scale-110 transition-[transform,scale] will-change-transform origin-bottom"
+  )
+  " "
 -}}
+
+
 <a class="{{ $iconCls }}" href="{{ .url }}" title="{{ .name }}" target="_blank" rel="noopener">
   <i class="ti ti-{{ $icon }}"></i>
 </a>

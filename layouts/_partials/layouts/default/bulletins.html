@@ -1,5 +1,5 @@
 {{ $surfaceCls := "bg-bg border-border rounded-xl p-4 border" -}}
-{{ $titleCls := "text-muted tracking-wider mb-2.5 text-13 truncate uppercase " -}}
+{{ $titleCls := "text-muted tracking-wider mb-2.5 text-14 truncate uppercase" -}}
 {{ $pillCls := delimit (slice
   "border-border bg-bg px-2.5 py-0.75 h-7 text-13 min-w-0 hover:border-accent hover:text-accent"
   "flex items-center rounded-full border transition-[color,border-color]"
@@ -7,7 +7,7 @@
 -}}
 
 {{/* Bulletins: every taxonomy defined on the site (e.g. categories, tags), plus a sticky TOC. */ -}}
-<aside class="gap-6 sidebar:order-0 order-first flex flex-col">
+<aside class="gap-6 md:order-0 order-first flex flex-col">
   {{ range $plural, $taxonObj := site.Taxonomies -}}
     {{/* Only render a bulletin card when the current post belongs to this taxonomy. */ -}}
     {{ with $.GetTerms $plural -}}
@@ -30,13 +30,10 @@
     {{ $toc := .TableOfContents -}}
     {{/* Skip the bulletin card when the TOC is 'empty' (has no headings). */ -}}
     {{ if strings.Contains $toc "href" -}}
-      <div class="{{ $surfaceCls }} sidebar:sticky sidebar:top-6">
+      <div class="{{ $surfaceCls }} md:sticky md:top-6">
         <p class="{{ $titleCls }}">{{ i18n "tocAlias" }}</p>
-        {{/* -mr-2: Fold the scrollbar to right padding of the container. */ -}}
         {{/* overscroll-contain: Prevent scroll chaining to the main content. */ -}}
-        <div
-          id="post-toc"
-          class="sidebar:max-h-[calc(100dvh-8rem)] -mr-2 overflow-y-scroll overscroll-contain wrap-break-word">
+        <div class="pretty-scrollbar md:max-h-[calc(100dvh-8rem)] md:overflow-y-auto md:overscroll-contain">
           {{ $toc }}
         </div>
       </div>

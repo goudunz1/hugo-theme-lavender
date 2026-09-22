@@ -6,11 +6,6 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @custom-variant toggled (&[data-toggled]);
 
-@theme {
-  --breakpoint-sidebar: 900px;
-  --breakpoint-desktop: 500px;
-}
-
 @theme inline {
   --color-bg: var(--theme-bg);
   --color-fg: var(--theme-fg);
@@ -20,16 +15,18 @@
   --color-accent-subtle: var(--theme-accent-subtle);
   --color-border: var(--theme-border);
   --color-shadow: var(--theme-shadow);
-  --shadow-card: 0px 4px 8px var(--theme-shadow);
-  --shadow-profile: 0 4px 12px var(--theme-shadow);
   --font-sans:
     "Fredoka Variable", "PingFang SC", HarmonyOS_Regular, "Helvetica Neue", "Microsoft YaHei", system-ui, sans-serif;
   --font-mono: "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --text-13: 0.8125rem;
   --text-14: 0.875rem;
+  --text-15: 0.9375rem;
   --text-17: 1.0625rem;
+  --text-18: 1.125rem;
   --text-19: 1.1875rem;
-  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --text-20: 1.25rem;
+  --text-21: 1.3125rem;
+  --spacing-sidebar: 5rem;
 }
 
 :root {
@@ -55,11 +52,6 @@
   --theme-accent-subtle: #382744;
   --theme-border: #2e2e2e;
   --theme-shadow: rgba(0, 0, 0, 0.24);
-}
-
-:root {
-  /* rem: 900px - 500px / 16px - 14px */
-  font-size: clamp(0.875rem, 0.719rem + 0.5vw, 1rem);
 }
 
 @layer base {
@@ -102,43 +94,9 @@
   }
 }
 
-#sidebar-viewport {
-  scrollbar-width: none;
-}
-
-#sidebar-viewport::-webkit-scrollbar {
-  display: none;
-}
-
-#post ::-webkit-scrollbar {
-  height: 0.5rem;
-  width: 0.5rem;
-}
-
-#post ::-webkit-scrollbar-thumb {
-  background-color: var(--theme-border);
-  border-radius: 0.25rem;
-}
-
-#post ::-webkit-scrollbar-thumb:hover {
-  background-color: var(--theme-accent-veil);
-  cursor: pointer;
-}
-
-#post ::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-#post ::-webkit-scrollbar-button {
-  display: none;
-}
-
-/* Weird scrollbar support of Firefox. */
-@supports (-moz-tab-size: 4) {
-  #post {
-    scrollbar-color: var(--theme-border) transparent;
-  }
-}
+@import "./toc.css";
+@import "./scrollbar.css";
+@import "./highlight.css";
 
 /* Markdown-rendered content. */
 
@@ -147,18 +105,18 @@
 }
 
 .post-content > :first-child {
-  @apply mt-0;
+  @apply mbs-0;
 }
 
 .post-content h1,
 .post-content h2,
 .post-content h3,
 .post-content h4 {
-  @apply mt-8 mb-3.25 font-bold text-[1.5rem]/[1.4];
+  @apply mbs-8 mbe-3.25 font-bold text-[1.5rem]/[1.4];
 }
 
 .post-content h2 {
-  @apply border-border pb-1.25 border-b;
+  @apply border-border pbe-1.25 border-be;
 }
 
 .post-content h3 {
@@ -179,7 +137,7 @@
 
 .post-content ul,
 .post-content ol {
-  @apply my-4 pl-6;
+  @apply my-4 ps-6;
 }
 
 .post-content ul {
@@ -206,7 +164,7 @@
 }
 
 .post-content blockquote {
-  @apply my-5 bg-accent-veil px-4 py-1.5 text-muted rounded-r-lg border-l-accent rounded-l-none border-l-[3px];
+  @apply my-5 bg-accent-veil px-4 py-1.5 text-muted rounded-e-lg border-s-accent border-s-[3px];
 }
 
 .post-content blockquote p {
@@ -265,7 +223,7 @@
 }
 
 .post-content .highlight .lntd:first-child code {
-  @apply pr-0 text-right;
+  @apply pe-0 text-right;
 }
 
 .post-content .highlight .lntd:last-child {
@@ -273,7 +231,7 @@
 }
 
 .post-content .highlight .lntd:last-child code {
-  @apply pl-0;
+  @apply ps-0;
 }
 
 .post-content table:not(.lntable) {
@@ -289,16 +247,37 @@
   @apply bg-border font-bold;
 }
 
-/* Table of Contents. */
+/* For compatibility, will be removed soon. */
 
-#post-toc a {
-  @apply py-1.25 px-2 text-13/[1.4] block border-l-2;
-  @apply toggled:border-l-accent text-muted hover:text-accent toggled:text-accent border-l-transparent;
+@supports selector(::-webkit-scrollbar) {
+  .post-content ::-webkit-scrollbar {
+    max-height: 0.5rem;
+    max-width: 0.5rem;
+  }
+
+  .post-content ::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  .post-content ::-webkit-scrollbar-thumb {
+    background-color: var(--theme-border);
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+
+  .post-content ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .post-content ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--theme-accent-veil);
+  }
 }
 
-#post-toc ul ul,
-#post-toc ol ol {
-  @apply pl-3.25;
+@supports (not selector(::-webkit-scrollbar)) and (scrollbar-color: auto) {
+  .post-content {
+    scrollbar-color: var(--theme-border) transparent;
+  }
 }
 
 /* Bold + accent highlight for the matched terms inside search result cards. */

@@ -1,0 +1,38 @@
+@supports selector(::-webkit-scrollbar) {
+  .pretty-scrollbar::-webkit-scrollbar {
+    max-height: 0.5rem;
+    max-width: 0.5rem;
+  }
+
+  .pretty-scrollbar::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  .pretty-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--theme-border);
+    border-radius: 0.25rem;
+    cursor: pointer;
+  }
+
+  .pretty-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .pretty-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: var(--theme-accent-veil);
+  }
+
+  .invisible-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@supports (not selector(::-webkit-scrollbar)) and (scrollbar-color: auto) {
+  .pretty-scrollbar {
+    scrollbar-color: var(--theme-border) transparent;
+  }
+
+  .invisible-scrollbar {
+    scrollbar-width: none;
+  }
+}

@@ -1,14 +1,34 @@
 // main.js: ES5 compatible
 
-const sidebarBreakpoint = 900;
-const backToTopThreshold = 400;
+const root = document.documentElement;
+// Same breakpoint as Tailwind's `lg:` variant: read it from CSS instead of hardcoding.
+// A media query's `rem` resolves against the browser's initial font size, exactly like Tailwind's generated query,
+// so this stays in sync with the stylesheet.
+const sidebarBreakpoint = getComputedStyle(root).getPropertyValue("--breakpoint-lg").trim() || "64rem";
+const sidebarMQ = window.matchMedia("(min-width: " + sidebarBreakpoint + ")");
+const scrollThreshold = 400;
 
 (function () {
   "use strict";
 
+  // Throttling via requestAnimationFrame.
+  // This guarantees at most one update per animation frame (~16ms at 60fps).
+  function rAF(func) {
+    var rafTicking = false;
+    return function () {
+      if (rafTicking) {
+        return;
+      }
+      rafTicking = true;
+      requestAnimationFrame(function () {
+        func();
+        rafTicking = false;
+      });
+    };
+  }
+
   // Theme toggle
   (function () {
-    var root = document.documentElement;
     var toggle = document.getElementById("theme-toggle");
 
     if (toggle) {
@@ -28,44 +48,49 @@ const backToTopThreshold = 400;
 
   // Sidebar
   (function () {
-    var burger = document.getElementById("sidebar-burger");
+    var viewport = document.getElementById("sidebar-viewport");
     var sidebar = document.getElementById("sidebar");
-    var scrim = document.getElementById("sidebar-scrim");
+    var burger = document.getElementById("sidebar-burger");
 
-    if (sidebar) {
-      function toggleSidebar(openOrClose) {
-        sidebar.toggleAttribute("data-toggled", openOrClose);
-        scrim.toggleAttribute("data-toggled", openOrClose);
-        if (burger) {
-          burger.toggleAttribute("data-toggled", openOrClose);
+    if (viewport && sidebar && burger) {
+      function toggleSidebar(force) {
+        viewport.toggleAttribute("data-toggled", force);
+        sidebar.toggleAttribute("data-toggled", force);
+        burger.toggleAttribute("data-toggled", force);
+      }
+      function onViewportClick(e) {
+        if (!sidebar.contains(e.target)) {
+          // Clicking on the scrim always hides the sidebar.
+          toggleSidebar(false);
         }
+      }
+      function onBurgerClick() {
+        toggleSidebar();
       }
 
-      if (burger) {
-        // Clicking on hamburger button toggles the sidebar.
-        burger.addEventListener("click", function () {
-          var isOpened = sidebar.hasAttribute("data-toggled");
-          toggleSidebar(!isOpened);
-        });
-      }
-      // Clicking on the scrim (backdrop) always hides the sidebar.
-      if (scrim) {
-        scrim.addEventListener("click", function () {
-          toggleSidebar(false);
-        });
-      }
-      // Clicking on a sidebar link hides the sidebar.
-      sidebar.addEventListener("click", function (e) {
-        if (e.target.closest("a")) {
-          toggleSidebar(false);
+      // The sidebar interactions only make sense below the `lg:` breakpoint.
+      // `status` makes this idempotent: it only touches the DOM when the side actually changes, so repeated calls
+      // never re-toggle anything.
+      var status = null;
+      function syncSidebar() {
+        var wide = sidebarMQ.matches;
+        if (wide === status) {
+          return;
         }
-      });
-      // Auto-close the sidebar when width > breakpoint.
-      window.addEventListener("resize", function () {
-        if (window.innerWidth > sidebarBreakpoint) {
-          toggleSidebar(false);
+        status = wide;
+        if (wide) {
+          if (viewport.hasAttribute("data-toggled")) {
+            toggleSidebar(false);
+          }
+          viewport.removeEventListener("click", onViewportClick);
+          burger.removeEventListener("click", onBurgerClick);
+        } else {
+          viewport.addEventListener("click", onViewportClick);
+          burger.addEventListener("click", onBurgerClick);
         }
-      });
+      }
+      syncSidebar();
+      sidebarMQ.addEventListener("change", rAF(syncSidebar));
     }
   })();
 
@@ -73,10 +98,9 @@ const backToTopThreshold = 400;
   (function () {
     var toTop = document.getElementById("back-to-top");
     // ES5 compatible, to enable array functions like .forEach() for the NodeList
-    var tocLinks = Array.prototype.slice.call(document.querySelectorAll("#post-toc a"));
+    var tocLinks = Array.prototype.slice.call(document.querySelectorAll("#TableOfContents a"));
     var headingEls = [];
     var activeLink = null;
-    var rafTicking = false;
 
     // Maps each TOC link to the DOM heading it anchors to.
     function buildHeadingList() {
@@ -115,20 +139,12 @@ const backToTopThreshold = 400;
       }
     }
 
-    // Throttling via requestAnimationFrame.
-    // This guarantees at most one update per animation frame (~16ms at 60fps).
-    function onScroll() {
-      if (rafTicking) {
-        return;
+    function syncScroll() {
+      if (toTop) {
+        // Show once scrolled more than one viewport height; hide again above it.
+        toTop.toggleAttribute("data-toggled", window.scrollY > scrollThreshold); 
       }
-      rafTicking = true;
-      requestAnimationFrame(function () {
-        if (toTop) {
-          toTop.toggleAttribute("data-toggled", window.scrollY > backToTopThreshold);
-        }
-        updateScrollSpy();
-        rafTicking = false;
-      });
+      updateScrollSpy();
     }
 
     if (toTop) {
@@ -142,9 +158,11 @@ const backToTopThreshold = 400;
       window.addEventListener("load", buildHeadingList);
     }
     if (toTop || tocLinks.length > 0) {
+      var throttled = rAF(syncScroll);
       // passive: true: allows the browser to scroll immediately without waiting for our handler to finish.
-      window.addEventListener("scroll", onScroll, { passive: true });
-      onScroll(); // Set the initial highlight
+      window.addEventListener("scroll", throttled, { passive: true });
+      window.addEventListener("resize", throttled);
+      syncScroll(); // Set the initial highlight
     }
   })();
 

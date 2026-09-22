@@ -3,7 +3,7 @@
 {{/* "menu": menu entry object */ -}}
 
 {{ $pillCls := delimit (slice
-  "flex items-baseline rounded-full border p-px"
+  "text-14 flex items-baseline rounded-full border p-px"
   "group-hover:translate-x-1.5 transition-[transform,translate]"
   ) " "
 -}}
@@ -21,7 +21,7 @@
   {{/* Alignment uses a negative left margin: half of icon size (5/4rem) + padding (1px) + border (1px). */ -}}
   <div class="w-0">
     {{/* Hover event group to prevent bouncing back. */ -}}
-    <div class="group text-14 -ml-[(1.25rem+2px)] size-fit">
+    <div class="group -ms-[(1.25rem+2px)] size-fit">
       <a href="{{ .URL }}" class="{{ $pillCls }} {{ $hlCls }}">
         <div class="{{ if not $hl }}text-muted{{ end }} size-10 flex items-center justify-center">
           <i class="ti ti-{{ $icon }}"></i>
