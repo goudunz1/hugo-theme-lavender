@@ -3,8 +3,8 @@
   --toc-line-height: 1.5;
   --toc-padding-block: 0.25rem;
   --toc-padding-inline: 0.5rem;
-  --toc-marker-width: 0.125rem;
-  --toc-indent-step: calc(var(--toc-padding-inline) + var(--toc-marker-width))
+  --toc-marker-width: 2px;
+  --toc-indent-step: calc(var(--toc-padding-inline) + var(--toc-marker-width));
 }
 
 #TableOfContents li > :where(ul, ol) {
@@ -13,21 +13,33 @@
 
 #TableOfContents a {
   display: block;
+  position: relative;
   color: var(--theme-muted);
-  border-inline-start: var(--toc-marker-width) solid transparent;
   font-size: var(--toc-font-size);
   line-height: var(--toc-line-height);
   overflow-wrap: break-word;
   padding-block: var(--toc-padding-block);
-  padding-inline: var(--toc-padding-inline);
-  transition-property: color, border-color;
-  transition-duration: var(--default-transition-duration);
-  transition-timing-function: var(--default-transition-timing-function);
+  padding-inline-start: var(--toc-indent-step);
+  padding-inline-end: var(--toc-padding-inline);
+  transition-property: color var(--default-transition-duration) var(--default-transition-timing-function);
+}
+
+#TableOfContents a::before {
+  content: "";
+  display: block;
+  position: absolute;
+  inset-block: var(--toc-padding-block);
+  inset-inline-start: 0;
+  inline-size: var(--toc-marker-width);
+  transition: background-color var(--default-transition-duration) var(--default-transition-timing-function);
 }
 
 #TableOfContents a[data-toggled] {
   color: var(--theme-accent);
-  border-inline-start-color: var(--theme-accent);
+}
+
+#TableOfContents a[data-toggled]::before {
+  background-color: var(--theme-accent);
 }
 
 #TableOfContents a:hover {
